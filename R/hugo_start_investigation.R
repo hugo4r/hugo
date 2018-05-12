@@ -1,12 +1,30 @@
 #' Starts a New Hugo Investigation
 #'
-#' @param ... parameters for the dispatcher
+#' @param ... name of a directory in which the investigation will be stored
 #'
-#' @return a \code{hugo} object
 #' @export
-#'
+#' @author Przemyslaw Biecek
 #' @examples
-hugo_start_investigation <- function(path = "hugo_investigation") {
+#' hugo_start_investigation()
+#'
+hugo_start_investigation <- function(path = NULL) {
+  if (is.null(path)) {
+    path <- .hugoEnv$path
+  } else  {
+    .hugoEnv$path <- path
+  }
 
+  if (dir.exists(path)) {
+    cat("Investigation ", path, " already exists\n")
+  } else {
+    dir.create(path)
+    sfile <- file(paste0(path, "/.session_info"), open="wt")
+    sink(sfile)
+    sink(sfile, type = "message")
+    print(devtools::session_info())
+    sink(type = "message")
+    sink()
+    cat("New investigation started in ", path, "\n")
+  }
 
 }

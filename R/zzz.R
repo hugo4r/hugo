@@ -1,6 +1,7 @@
 .hugoEnv <- new.env()
 
 setDefaultHugoEnv <- function() {
+  .hugoEnv$path = paste0("hugo_investigation_",gsub(Sys.Date(), pattern = "-", replacement = "_"))
 }
 
 .onAttach <- function(...) {
