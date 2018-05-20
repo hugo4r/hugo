@@ -1,0 +1,5 @@
+language: r
+dist: trusty
+r_packages:
+ - devtools
+sudo: required

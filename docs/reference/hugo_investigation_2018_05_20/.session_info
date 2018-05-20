@@ -1,0 +1,57 @@
+ setting  value                       
+ version  R version 3.4.4 (2018-03-15)
+ system   x86_64, darwin15.6.0        
+ ui       RStudio (1.1.442)           
+ language (EN)                        
+ collate  en_US.UTF-8                 
+ tz       Europe/Warsaw               
+ date     2018-05-20                  
+
+ package       * version    date       source                             
+ assertthat      0.2.0      2017-04-11 CRAN (R 3.4.0)                     
+ backports       1.1.2      2017-12-13 cran (@1.1.2)                      
+ base          * 3.4.4      2018-03-15 local                              
+ BiocInstaller   1.16.5     2015-05-20 Bioconductor                       
+ clisymbols      1.2.0      2017-05-21 cran (@1.2.0)                      
+ commonmark      1.4        2017-09-01 cran (@1.4)                        
+ compiler        3.4.4      2018-03-15 local                              
+ crayon          1.3.4      2017-09-16 CRAN (R 3.4.1)                     
+ datasets      * 3.4.4      2018-03-15 local                              
+ desc            1.1.1      2017-08-03 cran (@1.1.1)                      
+ devtools      * 1.13.5     2018-02-18 CRAN (R 3.4.3)                     
+ digest          0.6.15     2018-01-28 cran (@0.6.15)                     
+ evaluate        0.10.1     2017-06-24 CRAN (R 3.4.1)                     
+ graphics      * 3.4.4      2018-03-15 local                              
+ grDevices     * 3.4.4      2018-03-15 local                              
+ highlight       0.4.7.2    2017-10-04 cran (@0.4.7.2)                    
+ htmltools       0.3.6      2017-04-28 CRAN (R 3.4.0)                     
+ hugo          * 0.1        <NA>       local                              
+ knitr           1.20       2018-02-20 cran (@1.20)                       
+ magrittr        1.5        2014-11-22 CRAN (R 3.2.2)                     
+ MASS            7.3-49     2018-02-23 CRAN (R 3.4.4)                     
+ memoise         1.1.0      2017-04-21 CRAN (R 3.4.0)                     
+ methods       * 3.4.4      2018-03-15 local                              
+ pillar          1.2.1      2018-02-27 CRAN (R 3.4.3)                     
+ pkgbuild        0.0.0.9000 2017-10-25 Github (r-lib/pkgbuild@a70858f)    
+ pkgdown         0.1.0.9000 2017-11-21 Github (hadley/pkgdown@33673a9)    
+ pkgload         0.0.0.9000 2017-11-21 Github (r-lib/pkgload@70eaef8)     
+ purrr           0.2.4      2017-10-18 cran (@0.2.4)                      
+ R6              2.2.2      2017-06-17 CRAN (R 3.4.0)                     
+ Rcpp            0.12.16    2018-03-13 cran (@0.12.16)                    
+ rlang           0.2.0.9001 2018-05-17 Github (r-lib/rlang@854174a)       
+ rmarkdown       1.9        2018-03-01 CRAN (R 3.4.3)                     
+ roxygen2        6.0.1.9000 2017-10-25 Github (klutometis/roxygen@bbf259d)
+ rprojroot       1.3-2      2018-01-03 CRAN (R 3.4.3)                     
+ rstudioapi      0.7        2017-09-07 CRAN (R 3.4.1)                     
+ stats         * 3.4.4      2018-03-15 local                              
+ stringi         1.1.7      2018-03-12 cran (@1.1.7)                      
+ stringr         1.3.0      2018-02-19 cran (@1.3.0)                      
+ testthat        2.0.0      2017-12-13 CRAN (R 3.4.3)                     
+ tibble          1.4.2      2018-01-22 cran (@1.4.2)                      
+ tools           3.4.4      2018-03-15 local                              
+ usethis         1.3.0      2018-02-24 CRAN (R 3.4.3)                     
+ utils         * 3.4.4      2018-03-15 local                              
+ whisker         0.3-2      2013-04-28 CRAN (R 3.1.0)                     
+ withr           2.1.2      2018-05-17 Github (jimhester/withr@79d7b0d)   
+ xml2            1.2.0      2018-01-24 cran (@1.2.0)                      
+ yaml            2.1.18     2018-03-08 cran (@2.1.18)                     
