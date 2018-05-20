@@ -2,4 +2,8 @@ language: r
 dist: trusty
 r_packages:
  - devtools
+  - covr
 sudo: required
+
+after_success:
+  - Rscript -e 'library(covr); codecov()'
