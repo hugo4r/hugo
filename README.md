@@ -2,7 +2,9 @@
 
 [![Build Status](https://api.travis-ci.org/hugo4r/hugo.png)](https://travis-ci.org/hugo4r/hugo)
 [![Github Issues](http://githubbadges.herokuapp.com/hugo4r/hugo/issues.svg)](https://github.com/hugo4r/hugo/issues)
-[![Coverage Status](https://coveralls.io/repos/hugo4r/hugo/badge.svg)](https://coveralls.io/r/hugo4r/hugo)
+[![Coverage
+Status](https://img.shields.io/codecov/c/github/hugo4r/hugo/master.svg)](https://codecov.io/github/hugo4r/hugo?branch=master)
+
 
 I'm your personal assistant
 
