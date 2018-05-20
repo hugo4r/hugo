@@ -1,6 +1,6 @@
 #' Starts a New Hugo Investigation
 #'
-#' @param ... name of a directory in which the investigation will be stored
+#' @param path name of a directory in which the investigation will be stored
 #'
 #' @export
 #' @author Przemyslaw Biecek

@@ -1,11 +1,13 @@
 Package: hugo
-Title: What the Package Does (one line, title case)
+Title: I'm your personal assistant! 
 Version: 0.1
-Authors@R: person("First", "Last", email = "first.last@example.com", role = c("aut", "cre"))
-Description: What the package does (one paragraph).
-Depends: R (>= 3.0),
+Authors@R: person("Przemyslaw", "Biecek", email = "przemyslaw.biecek@gmail.com", role = c("aut", "cre"))
+Description: Hugo helps keeping results from data analysis in the right order. 
+    TODO: Add yourself to the list of authors.
+Depends: R (>= 3.0)
+Suggests: testthat,
     devtools
-License: What license is it under?
+License: GPL-3
 Encoding: UTF-8
 LazyData: true
 RoxygenNote: 6.0.1.9000

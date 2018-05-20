@@ -10,3 +10,4 @@ test_that("there is a directory", {
   expect_true("./hugo_test" %in% list.dirs())
 })
 
+unlink("hugo_test", recursive = TRUE)

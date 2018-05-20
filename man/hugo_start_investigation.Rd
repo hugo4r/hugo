@@ -7,7 +7,7 @@
 hugo_start_investigation(path = NULL)
 }
 \arguments{
-\item{...}{name of a directory in which the investigation will be stored}
+\item{path}{name of a directory in which the investigation will be stored}
 }
 \description{
 Starts a New Hugo Investigation
