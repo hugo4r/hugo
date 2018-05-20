@@ -1,5 +1,9 @@
 # hugo
 
+[![Build Status](https://api.travis-ci.org/hugo4r/hugo.png)](https://travis-ci.org/hugo4r/hugo)
+[![Github Issues](http://githubbadges.herokuapp.com/hugo4r/hugo/issues.svg)](https://github.com/hugo4r/hugo/issues)
+[![Coverage Status](https://coveralls.io/repos/hugo4r/hugo/badge.svg)](https://coveralls.io/r/hugo4r/hugo)
+
 I'm your personal assistant
 
 ## About
