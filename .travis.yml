@@ -1,8 +1,14 @@
-language: r
+language: R
+cache: packages
+notifications:
+  email: false
 dist: trusty
+env:
+  global:
+  - R_CHECK_ARGS="--no-build-vignettes --no-manual --timings"
 r_packages:
- - devtools
   - covr
+  - devtools
 sudo: required
 
 after_success:
