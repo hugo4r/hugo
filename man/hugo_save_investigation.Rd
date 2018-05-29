@@ -8,7 +8,7 @@
 hugo_save_investigation()
 }
 \description{
-Saves all important variable and all packages used in project
+Saves all important variables and all packages used in project
 -- There istn't info about packages implemented yet.
 }
 \examples{
