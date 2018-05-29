@@ -11,3 +11,6 @@ test_that("there is a directory", {
 })
 
 unlink("hugo_test", recursive = TRUE)
+
+
+
