@@ -18,5 +18,5 @@ hugo_save_investigation <- function(){
     obj <- paste(ls(envir = globalenv()), collapse = ", ")
     save.image(file=paste0(.hugoEnv$path, "/resources/variables"))
     if(obj!="") cat(paste("following objects are stored: ", obj))
-    else cat("no variables to save")
+    else cat("no variable to save")
 }
