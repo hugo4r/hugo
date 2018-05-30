@@ -7,8 +7,11 @@
 #'
 #' @param data Data.
 #' @param quantile Kwantyl do jakiego obcina skośne zmienne numeryczne
-#' @param prop Frakcja występowania, poniżej której wartość zmiennej katogorycznej jest uznana za rzadką, i łączona z innymi rzadkimi w jeden factor 
+#' @param prop Frakcja występowania, poniżej której wartość zmiennej katogorycznej jest uznana za rzadką, i łączona z innymi rzadkimi w jeden factor
 #'
 #' @author Eliza Kaczorek
 #' @export
 
+hugo_clean_data <- function(data) {
+# to do
+}
