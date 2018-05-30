@@ -1,4 +1,11 @@
+#' Saves an object as: .rda file, .md file and a markdown table as xlsx and docx  
+#' 
+#' @export
+#' @author Maria Piliszek
+#' @example 
+#' hugo_memorise_table()
+#' 
 
-#hugo_memorise_table(table) w katalogu badania w podkatalogu gallery zapamiętywana
-#jest tabela jako obiekt R w formacie rda, razem z plikiem md z tabelą w postaci
-#markdown i tabelą zapisaną w formacie xlsx i docx
+hugo_memorise_table <- function(table){
+  
+}
