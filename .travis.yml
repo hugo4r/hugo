@@ -11,5 +11,12 @@ r_packages:
   - devtools
 sudo: required
 
+addons:
+  apt:
+    sources:
+      - sourceline: 'ppa:chris-lea/libsodium'
+    packages:
+      - libsodium-dev
+
 after_success:
   - Rscript -e 'library(covr); codecov()'
