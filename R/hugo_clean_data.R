@@ -5,7 +5,7 @@
 #' 3. spłaszcza zmienne factorowe
 #' Funkcja zapisuje do katalogu data zbiór z wyczyszczonymi danymi i informuje o tym użytkownika.
 #'
-#' @param data Data that will be cleaned.
+#' @param data Data.
 #' @param quantile Kwantyl do jakiego obcina skośne zmienne numeryczne
 #' @param prop Frakcja występowania, poniżej której wartość zmiennej katogorycznej jest uznana za rzadką, i łączona z innymi rzadkimi w jeden factor 
 #'
