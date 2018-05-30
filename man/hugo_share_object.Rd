@@ -17,5 +17,5 @@ Share any object using github
 hugo_share_object(iris)
 }
 \author{
-Mateusz Krubiński
+MatKru (Mateusz Krubiński)
 }

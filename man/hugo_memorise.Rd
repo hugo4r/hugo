@@ -12,10 +12,6 @@ hugo_memorise(obj)
 \description{
 Saves an object as .rda file
 }
-\examples{
-hugo_memorise()
-
-}
 \author{
 Anna Gierlak
 }

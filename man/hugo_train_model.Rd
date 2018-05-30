@@ -6,6 +6,11 @@
 \usage{
 hugo_train_model(data, formula)
 }
+\arguments{
+\item{data}{data to train and test model}
+
+\item{formula}{formula for model}
+}
 \description{
 Starts a New Hugo Investigation
 }

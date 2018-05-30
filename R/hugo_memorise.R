@@ -4,8 +4,6 @@
 #'
 #' @export
 #' @author Anna Gierlak
-#' @examples
-#' hugo_memorise()
 #'
 hugo_memorise <- function(obj) {
   #path <- 'C:/Users/Ania/Desktop/R dla zaawansowanych/projekt3/memory/'
@@ -28,13 +26,11 @@ hugo_memorise <- function(obj) {
     }
   }
   
-  obj_var <- setNames(as.list(obj), deparse(substitute(obj)))
+  obj_var <- stats::setNames(as.list(obj), deparse(substitute(obj)))
   save(list = names(obj_var), file = file_name, envir = as.environment(obj_var))
 
   cat('Copy of the \"', deparse(substitute(obj)), '\" object is stored in ', path, '.\n', sep = '')
 
 }
-
-
 
 

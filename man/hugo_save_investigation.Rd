@@ -2,7 +2,7 @@
 % Please edit documentation in R/hugo_save_investigation.R
 \name{hugo_save_investigation}
 \alias{hugo_save_investigation}
-\title{Saves all important variable and all packages used in project
+\title{Saves all important variables and all packages used in project
 -- There istn't info about packages implemented yet.}
 \usage{
 hugo_save_investigation()
