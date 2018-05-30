@@ -4,7 +4,7 @@
 #' @param name
 #'
 #' @export
-#' @author Joanna Golawska
+#' @author Joanna Golawska golawskaj
 #' @examples hugo_memorise_plot()
 #' 
 #'
