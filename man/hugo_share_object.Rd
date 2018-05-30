@@ -4,12 +4,10 @@
 \alias{hugo_share_object}
 \title{Share any object using github}
 \usage{
-hugo_share_object(object, passphrase = NULL)
+hugo_share_object(object)
 }
 \arguments{
 \item{object}{object to share}
-
-\item{passphrase}{object will be encrypted using provided passphrase}
 }
 \description{
 Share any object using github
@@ -19,5 +17,5 @@ Share any object using github
 hugo_share_object(iris)
 }
 \author{
-Mateusz Krubiński, Kamil Romaszko
+Mateusz Krubiński
 }
