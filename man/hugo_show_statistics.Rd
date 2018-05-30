@@ -7,13 +7,12 @@
 hugo_show_statistics()
 }
 \description{
-hugo_show_statistics() returns list, which consist of beginning of current research as creationDate,
-number of saved objects as objects, number of loaded data sets as dataSets
+hugo_show_statistics() returns list, which consist of beginning of current research as creationDate, 
+number of saved objects as objects, number of loaded data sets as dataSets 
 and number of instructions as instructions.
 }
 \examples{
-hugo_show_statistics()
-
+hugo_show_statistics() 
 
 }
 \author{
