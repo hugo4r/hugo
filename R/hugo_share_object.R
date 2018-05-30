@@ -3,7 +3,7 @@
 #' @param object object to share
 #'
 #' @export
-#' @author Mateusz Krubiński
+#' @author MatKru (Mateusz Krubiński)
 #' @examples
 #' # TODO add some examples
 #' hugo_share_object(iris)
