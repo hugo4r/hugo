@@ -1,5 +1,7 @@
 #' Starts a New Hugo Investigation
 #'
+#' @param data data to train and test model
+#' @param formula formula for model
 #'
 #' @export
 #' @author Anna Kozak
