@@ -1,0 +1,4 @@
+
+#hugo_memorise_table(table) w katalogu badania w podkatalogu gallery zapamiętywana
+#jest tabela jako obiekt R w formacie rda, razem z plikiem md z tabelą w postaci
+#markdown i tabelą zapisaną w formacie xlsx i docx

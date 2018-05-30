@@ -10,6 +10,6 @@
 #' hugo_show_statistics() 
 #'
 
-hugo_show_statistics <- function(path){
+hugo_show_statistics <- function(){
   
 }
