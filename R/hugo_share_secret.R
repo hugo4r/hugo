@@ -8,7 +8,6 @@
 #' @examples
 #' hugo_share_secret(iris, "secret")
 hugo_share_secret <- function(object, passphrase) {
-
   if (!requireNamespace("sodium", quietly = TRUE)) {
     stop("Package \"sodium\" needed for this function to work.
           Install it if you really want encryption or use hugo_share_object.",
