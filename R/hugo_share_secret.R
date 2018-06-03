@@ -11,7 +11,7 @@ hugo_share_secret <- function(object, passphrase) {
 
   if (!requireNamespace("sodium", quietly = TRUE)) {
     stop("Package \"sodium\" needed for this function to work.
-          Install it if you really want ecryption or use hugo_share_object.",
+          Install it if you really want encryption or use hugo_share_object.",
          call. = FALSE)
   }
   object <- encrypt_object(object, passphrase)
