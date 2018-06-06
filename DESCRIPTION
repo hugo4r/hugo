@@ -1,7 +1,7 @@
 Package: hugo
 Title: I'm your personal assistant! 
 Version: 0.1
-Authors@R: c(person("Przemyslaw", "Biecek", email = "przemyslaw.biecek@gmail.com", role = c("aut", "cre")), person("Kamil", "Romaszko", email = "kamil.romaszko@gmail.com", role = c("aut")), person("Dariusz", "Komosinski", email = "komosinskid@student.mini.pw.edu.pl", role = c("aut")), person("Mateusz", "Krubinski", email = "matkruit@gmail.com", role = c("aut")))
+Authors@R: c(person("Przemyslaw", "Biecek", email = "przemyslaw.biecek@gmail.com", role = c("aut", "cre")), person("Kamil", "Romaszko", email = "kamil.romaszko@gmail.com", role = c("aut")), person("Dariusz", "Komosinski", email = "komosinskid@student.mini.pw.edu.pl", role = c("aut")), person("Mateusz", "Krubinski", email = "matkruit@gmail.com", role = c("aut")),person("Maciej", "Kurek", email = "maciej.kurek94@gmail.com", role = c("aut")))
 Description: Hugo helps keeping results from data analysis in the right order. 
     TODO: Add yourself to the list of authors.
 Depends: R (>= 3.0)
@@ -11,5 +11,6 @@ Suggests: testthat,
     sodium
 License: GPL-3
 Encoding: UTF-8
+Imports: stringr
 LazyData: true
 RoxygenNote: 6.0.1.9000
