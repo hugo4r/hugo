@@ -1,4 +1,4 @@
-export(hugo_save_investigation)
+
 export(hugo_share_object)
 export(hugo_share_secret)
 export(hugo_show_history)
