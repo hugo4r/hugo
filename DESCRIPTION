@@ -11,6 +11,7 @@ Suggests: testthat,
     sodium
 License: GPL-3
 Encoding: UTF-8
-Imports: stringr
+Imports: stringr,
+    utils
 LazyData: true
 RoxygenNote: 6.0.1.9000
