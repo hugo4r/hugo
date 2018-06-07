@@ -2,4 +2,5 @@
 
 export(hugo_share_object)
 export(hugo_share_secret)
+export(hugo_show_history)
 export(hugo_start_investigation)
