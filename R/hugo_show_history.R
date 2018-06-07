@@ -5,8 +5,6 @@
 #' 
 #' @export
 #' @author Maciej Kurek
-#' @examples
-
 
 hugo_show_history<-function(){
   
