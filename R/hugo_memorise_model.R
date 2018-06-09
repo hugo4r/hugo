@@ -9,14 +9,14 @@
 #' @export
 #' @author Malgosia Lazecka
 #' @examples
-#' mod.lm <- lm(Sepal.Length ~ Petal.Length, data = iris)
+#' \dontrun{mod.lm <- lm(Sepal.Length ~ Petal.Length, data = iris)
 #' hugo_memorise_model(mod.lm, name = "model.iris")
 #' # Or save as "mod.lm":
-#' hugo_memorise_model(mod.lm)
+#' hugo_memorise_model(mod.lm)}
 
 hugo_memorise_model <- function(model = NULL, name = substitute(model)) {
 
-  add_to_history("hugo_memorise_model")
+  # add_to_history("hugo_memorise_model")
 
   if (is.null(model)) {
     stop("There is no model to be saved.")
