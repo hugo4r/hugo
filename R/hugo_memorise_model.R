@@ -18,9 +18,9 @@ hugo_memorise_model <- function(model = NULL, name = substitute(model)) {
 
   # add_to_history("hugo_memorise_model")
 
-  # if (is.null(model)) {
-  #   stop("There is no model to be saved.")
-  # }
+  if (is.null(model)) {
+    stop("There is no model to be saved.")
+  }
   #
   # if (!requireNamespace("broom", quietly = TRUE)) {
   #   stop("Package \"broom\" needed for this function to work.
