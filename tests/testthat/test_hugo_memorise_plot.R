@@ -72,4 +72,11 @@ test_that("object without name on input are saved with next numbers",{
   expect_true(numb_of_plots[1] == numb_of_plots[2] + 1)
 })
 
+test_that("Next numbers when more then 9 plots in folder",{
+  hugo_memorise_plot(plot(1:10), "plot10")
+  hugo_memorise_plot(plot(1:10))
+  numb_of_plots <- substr(list.files("./hugo_test/gallery", pattern = "(plot)"), start = 5L, stop = 6L)
+  expect_true(max(unique(as.numeric(numb_of_plots)[!is.na(as.numeric(numb_of_plots))])) == 11)
+ })
+
 unlink("hugo_test", recursive = TRUE)
