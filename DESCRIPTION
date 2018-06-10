@@ -20,6 +20,8 @@ Suggests: testthat,
 License: GPL-3
 Encoding: UTF-8
 Imports: readr,
+    RCurl,
+    xlsx,
     rjson,
     stringr,
     utils,
