@@ -13,6 +13,7 @@ setDefaultHugoEnv <- function() {
   setDefaultHugoEnv()
 }
 
+.hugoEnv$history<-"empty"
 
 ## no S4 methodology here; speedup :
 .noGenerics <- TRUE
