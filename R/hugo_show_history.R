@@ -11,12 +11,11 @@ hugo_show_history<-function(){
   add_to_history("hugo_show_history")
   
   cat("This is your hugoing history: \n \n")
-  for ( i in 1:length(hugo_history))
+  for ( i in 1:length(.hugoEnv$history))
   {
-    cat(paste0(i,") ",hugo_history[i]),"\n")
+    cat(paste0(i,") ",.hugoEnv$history[i]),"\n")
   }
 }
-
 
 add_to_history<-function(function_name){
   savehistory()
@@ -29,8 +28,9 @@ add_to_history<-function(function_name){
   
   text<-paste(hist[max(index):length(hist)],collapse = "")
   
-  if(exists("hugo_history")) hugo_history[length(hugo_history)+1]<<-text
-  if(!exists("hugo_history")) hugo_history<<-text
+  if(.hugoEnv$history[1]!="empty") .hugoEnv$history[length(.hugoEnv$history)+1]<-text
+  if(.hugoEnv$history[1]=="empty") .hugoEnv$history[1]<-text
 }
+
 
 
