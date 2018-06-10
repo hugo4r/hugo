@@ -16,10 +16,10 @@ Saves a model in the directory chosen at the beginning of the current
 Hugo Investigation in the subfolder 'gallery' in .rda file and a summary in .md file
 }
 \examples{
-mod.lm <- lm(Sepal.Length ~ Petal.Length, data = iris)
+\dontrun{mod.lm <- lm(Sepal.Length ~ Petal.Length, data = iris)
 hugo_memorise_model(mod.lm, name = "model.iris")
 # Or save as "mod.lm":
-hugo_memorise_model(mod.lm)
+hugo_memorise_model(mod.lm)}
 }
 \author{
 Malgosia Lazecka
