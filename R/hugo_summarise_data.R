@@ -1,12 +1,35 @@
-#' Title
+#' Create report with variables summary in dataset
 #'
-#' @param data
-#' @param earlier_settings
-#' @param output
-#' @param mode
-#' @param report_title
+#' Creates  the report 'html' or 'pdf' in the directory chosen at the beginning of the current
+#' Hugo Investigation in the subfolder 'gallery' in .rda file and a summary in .md file.
+#' Make a data overview report that summarizes the contents of a dataset
+#' and flags potential problems. The potential problems are identified by
+#' running a set of class-specific validation checks, so that different
+#' checks are performed on different variables types.
 #'
-#' @return
+#' @param data The dataset to be summarised. This dataset should be of class \code{data.frame},
+#' \code{tibble} or \code{matrix}. If it is of classs \code{matrix}, it will be converted to a
+#' \code{data.frame}.
+#' @param earlier_settings A logical. If \code{TRUE} (the default) and this function was used in investigation, saved parameters will be used.
+#' Parameters given by user are overwrite by saved arguments.
+#' @param output Output format. Options are \code{"pdf"}, \code{"word"} (.docx) and \code{"html"}. This parameters If \code{NULL} (the default),
+#' the output format depends two sequential checks. First, whether a LaTeX installation is available,
+#' in which case \code{pdf} output is chosen. Secondly, if no LaTeX installation
+#' is found, then if the operating system is Windows, \code{word} output is used. Lastly, if neither of these
+#' checks are positive, \code{html} output is used.
+#' @param mode Vector of tasks to perform among the three categories "summarize", "visualize" and "check".
+#' The default, \code{c("summarize", "visualize", "check")}, implies that all three steps are
+#' performed. The steps selected in \code{mode} will be performed for each variable in
+#' \code{data} and their results are presented in the second part of the outputtet data report.
+#' The "summarize" step is responsible for creating the summary table,
+#' the "visualize" step is responsible for creating the plot and the "check" step is responsible
+#' for performing checks on the variable and printing the results if any problems are found.
+#' @param report_title A text string. If supplied, this will be the printed title of the
+#' report. If left unspecified, the title with the name of the supplied dataset.
+#'
+#' @return The function does not return anything. Its side effect (the production
+#' of a data report) is the reason for running the function.
+#' @importFrom dataMaid makeDataReport
 #' @export
 #'
 #' @examples
