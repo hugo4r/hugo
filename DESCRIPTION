@@ -25,6 +25,8 @@ Imports: readr,
     stringr,
     utils,
     ggplot2,
-    broom
+    broom,
+    xlsx,
+    RCurl
 LazyData: true
 RoxygenNote: 6.0.1.9000
