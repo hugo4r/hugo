@@ -17,7 +17,9 @@ Suggests: testthat,
     sodium
 License: GPL-3
 Encoding: UTF-8
-Imports: stringr,
+Imports: readr,
+    rjson,
+    stringr,
     utils,
     ggplot2
 LazyData: true
