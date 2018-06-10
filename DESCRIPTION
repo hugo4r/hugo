@@ -13,6 +13,7 @@ License: GPL-3
 Encoding: UTF-8
 Imports: stringr,
     utils,
-    ggplot2
+    ggplot2,
+    dataMaid
 LazyData: true
 RoxygenNote: 6.0.1.9000
