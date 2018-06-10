@@ -18,8 +18,12 @@ hugo_memorise_model <- function(model = NULL, name = substitute(model)) {
 
   # add_to_history("hugo_memorise_model")
 
+  if (!file.exists(.hugoEnv$path)) {
+    stop('Call hugo_start_investigation() for starting the new investigation.')
+  }
+
   if (is.null(model)) {
-    stop("There is no model to be saved.")
+    stop("There is no model to be saved.", call.=FALSE)
   }
 
   path <- paste0(.hugoEnv$path, "/gallery")
@@ -40,11 +44,11 @@ hugo_memorise_model <- function(model = NULL, name = substitute(model)) {
     rfile <- file(paste0(path, "/", name, ".md"), open="wt")
     sink(rfile, type="output")
     cat("Test results:", "\n")
-    # print(broom::tidy(model))
+    print(broom::tidy(model))
     cat("\n", "Augment data:", "\n")
-    # print(broom::augment(model))
+    print(broom::augment(model))
     cat("\n", "Single row summary:", "\n")
-    # print(broom::glance(model))
+    print(broom::glance(model))
   }, warning = function(w) {
     warning("From package \"broom\" while creating a summary: ", w)
   }, error = function(e) {
