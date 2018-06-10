@@ -20,11 +20,10 @@ Suggests: testthat,
 License: GPL-3
 Encoding: UTF-8
 Imports: readr,
-    RCurl,
-    xlsx,
     rjson,
     stringr,
     utils,
-    ggplot2
+    ggplot2,
+    broom
 LazyData: true
 RoxygenNote: 6.0.1.9000
