@@ -34,7 +34,7 @@
 #' }
 hugo_memorise_plot <- function(plot = NA, name = NULL){
 
-  add_to_history("hugo_memorise_plot")
+  #add_to_history("hugo_memorise_plot")
 
   if (!is.null(plot) & !ggplot2::is.ggplot(plot)){
     stop("Object to save is not a plot", call. = FALSE)
@@ -58,8 +58,9 @@ hugo_memorise_plot <- function(plot = NA, name = NULL){
     name <- paste0("plot", number + 1)
     }
   }}
-
-  if(ggplot2::is.ggplot(plot)){
+  
+tryCatch(
+  { if(ggplot2::is.ggplot(plot)){
     save(plot, file = paste0(path, "/", name, ".rda"))
     ggplot2::ggsave(filename = paste0(path, "/", name, ".pdf"), plot = plot, device = "pdf")
     ggplot2::ggsave(filename = paste0(path, "/", name, ".png"), plot = plot, device = "png")
@@ -77,7 +78,13 @@ hugo_memorise_plot <- function(plot = NA, name = NULL){
     grDevices::png(paste0(path, "/", name, ".png"))
     grDevices::replayPlot(recorded_plot)
     grDevices::dev.off()
-  }
+  }},
+  warning = function(w) {
+    warning("There are warnings while saving plot: ", w)
+  }, error = function(e) {
+    e$message <- paste0("There are errors while saving plot: ", e)
+    stop(e)
+  })
 
   cat("Your plot ", name, " has been saved in ", path, "\n")
 
