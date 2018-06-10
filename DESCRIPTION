@@ -8,7 +8,8 @@ Authors@R: c(person("Przemyslaw", "Biecek", email = "przemyslaw.biecek@gmail.com
     person("Maciej", "Kurek", email = "maciej.kurek94@gmail.com", role = c("aut")),
     person("Monika", "Chudek", email = "monika.chudek1@gmail.com", role = c("aut")),
     person("Anna", "Gierlak", email = "gierlaka@student.mini.pw.edu.pl", role = c("aut")),
-    person("Eliza", "Kaczorek", email = "elizakaczorek94@gmail.com", role = c("aut")))
+    person("Eliza", "Kaczorek", email = "elizakaczorek94@gmail.com", role = c("aut")),
+    person("Joanna", "Golawska", email = "j.k.golawska@gmail.com", role = c("aut")))
 Description: Hugo helps keeping results from data analysis in the right order.
     TODO: Add yourself to the list of authors.
 Depends: R (>= 3.0)
