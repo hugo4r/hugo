@@ -23,10 +23,10 @@ test_that("plot created with more then one function from package graphics is cor
     abline(a = 1, b = 1)}))
 })
 
-#test_that("function without returning value", {
-#  expect_null(hugo_memorise_plot(plot(1:10)))
-#})
-#
+test_that("function without returning value", {
+  expect_null(hugo_memorise_plot(plot(1:10)))
+})
+
 #test_that("plot created with package ggplot2 is correctly saved with name in input", {
 #  df <- data.frame(gp = factor(rep(letters[1:3], each = 10)),y = rnorm(30))
 #  require(ggplot2)
