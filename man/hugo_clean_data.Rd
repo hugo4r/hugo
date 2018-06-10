@@ -20,6 +20,7 @@ Additionally, the outliers from numeric variables are replaced according to the 
 In factors rare levels are merged into 'Other' level.
 }
 \examples{
+\dontrun{
 # Dataset in base R: airquality
 # There are 44 missing values
 sum(is.na(airquality))
@@ -42,6 +43,7 @@ hugo_clean_data(airquality)
 # We can see that the outlier in 'Wind' was
 # replaced by the value Q3+1.5*IGR for this column.
 # Missing values were replaced with medians.
+}
 
 }
 \author{
