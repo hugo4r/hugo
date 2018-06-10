@@ -21,6 +21,8 @@ in which case \code{pdf} output is chosen. Secondly, if no LaTeX installation
 is found, then if the operating system is Windows, \code{word} output is used. Lastly, if neither of these
 checks are positive, \code{html} output is used.}
 
+\item{replace}{akjs}
+
 \item{mode}{Vector of tasks to perform among the three categories "summarize", "visualize" and "check".
 The default, \code{c("summarize", "visualize", "check")}, implies that all three steps are
 performed. The steps selected in \code{mode} will be performed for each variable in
@@ -39,7 +41,7 @@ of a data report) is the reason for running the function.
 \description{
 Creates  the report 'html' or 'pdf' in the directory chosen at the beginning of the current
 Hugo Investigation in the subfolder 'gallery' in .rda file and a summary in .md file.
-Make a data overview report that summarizes the contents of a dataset
+This reports summarizes the contents of a dataset
 and flags potential problems. The potential problems are identified by
 running a set of class-specific validation checks, so that different
 checks are performed on different variables types.
