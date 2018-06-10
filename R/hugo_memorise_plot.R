@@ -45,6 +45,8 @@ hugo_memorise_plot <- function(plot = NA, name = NULL){
           Install it first.",
          call. = FALSE)
   }
+  
+  loadNamespace("ggplot2")
 
   path <- paste0(.hugoEnv$path, "/gallery")
 
