@@ -1,6 +1,7 @@
 #' Dispays history of hugo investigation.
 #'
-#' Each usage of any hugo function adds an entry about it to a global variable called hugo_history, and the very first usage creates it.
+#' Each usage of any hugo function adds an entry about it to a hidden variable in hugo environment 
+#' which contains the whole history of your investigation.
 #' hugo_show_history(), displays all the entries with additions of paths to files created by functions hugo_memorize*.
 #' 
 #' @export
@@ -32,5 +33,15 @@ add_to_history<-function(function_name){
   if(.hugoEnv$history[1]=="empty") .hugoEnv$history[1]<-text
 }
 
+add_path_to_history<-function(path){
+  path<-paste0(getwd(),"/",path)
+  n<-length(.hugoEnv$history)
 
-
+  if(grepl("\n Saved files: \n", .hugoEnv$history[n])){
+    .hugoEnv$history[n]<-paste0(.hugoEnv$history[n],"\n",path)
+  }
+  
+  if(!grepl("\n Saved files: \n", .hugoEnv$history[n])){
+    .hugoEnv$history[n]<-paste0(.hugoEnv$history[n],"\n Saved files: \n",path)
+  } 
+}
