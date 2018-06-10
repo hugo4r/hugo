@@ -41,17 +41,17 @@ test_that("function without returning value", {
 #  df <- data.frame(gp = factor(rep(letters[1:3], each = 10)),y = rnorm(30))
 #  expect_output(hugo_memorise_plot(ggplot(df, aes(gp, y)) + geom_point(), "test_name2"))
 #})
-#
-#
-#test_that("directory was created", {
-#  expect_true("./hugo_test/gallery" %in% list.dirs())
-#})
-#
-#test_that("object saved as .rda",{
-#  hugo_memorise_plot(plot(1:10), "testrda")
-#  expect_true("testrda.rda" %in% list.files("./hugo_test/gallery"))
-#})
-#
+
+
+test_that("directory was created", {
+  expect_true("./hugo_test/gallery" %in% list.dirs())
+})
+
+test_that("object saved as .rda",{
+  hugo_memorise_plot(plot(1:10), "testrda")
+  expect_true("testrda.rda" %in% list.files("./hugo_test/gallery"))
+})
+
 #test_that("object saved as pdf",{
 #  hugo_memorise_plot(plot(1:10), "testpdf")
 #  expect_true("testpdf.pdf" %in% list.files("./hugo_test/gallery"))
@@ -62,11 +62,11 @@ test_that("function without returning value", {
 #  expect_true("testpng.png" %in% list.files("./hugo_test/gallery"))
 #})
 #
-#test_that("object without name is saved",{
-#  hugo_memorise_plot(plot(1:10))
-#  expect_false(length(list.files("./hugo_test/gallery", pattern = "(plot)")) == 0)
-#})
-#
+test_that("object without name is saved",{
+  hugo_memorise_plot(plot(1:10))
+  expect_false(length(list.files("./hugo_test/gallery", pattern = "(plot)")) == 0)
+})
+
 #test_that("object without name on input are saved with next numbers",{
 #  hugo_memorise_plot(plot(1:5))
 #  hugo_memorise_plot(plot(1:10, type = "l"))
