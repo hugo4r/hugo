@@ -18,12 +18,11 @@ test_that("plot created with package graphics is correctly saved without name in
   expect_output(hugo_memorise_plot(plot(1:10)))
 })
 
-#test_that("plot created with more then one function from package graphics is correctly saved", {
-#  expect_output(hugo_memorise_plot({plot(1:10)
-#    abline(a = 1, b = 1)}))
-#})
-#
-#
+test_that("plot created with more then one function from package graphics is correctly saved", {
+  expect_output(hugo_memorise_plot({plot(1:10)
+    abline(a = 1, b = 1)}))
+})
+
 #test_that("function without returning value", {
 #  expect_null(hugo_memorise_plot(plot(1:10)))
 #})
