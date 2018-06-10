@@ -46,7 +46,7 @@ test_that("Csv file loaded correctly.",{
   data <- hugo_read_data(path="example3.csv")
   expect_equal(dim(data), c(500,12))
   expect_true("data.frame" %in% class(data))
-  
+
   data2 <- hugo_read_data(path="example2.csv")
   expect_equal(dim(data2), c(985,12))
   expect_true("data.frame" %in% class(data2))
@@ -56,7 +56,7 @@ test_that("Txt file loaded correctly.",{
   data <- hugo_read_data(path="example.txt")
   expect_equal(dim(data), c(35,44))
   expect_true("data.frame" %in% class(data))
-  
+
   data2 <- hugo_read_data(path="example2.txt")
   expect_equal(dim(data2), c(14690,3))
   expect_true("data.frame" %in% class(data2))
@@ -66,10 +66,15 @@ test_that("Xls and xlsx files loaded correctly.",{
   data <- hugo_read_data(path="example.xls")
   expect_equal(dim(data), c(100,8))
   expect_true("data.frame" %in% class(data))
-  
+
   data2 <- hugo_read_data(path="example.xlsx")
   expect_equal(dim(data2), c(100,8))
   expect_true("data.frame" %in% class(data2))
+})
+
+test_that("Fancy separator % causes error.",{
+  expect_error(hugo_read_data("fancy_separator.csv"))
+  expect_error(hugo_read_data("fancy_separator.txt"))
 })
 
 test_that("Providing own parameters was successfull.",{
