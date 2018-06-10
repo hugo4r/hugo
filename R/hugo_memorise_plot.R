@@ -39,12 +39,6 @@ hugo_memorise_plot <- function(plot = NA, name = NULL){
   if (!is.null(plot) & !ggplot2::is.ggplot(plot)){
     stop("Object to save is not a plot", call. = FALSE)
   }
-
-  if (!requireNamespace("ggplot2", quietly = TRUE)) {
-    stop("Package \"ggplot2\" needed for this function to work.
-          Install it first.",
-         call. = FALSE)
-  }
   
   loadNamespace("ggplot2")
 
