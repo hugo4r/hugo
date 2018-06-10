@@ -7,9 +7,11 @@
 hugo_show_history()
 }
 \description{
-Each usage of any hugo function adds an entry about it to a global variable called hugo_history, and the very first usage creates it.
+Each usage of any hugo function adds an entry about it to a hidden variable in hugo environment 
+which contains the whole history of your investigation.
 hugo_show_history(), displays all the entries with additions of paths to files created by functions hugo_memorize*.
 }
 \author{
 Maciej Kurek
 }
+
