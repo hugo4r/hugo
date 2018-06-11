@@ -1,4 +1,4 @@
-context("Check hugo_share_object() function")
+context("Check hugo_share_object() and hugo_get_object() functions")
 
 
 test_that('properly loads object from example 1',{
