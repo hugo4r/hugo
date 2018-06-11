@@ -20,9 +20,9 @@ hugo_show_history<-function(){
 
 add_to_history<-function(function_name){
   
-   savehistory()
-   hist<-readLines(".Rhistory")
-   file.remove(".Rhistory")
+  utils::savehistory("histor.txt")
+  hist<-readLines("histor.txt")
+  file.remove("histor.txt")
   
   pat<-paste(function_name,"\\(",sep="")
   index<-which(grepl(pat,hist[]))
