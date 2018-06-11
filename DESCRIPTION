@@ -9,7 +9,8 @@ Authors@R: c(person("Przemyslaw", "Biecek", email = "przemyslaw.biecek@gmail.com
     person("Monika", "Chudek", email = "monika.chudek1@gmail.com", role = c("aut")),
     person("Anna", "Gierlak", email = "gierlaka@student.mini.pw.edu.pl", role = c("aut")),
     person("Eliza", "Kaczorek", email = "elizakaczorek94@gmail.com", role = c("aut")),
-    person("Joanna", "Golawska", email = "j.k.golawska@gmail.com", role = c("aut")))
+    person("Joanna", "Golawska", email = "j.k.golawska@gmail.com", role = c("aut")),
+    person("Anna", "Kozak", email = "kozaka@student.mini.pw.edu.pl", role = c("aut")))
 Description: Hugo helps keeping results from data analysis in the right order.
     TODO: Add yourself to the list of authors.
 Depends: R (>= 3.0)
@@ -29,6 +30,8 @@ Imports: readr,
     ggplot2,
     broom,
     xlsx,
-    RCurl
+    RCurl,
+    caret,
+    mlbench
 LazyData: true
 RoxygenNote: 6.0.1.9000
