@@ -19,7 +19,7 @@
 #' }
 hugo_memorise <- function(object = NULL) {
 
-  add_to_history('hugo_memorise')
+  .hugoEnv$history[length(.hugoEnv$history)+1]<-deparse(match.call())
 
   if (!file.exists(.hugoEnv$path)) {
     stop('Call hugo_start_investigation() for starting the new investigation.')
