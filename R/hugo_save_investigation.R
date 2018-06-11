@@ -1,12 +1,15 @@
-#' Save variables and information about packages
+#' Save investigation info
 #'
-#' @description hugo_save_investigation writes variables and packages used in session.
-#' Written data can be read back at later date by using function hugo_continue_investigation.
+#' @description hugo_save_investigation saves variables and packages used in investigation.
+#' Data is stored in subfolder 'resources/{session_name}' in two separate files: _variables_ and _packages_
+#' Written data can be read back at later date by using function _hugo_continue_investigation_.
 #'
 #' @param session_name name of directory in which the session will be saved.
 #' If session_name = NULL, the dafault name is set.
-#' @param variables A character vector containing the names of objects to be saved.
-#' If variables = NULL, all variables in Global Environment are saved.
+#' @param variables a character vector containing names of important variables to be saved.
+#' By default _variables = NULL_, then all the variables in environment _envir_ are saved.
+#'
+#' @param envir an environment to search for objects to be saved. Global Environment by default.
 #'
 #' @export
 #' @author Monika Chudek
@@ -16,52 +19,58 @@
 #' res <- model$residuals
 #' petal.pred <- predict(model, newdata = iris)
 #' hugo_save_investigation()
-#' # Or select variables to be written out and set name of session's directory:
-#' hugo_save_investigation( variables = c('petal.pred', 'res'), session_name = 'IrisModel')}
+#' # or select variables to be written out and set name of session's directory:
+#' hugo_save_investigation( variables = c('petal.pred', 'res'), session_name = 'IrisModel')
+#' # or select the environment that contains variables for saving
+#' e <- new.env()
+#' e$a <- FALSE
+#' e$b <- "a"
+#' expect_output(hugo_save_investigation(envir = e))
+#' }
 
-hugo_save_investigation <- function( variables = NULL, session_name = NULL){
+hugo_save_investigation <- function( variables = NULL, session_name = NULL, envir = .GlobalEnv){
 
-  add_to_history("hugo_save_investigation")
-
-  if (!file.exists(.hugoEnv$path))
-    stop('Call hugo_start_investigation() for statring the new investigation')# if hugo folder was not initiallized
-
-
-  if(length(variables) != 0){     # if user entered variables
-    obj <- variables[!variables %in% ls(envir = globalenv())] # chceck if all of them are in global env
-    if(length(obj) != 0)
-      stop( paste('Following varables are not defined:', paste(obj, collapse = ", ")))
-    obj <- variables
-  } else{
-    obj <- ls(envir = globalenv())
+  #add_to_history("hugo_save_investigation")
+  if (!file.exists(.hugoEnv$path)) {                                # if investigation wasn't called
+    ans <- readline(cat("hugo_start_investigation() wasn't called.\n Enter investigation's path or 0 to continue with default path parameter."))
+    if(ans == "0") hugo_start_investigation()
+    else hugo_start_investigation(ans)
   }
 
-  if (length(obj) == 0)
-    stop('No variables to save.')
+  if(length(variables) != 0) {                                                          # if user entered variables
+    obj <- variables[!variables %in% ls(envir = envir)]                                 # chceck if all of them are in global env
+    if(length(obj) != 0)                                                                # if variables are not defined in env
+      stop( paste('Following varables are not defined:', paste(obj, collapse = ", ")))
+    obj <- variables
+  } else {
+    obj <- ls(envir = envir)
+  }
+
+  if (length(obj) == 0)  warning("No variables to save.")                               # stop('No variables to save.')
 
   resources.path <- paste0(.hugoEnv$path, "/resources")
   if(!file.exists(paste0(.hugoEnv$path, "/resources")))   dir.create(resources.path)    # create resourecs dir if it wasnt created yet
 
   saved_sessions <- list.files(resources.path)  # list saved sessions
-  if (is.null(session_name)) session_name = paste0("session", length(saved_sessions)) # set session name
+  if (is.null(session_name)) session_name = paste0("session", length(saved_sessions))   # set session name
 
-  ans <- 1
-  while(session_name %in% saved_sessions & ans != 0 ) {
-    ans <- readline(cat('Session ', session_name, " already exists. Please, enter other name or press 0 to overwrite the file" ))
-    if(ans != 0 ) session_name <- ans
+  answ <- 1
+  while(session_name %in% saved_sessions & answ != "0" ) {
+    answ <- readline(cat('Session ', session_name, " already exists. Please, enter other name or press 0 to overwrite the file" ))
+    if(answ != 0 ) session_name <- answ
   }
 
-  resources.path <- paste0(resources.path, "/", session_name)  # path to session
-  dir.create(resources.path)        # create session dir
+  resources.path <- paste0(resources.path, "/", session_name)                          # path to session
+  dir.create(resources.path)                                                           # create session dir
 
-  save( list = obj, file = paste0(resources.path, "/variables"), ascii = FALSE, overwrite = T) # save variables
+  save( list = obj, file = paste0(resources.path, "/variables"), ascii = FALSE, envir = envir) # save variables
 
-
-  sfile <- file(paste0(resources.path, "/packages"), open="wt")                 # save packages
+  sfile <- file(paste0(resources.path, "/packages"), open="wt")                        # save packages
   sink(sfile)
-  devtools::session_info()
+  sink(sfile, type = "message")
+  print(devtools::session_info())
+  sink(type = "message")
   sink()
 
-  cat(session_name, " succesfully saved.")
-  closeAllConnections()
+  cat(session_name, " succesfully saved.\n")
 }
