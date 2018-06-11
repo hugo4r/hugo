@@ -8,7 +8,7 @@ hugo_read_data(path, file_extension = NA, header = NA, separator = NA,
   decimal = NA, file_name_to_save = NULL)
 }
 \arguments{
-\item{path}{the name of the path which the data are to be read from. Each row of the table appears as one line of the file. If it does not contain an absolute path, the path name is relative to the current working directory, getwd(). path can also be a complete URL.}
+\item{path}{the name of the path which the data are to be read from. Each row of the table appears as one line of the file. If it does not contain an absolute path, the path name is relative to the current working directory, \code{getwd()}. path can also be a complete URL.}
 
 \item{file_extension}{the type of file which is loaded. Usually don't needed, because Hugo guesses it.}
 

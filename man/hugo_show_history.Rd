@@ -14,4 +14,3 @@ hugo_show_history(), displays all the entries with additions of paths to files c
 \author{
 Maciej Kurek
 }
-
