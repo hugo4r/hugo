@@ -20,7 +20,7 @@ hugo_show_history<-function(){
 
 add_to_history<-function(function_name){
   
-  utils::savehistory("histor.txt")
+  savehistory("histor.txt")
   hist<-readLines("histor.txt")
   file.remove("histor.txt")
   
