@@ -33,7 +33,8 @@
 <meta property="og:title" content="Reads data to R — hugo_read_data" />
 
 <meta property="og:description" content="Function unifies most common reading data functions. It guesses the file extenstion and fits best function to load.
-Usually knowing types of parameters as: separator, decimal, header is not necessary, but function allows to put them by hand." />
+Usually knowing types of parameters as: separator, decimal, header is not necessary, but function allows to put them by hand.
+Supported extensions: &quot;txt&quot;, &quot;csv&quot;, &quot;xls&quot;, &quot;xlsx&quot;, &quot;tsv&quot;, &quot;rda&quot;, &quot;rdata&quot;, &quot;json&quot;." />
 <meta name="twitter:card" content="summary" />
 
 
@@ -101,7 +102,8 @@ Usually knowing types of parameters as: separator, decimal, header is not necess
     <div class="ref-description">
     
     <p>Function unifies most common reading data functions. It guesses the file extenstion and fits best function to load.
-Usually knowing types of parameters as: separator, decimal, header is not necessary, but function allows to put them by hand.</p>
+Usually knowing types of parameters as: separator, decimal, header is not necessary, but function allows to put them by hand.
+Supported extensions: "txt", "csv", "xls", "xlsx", "tsv", "rda", "rdata", "json".</p>
     
     </div>
 
@@ -151,9 +153,9 @@ Usually knowing types of parameters as: separator, decimal, header is not necess
 <span class='fu'>head</span>(<span class='no'>data</span>)
 
 <span class='co'>#loading rda</span>
-<span class='co'>#path &lt;- "iris2.rda"</span>
-<span class='co'>#data &lt;- hugo_read_data(path)</span>
-<span class='co'>#head(data)</span>
+<span class='no'>path</span> <span class='kw'>&lt;-</span> <span class='fu'>system.file</span>(<span class='st'>"extdata"</span>, <span class='st'>"example.rda"</span>, <span class='kw'>package</span> <span class='kw'>=</span> <span class='st'>"hugo"</span>)
+<span class='no'>data</span> <span class='kw'>&lt;-</span> <span class='fu'>hugo_read_data</span>(<span class='no'>path</span>)
+<span class='fu'>head</span>(<span class='no'>data</span>)
 
 <span class='co'>#loading json</span>
 <span class='no'>path</span> <span class='kw'>&lt;-</span> <span class='st'>"https://raw.githubusercontent.com/corysimmons/colors.json/master/colors.json"</span>
@@ -166,6 +168,30 @@ Usually knowing types of parameters as: separator, decimal, header is not necess
 <span class='no'>path</span> <span class='kw'>&lt;-</span> <span class='st'>"http://insight.dev.schoolwires.com/HelpAssets/C2Assets/C2Files/C2SectionRobotSample.csv"</span>
 <span class='no'>data</span> <span class='kw'>&lt;-</span> <span class='fu'>hugo_read_data</span>(<span class='no'>path</span>, <span class='kw'>separator</span> <span class='kw'>=</span> <span class='st'>","</span>, <span class='kw'>decimal</span> <span class='kw'>=</span> <span class='st'>"."</span>, <span class='kw'>header</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>)
 <span class='fu'>head</span>(<span class='no'>data</span>)
+
+
+<span class='co'>### interaction with user</span>
+<span class='co'># loading file without extension</span>
+<span class='no'>path</span> <span class='kw'>&lt;-</span> <span class='fu'>system.file</span>(<span class='st'>"extdata"</span>, <span class='st'>"no_extension"</span>, <span class='kw'>package</span> <span class='kw'>=</span> <span class='st'>"hugo"</span>)
+<span class='co'># input "txt"</span>
+<span class='no'>data</span> <span class='kw'>&lt;-</span> <span class='fu'>hugo_read_data</span>(<span class='no'>path</span>)
+<span class='fu'>head</span>(<span class='no'>data</span>)
+
+<span class='co'># providing your own parameters</span>
+<span class='no'>path</span> <span class='kw'>&lt;-</span> <span class='fu'>system.file</span>(<span class='st'>"extdata"</span>, <span class='st'>"example2.txt"</span>, <span class='kw'>package</span> <span class='kw'>=</span> <span class='st'>"hugo"</span>)
+<span class='no'>data</span> <span class='kw'>&lt;-</span> <span class='fu'>hugo_read_data</span>(<span class='no'>path</span>, <span class='kw'>decimal</span> <span class='kw'>=</span> <span class='st'>"."</span>)
+<span class='co'># an error occured, but you have an information to put ALL parameters</span>
+<span class='no'>data</span> <span class='kw'>&lt;-</span> <span class='fu'>hugo_read_data</span>(<span class='no'>path</span>, <span class='kw'>header</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>, <span class='kw'>separator</span> <span class='kw'>=</span> <span class='st'>","</span>, <span class='kw'>decimal</span> <span class='kw'>=</span> <span class='st'>"."</span>)
+<span class='fu'>head</span>(<span class='no'>data</span>)
+
+
+<span class='co'>### more examples</span>
+<span class='co'># for more examples please put an extension in &lt;extension&gt; below</span>
+<span class='co'># and try other avaliable sample files attached to package</span>
+<span class='co'># path &lt;- system.file("extdata", "example.&lt;extension&gt;", package = "hugo")</span>
+<span class='co'># data &lt;- hugo_read_data(path)</span>
+<span class='co'># head(data)</span>
+
 <span class='co'># }</span></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">

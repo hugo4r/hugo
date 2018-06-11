@@ -13,6 +13,12 @@ hugo_get_secret(user, repo_name, object_name, passphrase)
 \item{object}{object to share}
 
 \item{passphrase}{object will be encrypted using provided passphrase}
+
+\item{user}{Github user name, to construct proper url to repository.}
+
+\item{repo_name}{Name of github repository, also used to construct url.}
+
+\item{object_name}{Name of the object you want to download.}
 }
 \value{
 Please check Functions section.

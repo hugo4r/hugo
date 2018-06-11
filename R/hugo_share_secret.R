@@ -5,6 +5,10 @@
 #' @param object object to share
 #' @param passphrase object will be encrypted using provided passphrase
 #'
+#' @param user Github user name, to construct proper url to repository.
+#' @param repo_name Name of github repository, also used to construct url.
+#' @param object_name Name of the object you want to download.
+#'
 #' @describeIn  hugo_share_secret Shares given object via github, prompts user for input.
 #'
 #'    Returns: in case of success prompts user with message, and returns string, which is
