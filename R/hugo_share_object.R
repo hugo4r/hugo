@@ -50,11 +50,11 @@ hugo_share_object <- function(object) {
   options(hugo.user_name = user)
 
   if(getOption('hugo.connection_out') != stdout() | !interactive()){
-  cat(paste0("Please insert password for user", getOption('hugo.user_name'), ": > ", sep = " "),
+  cat(paste0("Please insert password for user ", getOption('hugo.user_name'), ": > ", sep = " "),
       file = getOption('hugo.connection_out'))
   pass <-  readLines(con = getOption('hugo.connection_in'), n = 1)
   } else {
-    pass <- getPass::getPass(paste0("Please insert password for user",
+    pass <- getPass::getPass(paste0("Please insert password for user ",
           getOption('hugo.user_name'), ": > ", sep = " "))
 
   }
@@ -73,11 +73,11 @@ hugo_share_object <- function(object) {
     if(is.null(chosen_input)) {return()}
     if(chosen_input) {
       if(getOption('hugo.connection_out') != stdout() | !interactive()){
-        cat(paste0("Please insert password for user", getOption('hugo.user_name'), ": > ", sep = " "),
+        cat(paste0("Please insert password for user ", getOption('hugo.user_name'), ": > ", sep = " "),
             file = getOption('hugo.connection_out'))
         pass <-  readLines(con = getOption('hugo.connection_in'), n = 1)
       } else {
-        pass <- getPass::getPass(paste0("Please insert password for user",
+        pass <- getPass::getPass(paste0("Please insert password for user ",
               getOption('hugo.user_name'), ": > ", sep = " "))
 
       }
@@ -88,11 +88,11 @@ hugo_share_object <- function(object) {
       options(hugo.user_name = user)
 
       if(getOption('hugo.connection_out') != stdout() | !interactive()){
-        cat(paste0("Please insert password for user", getOption('hugo.user_name'), ": > ", sep = " "),
+        cat(paste0("Please insert password for user ", getOption('hugo.user_name'), ": > ", sep = " "),
             file = getOption('hugo.connection_out'))
         pass <-  readLines(con = getOption('hugo.connection_in'), n = 1)
       } else {
-        pass <- getPass::getPass(paste0("Please insert password for user",
+        pass <- getPass::getPass(paste0("Please insert password for user ",
               getOption('hugo.user_name'), ": > ", sep = " "))
 
       }
