@@ -34,7 +34,7 @@
 #' }
 hugo_memorise_plot <- function(plot = NA, name = NULL){
 
-  #add_to_history("hugo_memorise_plot")
+  .hugoEnv$history[length(.hugoEnv$history)+1]<-deparse(match.call())
 
   if (!is.null(plot) & !ggplot2::is.ggplot(plot)){
     stop("Object to save is not a plot", call. = FALSE)
@@ -58,6 +58,10 @@ hugo_memorise_plot <- function(plot = NA, name = NULL){
     name <- paste0("plot", number + 1)
     }
   }}
+  
+  if(any(list.files(path) == paste0(name, ".rda"))) {
+    stop("File with name already exist. Please give another name. List of used names: " , list.files(path = path, pattern = "(.rda)"))
+  }
   
  if(ggplot2::is.ggplot(plot)){
     save(plot, file = paste0(path, "/", name, ".rda"))

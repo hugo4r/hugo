@@ -17,7 +17,9 @@ Suggests: testthat,
     mockery,
     devtools,
     sodium,
-    forcats
+    forcats,
+    git2r,
+    getPass
 License: GPL-3
 Encoding: UTF-8
 Imports: readr,

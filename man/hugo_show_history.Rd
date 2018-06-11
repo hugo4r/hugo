@@ -4,7 +4,14 @@
 \alias{hugo_show_history}
 \title{Dispays history of hugo investigation.}
 \usage{
-hugo_show_history()
+hugo_show_history(last = NULL, first = NULL, specyfic = NULL)
+}
+\arguments{
+\item{last}{is the number of entries from the beginning of the history to display}
+
+\item{first}{is the number of entries from the end of the history to display}
+
+\item{specyfic}{is a natural vector ponting out which particular enrties should be shown.}
 }
 \description{
 Each usage of any hugo function adds an entry about it to a hidden variable in hugo environment 
@@ -14,4 +21,3 @@ hugo_show_history(), displays all the entries with additions of paths to files c
 \author{
 Maciej Kurek
 }
-

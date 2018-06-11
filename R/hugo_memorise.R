@@ -1,6 +1,8 @@
 #' Saving objects as .rda files
 #'
-#' The \code{hugo_memorise} function saves an object as .rda file in the memory subdirectory.
+#' The \code{hugo_memorise} function saves an object as .rda file in the 'memory' subdirectory.
+#' If the object of the same name has been already saved, it gives the opportunity either
+#' to overwrite it or to stop the function execution.
 #'
 #' @param object an object to be saved as .rda file
 #'
@@ -12,7 +14,8 @@
 #' a <- 1:5
 #' hugo_memorise(a)
 #'
-#' hugo_memorise(list('abcdef', seq(0,5,0.1), c(TRUE,FALSE)))
+#' b <- list('abcdef', seq(0,5,0.1), c(TRUE,FALSE))
+#' hugo_memorise(b)
 #' }
 hugo_memorise <- function(object = NULL) {
 
@@ -23,7 +26,7 @@ hugo_memorise <- function(object = NULL) {
   }
 
   if (is.null(object)) {
-    stop('There is no object to be saved.', call. = FALSE)
+    stop('There is no object to be saved.')
   }
 
   path <- paste0(.hugoEnv$path, '/memory/')
@@ -35,7 +38,7 @@ hugo_memorise <- function(object = NULL) {
   ans <- -1
   if (file.exists(file_name)) {
     cat('Object named \"', deparse(substitute(object)), '\" already exists in directory ', path, '.\nDo you want to overwrite it?\n', sep = '')
-    while(ans != 0 & ans != 1) {
+    while(!(ans %in% c(0,1))) {
       ans <- readline(cat('1: Yes\n0: No\n'))
       if (ans == 0) {
         return(cat('The \"', deparse(substitute(object)), '\" object was not copied.\n', sep=''))
