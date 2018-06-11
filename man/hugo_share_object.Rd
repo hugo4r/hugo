@@ -30,6 +30,8 @@ function to download object from github, and don't try to use it as one.
 }
 \details{
 While using hugo_share_object user is prompted and asked to insert additional parameters - github user name, password for given user, and repository name, to wich you want to add your object.
+If hugo remebers previus answer, user will be prompted and asked if he wishes to use current
+credentials or insert new ones.
 }
 \section{Functions}{
 \itemize{
