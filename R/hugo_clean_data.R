@@ -39,7 +39,7 @@
 #' @export
 
 hugo_clean_data <- function(data, prop = 0.05) {
-  # add_to_history("hugo_clean_data")
+  .hugoEnv$history[length(.hugoEnv$history)+1] <- deparse(match.call())
 
   stopifnot(is.data.frame(data))
 
@@ -86,7 +86,7 @@ hugo_clean_data <- function(data, prop = 0.05) {
     } else {
       data[is.na(data[,col]),col] <- modes_of_column
     }
-    data[,col] <- forcats::fct_lump(data[,2], prop = prop, other_level = "Other")
+    data[,col] <- forcats::fct_lump(data[,col], prop = prop, other_level = "Other")
   }
 
   cat("\nThe data has been cleaned.")
