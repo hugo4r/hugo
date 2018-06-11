@@ -161,8 +161,8 @@ hugo_read_data <- function(path, file_extension=NA, header=NA, separator=NA, dec
   nr_of_rows <- nrow(read_data)
 
   # prints a message
-  print(paste0("I've read a data with ", nr_of_rows, " rows and ", nr_of_columns, " columns."))
-  print(paste0("Copy of it is stored in ", path_to_save_data, file_name_to_save, "."))
+  cat(paste0("I've read a data with ", nr_of_rows, " rows and ", nr_of_columns, " columns."))
+  cat(paste0("Copy of it is stored in ", path_to_save_data, file_name_to_save, "."))
 
   return(read_data)
 }
