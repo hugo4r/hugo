@@ -59,6 +59,10 @@ hugo_memorise_plot <- function(plot = NA, name = NULL){
     }
   }}
   
+  if(any(list.files(path) == paste0(name, ".rda"))) {
+    cat("File with name already exist. Please give another name. List of used names" , list.files(path = path, pattern = "(.rda)"))
+  }
+  
  if(ggplot2::is.ggplot(plot)){
     save(plot, file = paste0(path, "/", name, ".rda"))
     ggplot2::ggsave(filename = paste0(path, "/", name, ".pdf"), plot = plot, device = "pdf")
