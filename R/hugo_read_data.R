@@ -2,6 +2,7 @@
 #'
 #' Function unifies most common reading data functions. It guesses the file extenstion and fits best function to load.
 #' Usually knowing types of parameters as: separator, decimal, header is not necessary, but function allows to put them by hand.
+#' Supported extensions: "txt", "csv", "xls", "xlsx", "tsv", "rda", "rdata", "json".
 #'
 #'
 #' @param path the name of the path which the data are to be read from. Each row of the table appears as one line of the file. If it does not contain an absolute path, the path name is relative to the current working directory, \code{getwd()}. path can also be a complete URL.
@@ -31,9 +32,9 @@
 #' head(data)
 #'
 #' #loading rda
-#' #path <- "iris2.rda"
-#' #data <- hugo_read_data(path)
-#' #head(data)
+#' path <- system.file("extdata", "example.rda", package = "hugo")
+#' data <- hugo_read_data(path)
+#' head(data)
 #'
 #' #loading json
 #' path <- "https://raw.githubusercontent.com/corysimmons/colors.json/master/colors.json"
@@ -46,11 +47,28 @@
 #' path <- "http://insight.dev.schoolwires.com/HelpAssets/C2Assets/C2Files/C2SectionRobotSample.csv"
 #' data <- hugo_read_data(path, separator = ",", decimal = ".", header = TRUE)
 #' head(data)
+#'
+#'
+#'
+#' ### interaction with user
+#' # loading file without extension
+#' path <- system.file("extdata", "no_extension", package = "hugo")
+#' # input "txt"
+#' data <- hugo_read_data(path)
+#' head(data)
+#'
+#' # providing your own parameters
+#' path <- system.file("extdata", "example2.txt", package = "hugo")
+#' data <- hugo_read_data(path, decimal = ".")
+#' # an error occured, but you have an information to put ALL parameters
+#' data <- hugo_read_data(path, header = TRUE, separator = ",", decimal = ".")
+#' head(data)
+#'
 #' }
 
 hugo_read_data <- function(path, file_extension=NA, header=NA, separator=NA, decimal=NA, file_name_to_save=NULL){
 
-  #add_to_history("hugo_read_data")
+  .hugoEnv$history[length(.hugoEnv$history)+1]<-deparse(match.call())
 
   # checks the correctness of the path
   if (is.null(path) ) {
