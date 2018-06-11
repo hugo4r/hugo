@@ -34,7 +34,7 @@
 #' }
 hugo_memorise_plot <- function(plot = NA, name = NULL){
 
-  add_to_history("hugo_memorise_plot")
+  # add_to_history("hugo_memorise_plot")
 
   if (!is.null(plot) & !ggplot2::is.ggplot(plot)){
     stop("Object to save is not a plot", call. = FALSE)
