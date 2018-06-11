@@ -1,4 +1,4 @@
-' Dispays history of hugo investigation.
+#' Dispays history of hugo investigation.
 #'
 #' Each usage of any hugo function adds an entry about it to a hidden variable in hugo environment 
 #' which contains the whole history of your investigation.
