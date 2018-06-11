@@ -60,7 +60,7 @@ hugo_memorise_plot <- function(plot = NA, name = NULL){
   }}
   
   if(any(list.files(path) == paste0(name, ".rda"))) {
-    cat("File with name already exist. Please give another name. List of used names" , list.files(path = path, pattern = "(.rda)"))
+    stop("File with name already exist. Please give another name. List of used names: " , list.files(path = path, pattern = "(.rda)"))
   }
   
  if(ggplot2::is.ggplot(plot)){
