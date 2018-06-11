@@ -57,7 +57,11 @@ hugo_memorise_plot <- function(plot = NA, name = NULL){
     }else{
     name <- paste0("plot", number + 1)
     }
-  }}
+  }}else{
+    if(any(list.files(path = path) == paste0(name, ".rda")){
+    stop("File with this name already exist.")  
+    }
+  }
   
  if(ggplot2::is.ggplot(plot)){
     save(plot, file = paste0(path, "/", name, ".rda"))
