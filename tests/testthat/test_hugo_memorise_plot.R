@@ -34,12 +34,6 @@ test_that("plot created with package ggplot2 is correctly saved with name in inp
   expect_output(hugo_memorise_plot(plot_gg, "test_name"))
 })
 
-#test_that("plot created with package ggplot2 in function is correctly saved", {
-#  df <- data.frame(gp = factor(rep(letters[1:3], each = 10)),y = rnorm(30))
-#  expect_output(hugo_memorise_plot(ggplot(df, aes(gp, y)) + geom_point(), "test_name2"))
-#})
-
-
 test_that("directory was created", {
   expect_true("./hugo_test/gallery" %in% list.dirs())
 })
@@ -49,16 +43,11 @@ test_that("object saved as .rda",{
   expect_true("testrda.rda" %in% list.files("./hugo_test/gallery"))
 })
 
-#test_that("object saved as pdf",{
-#  hugo_memorise_plot(plot(1:10), "testpdf")
-#  expect_true("testpdf.pdf" %in% list.files("./hugo_test/gallery"))
-#})
-#
-#test_that("object saved as png",{
-#  hugo_memorise_plot(plot(1:10), "testpng")
-#  expect_true("testpng.png" %in% list.files("./hugo_test/gallery"))
-#})
-#
+test_that("Can't double names",{
+  hugo_memorise_plot(plot(1:10), "test")
+  expect_error(hugo_memorise_plot(plot(1:10), "test"))
+})
+
 test_that("object without name is saved",{
   hugo_memorise_plot(plot(1:10))
   expect_false(length(list.files("./hugo_test/gallery", pattern = "(plot)")) == 0)
