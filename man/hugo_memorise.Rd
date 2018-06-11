@@ -10,14 +10,17 @@ hugo_memorise(object = NULL)
 \item{object}{an object to be saved as .rda file}
 }
 \description{
-The \code{hugo_memorise} function saves an object as .rda file in the memory subdirectory.
+The \code{hugo_memorise} function saves an object as .rda file in the 'memory' subdirectory.
+If the object of the same name has been already saved, it gives the opportunity either
+to overwrite it or to stop the function execution.
 }
 \examples{
 \dontrun{
 a <- 1:5
 hugo_memorise(a)
 
-hugo_memorise(list('abcdef', seq(0,5,0.1), c(TRUE,FALSE)))
+b <- list('abcdef', seq(0,5,0.1), c(TRUE,FALSE))
+hugo_memorise(b)
 }
 }
 \author{
