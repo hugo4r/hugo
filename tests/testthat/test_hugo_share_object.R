@@ -57,4 +57,8 @@ test_that("throws error when there is no \"git2r\" package", {
   )
 })
 
-
+test_that("throws error when there is no \"getPass\" package", {
+  with_mock(requireNamespace = requireNamespace_mock,
+            expect_error(hugo_share_object(iris))
+  )
+})
