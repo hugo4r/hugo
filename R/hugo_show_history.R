@@ -7,30 +7,39 @@
 #' @export
 #' @author Maciej Kurek
 
-hugo_show_history<-function(){
+hugo_show_history<-function(last=NULL,first=NULL,specyfic=NULL){
   
-  add_to_history("hugo_show_history")
+  .hugoEnv$history[length(.hugoEnv$history)+1]<-deparse(match.call())
+  
+  checking(last=last,first=first,specyfic=specyfic)
+  
+  if(.hugoEnv$history[1]=="empty"){
+  .hugoEnv$history<-.hugoEnv$history[-1]
+  }
+  
+  n<-length(.hugoEnv$history)
+  which_to_show<-1:n
+  
+  if(!is.null(last)){
+    which_to_show<-(n-last+1):n
+  }
+  
+  if(!is.null(first)){
+    which_to_show<-1:first
+  }
+  
+  if(!is.null(specyfic)){
+    which_to_show<-specyfic
+  }
+  
+  which_to_show<-which_to_show[which_to_show>=1 & which_to_show<=n]
   
   cat("This is your hugoing history: \n \n")
-  for ( i in 1:length(.hugoEnv$history))
+
+  for (i in which_to_show)
   {
     cat(paste0(i,") ",.hugoEnv$history[i]),"\n")
   }
-}
-
-add_to_history<-function(function_name){
-  
-  utils::savehistory("histor.txt")
-  hist<-readLines("histor.txt")
-  file.remove("histor.txt")
-  
-  pat<-paste(function_name,"\\(",sep="")
-  index<-which(grepl(pat,hist[]))
-  
-  text<-paste(hist[max(index):length(hist)],collapse = "")
-  
-  if(.hugoEnv$history[1]!="empty") .hugoEnv$history[length(.hugoEnv$history)+1]<-text
-  if(.hugoEnv$history[1]=="empty") .hugoEnv$history[1]<-text
 }
 
 add_path_to_history<-function(path){
@@ -44,4 +53,32 @@ add_path_to_history<-function(path){
   if(!grepl("\n Saved files: \n", .hugoEnv$history[n])){
     .hugoEnv$history[n]<-paste0(.hugoEnv$history[n],"\n Saved files: \n",path)
   } 
+}
+
+checking<-function(last=NULL,first=NULL,specyfic=NULL)
+{
+  if(is.null(last)+is.null(first)+is.null(specyfic)<2) 
+    stop("Error: Maximum one argument may not be NULL")
+  ### last & first check
+  if(!is.null(first)) last<-first
+  
+  if(!is.null(last)){
+    if(!is.numeric(last))
+     stop("Error: argument 'last' must be a natural number")
+    if(!last==floor(last))
+     stop("Error: argument 'last' must be a natural number")
+    if(!length(last)==1)
+     stop("Error: argument 'last' must be a natural number")  
+    if(last<=0)
+     stop("Error: argument 'last' must be a natural number")  
+  }
+  ### specyfic check
+  if(!is.null(specyfic)){
+    if(!is.vector(specyfic))
+      stop("Error: argument 'specyfic' must be a vector")
+    if(!is.numeric(specyfic))
+      stop("Error: argument 'specyfic' must contain natural numbers")
+    if(!sum(specyfic==floor(specyfic))==length(specyfic))
+      stop("Error: argument 'specyfic' must contain natural numbers")
+  }
 }
