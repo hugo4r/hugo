@@ -19,6 +19,7 @@ hugo_show_history<-function(){
 }
 
 add_to_history<-function(function_name){
+  loadNamespace("utils")
   savehistory()
   hist<-readLines(".Rhistory")
   # hist<-paste(hist[-length(hist)], collapse = '')
