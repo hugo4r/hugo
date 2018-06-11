@@ -49,7 +49,6 @@
 #' head(data)
 #'
 #'
-#'
 #' ### interaction with user
 #' # loading file without extension
 #' path <- system.file("extdata", "no_extension", package = "hugo")
@@ -63,6 +62,14 @@
 #' # an error occured, but you have an information to put ALL parameters
 #' data <- hugo_read_data(path, header = TRUE, separator = ",", decimal = ".")
 #' head(data)
+#'
+#'
+#' ### more examples
+#' # for more examples please put an extension in <extension> below
+#' # and try other avaliable sample files attached to package
+#' # path <- system.file("extdata", "example.<extension>", package = "hugo")
+#' # data <- hugo_read_data(path)
+#' # head(data)
 #'
 #' }
 
@@ -82,8 +89,12 @@ hugo_read_data <- function(path, file_extension=NA, header=NA, separator=NA, dec
   if(is.na(file_extension)){
     file_extension <- stringr::str_match(path, stringr::regex(".*(?<=\\.)(.*)"))[2]
   }
-  while(is.na(file_extension) || file_extension=="" || is.null(file_extension)) {
-    file_extension <- tolower(readline(cat("Please input file extension.")))
+  if(is.na(file_extension) || file_extension=="" || is.null(file_extension)) {
+    file_extension <- tolower(readline(cat("Please input file extension. > \n")))
+    if(file_extension==""){
+      cat("\nNo file extension provided. Set to default: txt")
+      file_extension <- "txt"
+    }
   }
 
   formats <- c("txt", "csv", "xls", "xlsx", "tsv", "rda", "rdata", "json")
@@ -161,8 +172,8 @@ hugo_read_data <- function(path, file_extension=NA, header=NA, separator=NA, dec
   nr_of_rows <- nrow(read_data)
 
   # prints a message
-  cat(paste0("I've read a data with ", nr_of_rows, " rows and ", nr_of_columns, " columns."))
-  cat(paste0("Copy of it is stored in ", path_to_save_data, file_name_to_save, "."))
+  cat(paste0("\nI've read a data with ", nr_of_rows, " rows and ", nr_of_columns, " columns."))
+  cat(paste0("\nCopy of it is stored in ", path_to_save_data, file_name_to_save, "."))
 
   return(read_data)
 }
