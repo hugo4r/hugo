@@ -46,18 +46,16 @@ hugo_clean_data <- function(data, prop = 0.05) {
   if(!(is.numeric(prop) & prop<=1 & prop>=0)) {
     cat("Try choose 'prop' parameter again.\nThe proportion should be the number between 0 and 1 (less than 0.2 recommended).")
     while(TRUE) {
-      cat("\nprop = ")
-      prop <- readLines(con=stdin(), 1)
+      prop <- readline(prompt = "prop = ")
       if(prop>=0 & prop<=1) {
-        cat(paste0("\nThanks! You choose prop=", prop,".\n"))
         break
       } else {
-        cat("Try again.")
+        cat("Try again:")
       }
     }
-  } else {
-    cat(paste0("Data cleaning will be done with 'prop' parameter equal to ",prop,".\n"))
   }
+  cat(paste0("Data cleaning will be done with 'prop' parameter equal to ",prop,".\n"))
+
   columns_num <- ncol(data)
 
   factor_columns <- which(sapply(1:columns_num, function(column) is.factor(data[,column])))
