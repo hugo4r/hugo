@@ -20,9 +20,11 @@ test_that("Must of providing all parameters or none.",{
   expect_error(hugo_read_data(path="example2.txt", decimal = "."))
 })
 
-# test_that("File without extension handled.", {
-#   expect_output(hugo_read_data(path="no_extension"), info="Please input file extension.")
-# })
+test_that("File without extension handled.", {
+  data <- hugo_read_data(path="no_extension")
+  expect_equal(dim(data), c(35,44))
+  expect_true("data.frame" %in% class(data))
+})
 
 test_that("Json file loaded correctly.",{
   data <- hugo_read_data(path="https://raw.githubusercontent.com/corysimmons/colors.json/master/colors.json")
