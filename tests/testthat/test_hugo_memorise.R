@@ -35,12 +35,12 @@ test_that('an object is saved correctly', {
   expect_true('test6.rda' %in% list.files('./hugo_test/memory'))
 })
 
-test_that('overwriting an object', {
-  test7 <- 1:3
-  hugo_memorise(test7)
-  test7 <- 4:6
-  expect_output(hugo_memorise(test7))
-})
+# test_that('overwriting an object', {
+#   test7 <- 1:3
+#   hugo_memorise(test7)
+#   test7 <- 4:6
+#   expect_output(hugo_memorise(test7))
+# })
 
 
 unlink('hugo_test', recursive = TRUE)
