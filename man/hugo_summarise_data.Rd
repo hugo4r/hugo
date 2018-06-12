@@ -10,7 +10,7 @@ hugo_summarise_data(data, overwrite_params = TRUE)
 \item{data}{R dataset which you wish to summary. This dataset should be of class \code{data.frame},
 \code{tibble} or \code{matrix}.}
 
-\item{overwrite_paramsA}{logical. If \code{TRUE} (the default) parameters used to generate report will be saved.}
+\item{overwrite_params}{logical. If \code{TRUE} (the default) parameters used to generate report will be saved.}
 }
 \value{
 The function does not return anything. Its side effect (the production
