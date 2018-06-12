@@ -115,123 +115,16 @@ test_that('wrong type of typed parameters- output',{
 })
 
 
-test_that('wrong type of typed parameters-v1',{
-  tmp <- getOption("hugo.know_summary_parameters")
-  options(hugo.know_summary_parameters = F)
-  options(hugo.use_summary_parameters = T)
-  options(hugo.use_default_name_summary_parameters = T)
-  f <- file()
-  g <- file()
-  options(hugo.connection_in = f)
-  options(hugo.connection_out = g)
-  ans <- paste(c(
-    #'word','TRUE','FALSE','all', 'TRUE', '2', 'iris', 'iris',
-    'html','null','FALSE','all', 'TRUE', '2', 'cars', 'cars',
-    'html','TRUE','false','all', 'TRUE', '2', 'cars', 'cars',
-    'html','TRUE','FALSE','all', 't', '2', 'cars', 'cars',
-    'html','TRUE','FALSE','all', 'TRUE', 'null', 'cars', 'cars'),collapse = '\n')
-  write(ans,f)
-
-  #expect_message(hugo_summarise_data(data = iris), "Incorrect format of output. Default html will be used.")
-
-  expect_message(hugo_summarise_data(data = iris), "Incorrect value. Default TRUE will be used.")
 
 
 
 
-  options(hugo.connection_in = stdin())
-  options(hugo.connection_out = stdout())
-  options(hugo.know_summary_parameters = tmp)
-  close(f)
-  close(g)
-})
+requireNamespace_mock <- function(package, quietly) {
+  return(false)
+}
 
-
-test_that('wrong type of typed parameters-v2',{
-  tmp <- getOption("hugo.know_summary_parameters")
-  options(hugo.know_summary_parameters = F)
-  options(hugo.use_summary_parameters = T)
-  options(hugo.use_default_name_summary_parameters = T)
-  f <- file()
-  g <- file()
-  options(hugo.connection_in = f)
-  options(hugo.connection_out = g)
-  ans <- paste(c(
-    #'word','TRUE','FALSE','all', 'TRUE', '2', 'iris', 'iris',
-    #'html','null','FALSE','all', 'TRUE', '2', 'cars', 'cars',
-    'html','TRUE','false','all', 'TRUE', '2', 'cars', 'cars',
-    'html','TRUE','FALSE','all', 't', '2', 'cars', 'cars',
-    'html','TRUE','FALSE','all', 'TRUE', 'null', 'cars', 'cars'),collapse = '\n')
-  write(ans,f)
-
-
-  expect_message(hugo_summarise_data(data = iris), "Incorrect value. Default TRUE will be used.")
-
-
-
-  options(hugo.connection_in = stdin())
-  options(hugo.connection_out = stdout())
-  options(hugo.know_summary_parameters = tmp)
-  close(f)
-  close(g)
-})
-
-
-test_that('wrong type of typed parameters-v3',{
-  tmp <- getOption("hugo.know_summary_parameters")
-  options(hugo.know_summary_parameters = F)
-  options(hugo.use_summary_parameters = T)
-  options(hugo.use_default_name_summary_parameters = T)
-  f <- file()
-  g <- file()
-  options(hugo.connection_in = f)
-  options(hugo.connection_out = g)
-  ans <- paste(c(
-    #'word','TRUE','FALSE','all', 'TRUE', '2', 'iris', 'iris',
-    #'html','null','FALSE','all', 'TRUE', '2', 'cars', 'cars',
-    #'html','TRUE','false','all', 'TRUE', '2', 'cars', 'cars',
-    'html','TRUE','FALSE','all', 't', '2', 'cars', 'cars',
-    'html','TRUE','FALSE','all', 'TRUE', 'null', 'cars', 'cars'),collapse = '\n')
-  write(ans,f)
-
-
-  expect_message(hugo_summarise_data(data = iris), "Incorrect value. Default TRUE will be used.")
-
-
-
-  options(hugo.connection_in = stdin())
-  options(hugo.connection_out = stdout())
-  options(hugo.know_summary_parameters = tmp)
-  close(f)
-  close(g)
-})
-
-
-test_that('wrong type of typed parameters-v4',{
-  tmp <- getOption("hugo.know_summary_parameters")
-  options(hugo.know_summary_parameters = F)
-  options(hugo.use_summary_parameters = T)
-  options(hugo.use_default_name_summary_parameters = T)
-  f <- file()
-  g <- file()
-  options(hugo.connection_in = f)
-  options(hugo.connection_out = g)
-  ans <- paste(c(
-    #'word','TRUE','FALSE','all', 'TRUE', '2', 'iris', 'iris',
-    #'html','null','FALSE','all', 'TRUE', '2', 'cars', 'cars',
-    #'html','TRUE','false','all', 'TRUE', '2', 'cars', 'cars',
-    #'html','TRUE','FALSE','all', 't', '2', 'cars', 'cars',
-    'html','TRUE','FALSE','all', 'TRUE', 'null', 'cars', 'cars'),collapse = '\n')
-  write(ans,f)
-
-
-  expect_message(hugo_summarise_data(data = iris), "Incorrect value. Default TRUE will be used.")
-
-
-
-  options(hugo.connection_in = stdin())
-  options(hugo.connection_out = stdout())
-  options(hugo.know_summary_parameters = tmp)
-  close(f)
-  close(g)
+test_that("throws error when there is no \"dataMaid\" package", {
+  with_mock(requireNamespace = requireNamespace_mock,
+            expect_error(hugo_summarise_data(iris))
+  )
 })
