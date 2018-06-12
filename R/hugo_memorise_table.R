@@ -29,14 +29,12 @@ hugo_memorise_table <- function(table = NULL, name = substitute(table)){
     stop("There is no table to be saved.", call.=FALSE)
   }
   
-  if(!require(openxlsx)){
-    install.packages("openxlsx")
-    library(openxlsx) 
+  if (!requireNamespace("openxlsx", quietly = TRUE)) {
+    stop("You have to first install library 'openxlsx'. ", call. = FALSE)
   }
   
-  if(!require(ReporteRs)){
-    install.packages("ReporteRs")
-    library(ReporteRs) 
+  if (!requireNamespace("ReporteRs", quietly = TRUE)) {
+    stop("You have to first install library 'ReporteRs'. ", call. = FALSE)
   }
   
   path <- paste0(.hugoEnv$path, "/gallery")
