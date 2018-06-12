@@ -72,20 +72,19 @@ test_that("Missing package is loaded",{
   expect_true("datasets" %in% .packages())
 })
 
-test_that("Missing package is installed",{
-
-  e <- new.env()
-  if(!require(astsa)){
-    install.packages("astsa")
-    library(astsa)
-  }
-  hugo_save_investigation(session_name = "test_session 5",envir=e)
-  detach(name="package:astsa", unload=TRUE, force = TRUE)
-  remove.packages("astsa")
-  expect_error(hugo_continue_investigation(path="hugo_test_continue",session_name="test_session 5",envir=e))
-  expect_true("astsa" %in% .packages())
-
-})
+#test_that("Missing package is installed",{
+#
+# e <- new.env()
+#    install.packages("astsa")
+#    library(astsa)
+#  }
+#  hugo_save_investigation(session_name = "test_session 5",envir=e)
+#  detach(name="package:astsa", unload=TRUE, force = TRUE)
+#  remove.packages("astsa")
+#  expect_error(hugo_continue_investigation(path="hugo_test_continue",session_name="test_session 5",envir=e))
+#  expect_true("astsa" %in% .packages())
+#
+#})
 
 
 
