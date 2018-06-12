@@ -20,7 +20,7 @@ test_that('the function takes exactly one argument', {
 
 test_that('an object is saved without any warnings/errors', {
   test4 <- list('abcdef', seq(0,5,0.1), c(TRUE,FALSE))
-  expect_output(hugo_memorise(test4), cat('Copy of the \"test4\" object is stored in hugo_memorise_test/memory/.\n'))
+  expect_output(hugo_memorise(test4), cat('Copy of the \"test4\" object is stored in hugo_test/memory/.\n'))
 })
 
 test_that('there is a memory subdirectory after saving an object', {
@@ -35,12 +35,41 @@ test_that('an object is saved correctly', {
   expect_true('test6.rda' %in% list.files('./hugo_test/memory'))
 })
 
+test_that('not overwriting the object that already exists', {
+  f <- file()
+  options(hugo.connection_in = f)
+  ans <- 2
+  write(ans, f)
+  test7 <- 1:3
+  hugo_memorise(test7)
+  test7 <- 4:6
+  expect_output(hugo_memorise(test7), cat('The \"test7\" object was not copied.\n'))
+  options(hugo.connection_in = stdin())
+  close(f)
+})
+
+test_that('overwriting an object', {
+  f <- file()
+  options(hugo.connection_in = f)
+  ans <- 1
+  write(ans, f)
+  test8 <- 1:3
+  hugo_memorise(test8)
+  test8 <- 4:6
+  expect_output(hugo_memorise(test8), cat('Copy of the \"test8\" object is stored in hugo_test/memory/.\n'))
+  options(hugo.connection_in = stdin())
+  close(f)
+})
+
+
 # test_that('overwriting an object', {
 #   test7 <- 1:3
 #   hugo_memorise(test7)
 #   test7 <- 4:6
 #   expect_output(hugo_memorise(test7))
 # })
+
+
 
 
 unlink('hugo_test', recursive = TRUE)
