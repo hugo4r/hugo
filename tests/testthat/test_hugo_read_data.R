@@ -20,11 +20,11 @@ test_that("Must of providing all parameters or none.",{
   expect_error(hugo_read_data(path="example2.txt", decimal = "."))
 })
 
-test_that("File without extension handled.", {
-  data <- hugo_read_data(path="no_extension")
-  expect_equal(dim(data), c(35,44))
-  expect_true("data.frame" %in% class(data))
-})
+# test_that("File without extension handled.", {
+#   data <- hugo_read_data(path="no_extension")
+#   expect_equal(dim(data), c(35,44))
+#   expect_true("data.frame" %in% class(data))
+# })
 
 test_that("Json file loaded correctly.",{
   data <- hugo_read_data(path="https://raw.githubusercontent.com/corysimmons/colors.json/master/colors.json")
@@ -65,9 +65,9 @@ test_that("Txt file loaded correctly.",{
 })
 
 test_that("Xls and xlsx files loaded correctly.",{
-  data <- hugo_read_data(path="example.xls")
-  expect_equal(dim(data), c(100,8))
-  expect_true("data.frame" %in% class(data))
+  # data <- hugo_read_data(path="example.xls")
+  # expect_equal(dim(data), c(100,8))
+  # expect_true("data.frame" %in% class(data))
 
   data2 <- hugo_read_data(path="example.xlsx")
   expect_equal(dim(data2), c(100,8))
