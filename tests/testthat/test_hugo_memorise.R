@@ -36,12 +36,12 @@ test_that('an object is saved correctly', {
 })
 
 test_that('not overwriting the object that already exists', {
+  test7 <- 1:3
+  hugo_memorise(test7)
   f <- file()
   options(hugo.connection_in = f)
   ans <- 2
   write(ans, f)
-  test7 <- 1:3
-  hugo_memorise(test7)
   test7 <- 4:6
   expect_output(hugo_memorise(test7), cat('The \"test7\" object was not copied.\n'))
   options(hugo.connection_in = stdin())
@@ -49,27 +49,17 @@ test_that('not overwriting the object that already exists', {
 })
 
 test_that('overwriting an object', {
+  test8 <- 1:3
+  hugo_memorise(test8)
   f <- file()
   options(hugo.connection_in = f)
   ans <- 1
   write(ans, f)
-  test8 <- 1:3
-  hugo_memorise(test8)
   test8 <- 4:6
   expect_output(hugo_memorise(test8), cat('Copy of the \"test8\" object is stored in hugo_test/memory/.\n'))
   options(hugo.connection_in = stdin())
   close(f)
 })
-
-
-# test_that('overwriting an object', {
-#   test7 <- 1:3
-#   hugo_memorise(test7)
-#   test7 <- 4:6
-#   expect_output(hugo_memorise(test7))
-# })
-
-
 
 
 unlink('hugo_test', recursive = TRUE)
