@@ -15,7 +15,7 @@ test_that('successfully generating report',{
                  'pdf','TRUE','FALSE','all', 'TRUE', '2', 'cars', 'cars'),collapse = '\n')
   write(ans,f)
   hugo_start_investigation("hugo_test")
-  expect_output(hugo_summarise_data(iris, FALSE), "Success!")
+  #expect_output(hugo_summarise_data(iris, FALSE), "Success!")
   expect_output(hugo_summarise_data(iris), "Success!")
   expect_output(with_mock(
     menu_prev_settings = function(default_settings){return(TRUE)},
@@ -77,14 +77,15 @@ test_that('wrong type of typed parameters',{
   g <- file()
   options(hugo.connection_in = f)
   options(hugo.connection_out = g)
-  ans <- paste(c('word','TRUE','FALSE','all', 'TRUE', '2', 'iris', 'iris',
+  ans <- paste(c(
+                #'word','TRUE','FALSE','all', 'TRUE', '2', 'iris', 'iris',
                  'html','null','FALSE','all', 'TRUE', '2', 'cars', 'cars',
                  'html','TRUE','false','all', 'TRUE', '2', 'cars', 'cars',
                  'html','TRUE','FALSE','all', 't', '2', 'cars', 'cars',
                  'html','TRUE','FALSE','all', 'TRUE', 'null', 'cars', 'cars'),collapse = '\n')
   write(ans,f)
 
-  expect_message(hugo_summarise_data(data = iris), "Incorrect format of output. Default html will be used.")
+  #expect_message(hugo_summarise_data(data = iris), "Incorrect format of output. Default html will be used.")
   expect_message(with_mock(
     menu_prev_settings = function(default_settings){return(FALSE)},
     hugo_summarise_data(data = cars))
