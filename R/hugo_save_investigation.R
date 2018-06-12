@@ -32,15 +32,14 @@
 
 hugo_save_investigation <- function( variables = NULL, session_name = NULL, envir = .GlobalEnv){
 
-  .hugoEnv$history[length(.hugoEnv$history)+1]<-deparse(match.call()) 
-
   if (!file.exists(.hugoEnv$path)) {                                # if investigation wasn't called
     cat("hugo_start_investigation() wasn't called.\n Enter investigation's path or 0 to continue with default path parameter.\n")
     ans <- readLines(con = getOption("hugo.connection_in"), n = 1)
     if(ans == "0") hugo_start_investigation()
     else hugo_start_investigation(ans)
   }
-
+  .hugoEnv$history[length(.hugoEnv$history)+1]<-deparse(match.call()) 
+  
   if(length(variables) != 0) {                                                          # if user entered variables
     obj <- variables[!variables %in% ls(envir = envir)]                                 # chceck if all of them are in global env
     if(length(obj) != 0)                                                                # if variables are not defined in env
