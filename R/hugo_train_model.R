@@ -19,12 +19,12 @@ hugo_train_model <- function(data, formula) {
     deparse(match.call())
   cat("Hugo starts training models.\n")
   formula <- stats::formula(formula)
-  if (length(levels(data[, c(as.character(formula[[2]]))])) != 2) {
-    return(cat("Response variable has more than two classes. Wrong data to binary classification.\n"))
-  }
   if (!is.factor(data[, c(as.character(formula[[2]]))])) {
     data[, c(as.character(formula[[2]]))] <-
       as.factor(data[, c(as.character(formula[[2]]))])
+  }
+  if (length(levels(data[, c(as.character(formula[[2]]))])) != 2) {
+    return(cat("Response variable has more than two classes. Wrong data to binary classification.\n"))
   }
   control <- data_division(data)
   model_glm <<- glm_model(control, data, formula)
