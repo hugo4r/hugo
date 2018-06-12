@@ -1,6 +1,6 @@
 #' Encrypt and share any object
 #'
-#' Encrypt and share R objects on github
+#' Encrypt and share R objects on github using \code{\link{hugo_share_object}}.
 #'
 #' @param object object to share
 #' @param passphrase object will be encrypted using provided passphrase
@@ -11,8 +11,10 @@
 #'
 #' @describeIn  hugo_share_secret Shares given object via github, prompts user for input.
 #'
+#'    See \code{\link{hugo_share_object}} for details.
+#'
 #'    Returns: in case of success prompts user with message, and returns string, which is
-#'    direct call to hugo_get_secret. In case of failure, prompts user with appropriate
+#'    direct call to \code{\link{hugo_get_secret}}. In case of failure, prompts user with appropriate
 #'    message and returns NULL.
 #'
 #' @return Please check Functions section.
@@ -20,7 +22,10 @@
 #' @author Kamil Romaszko
 #' @examples
 #' \dontrun{
-#' hugo_share_secret(iris, "secret")
+#' get_string <- hugo_share_secret(iris, "secret")
+#'
+#' #Fetch object from github using returned command
+#' eval(parse(text=get_string))
 #' }
 hugo_share_secret <- function(object, passphrase) {
   if (!requireNamespace("sodium", quietly = TRUE)) {
@@ -32,6 +37,10 @@ hugo_share_secret <- function(object, passphrase) {
 
   object <- encrypt_object(object, passphrase)
   get_string <- hugo_share_object(object)
+
+  # override history entry from hugo_share_object
+  .hugoEnv$history[length(.hugoEnv$history)] <- deparse(match.call())
+
   if(is.null(get_string)) {
     return(get_string)
   }
@@ -43,6 +52,9 @@ hugo_share_secret <- function(object, passphrase) {
 
 
 #' @describeIn  hugo_share_secret Downloads encrypted object from github.
+#'
+#'    See \code{\link{hugo_get_object}} for details.
+#'
 #'    Returns: in case of success prompts user with message, and returns object.
 #'    It us up to user how to handle it - wheter to assign it to variable,
 #'    or use as parameter. In case of failure, prompts user with appropriate
@@ -58,6 +70,10 @@ hugo_get_secret <- function(user, repo_name, object_name, passphrase) {
   }
 
   encrypted_object <- hugo_get_object(user, repo_name, object_name)
+
+  # override history entry from hugo_get_object
+  .hugoEnv$history[length(.hugoEnv$history)] <- deparse(match.call())
+
   if(is.null(encrypted_object)) {
     return(encrypted_object)
   }

@@ -35,6 +35,8 @@
 
 hugo_share_object <- function(object) {
 
+  .hugoEnv$history[length(.hugoEnv$history)+1] <- deparse(match.call())
+
   if (!requireNamespace("git2r", quietly = TRUE)) {
     stop("You have to first install library 'git2r'. ", call. = FALSE)
   }
@@ -162,6 +164,8 @@ hugo_share_object <- function(object) {
 
 
 hugo_get_object <- function(user, repo_name, object_name) {
+
+  .hugoEnv$history[length(.hugoEnv$history)+1] <- deparse(match.call())
 
   if (!requireNamespace("git2r", quietly = TRUE)) {
     stop("You have to first install library 'git2r'. ", call. = FALSE)
