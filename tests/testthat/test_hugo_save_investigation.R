@@ -2,12 +2,13 @@ context("Check hugo_save_investigation() function")
 
 hugo_start_investigation("hugo_test")
 
+
 test_that("no variables for saving returns warning", {
-  expect_warning(hugo_save_investigation())
+  expect_warning(hugo_save_investigation(), "No variables to save.")
 })
 
 test_that("no defined variable throws error", {
-  expect_error(hugo_save_investigation(variables = "a"))
+  expect_error(hugo_save_investigation(variables = "a"), '^Following varables are not defined:')
 })
 
 test_that("environment not exist", {
@@ -19,6 +20,13 @@ test_that("basic funcionality works", {
   e$a <- FALSE
   e$b <- "a"
   expect_output(hugo_save_investigation(envir = e, session_name = "test_session"))
+})
+
+test_that("selected variables are saved", {
+  e <- new.env()
+  e$a <- FALSE
+  e$b <- "a"
+  expect_output(hugo_save_investigation(variables = "b", envir = e))
 })
 
 test_that("there are directories", {
@@ -41,11 +49,36 @@ test_that("it is possible to restore the data", {
 })
 
 
-#test_that("hugo asks for overwriting session", {
-#  e <- new.env()
-#  e$a <- "Hugo"
-#  expect_output(hugo_save_investigation(envir = e, session_name = "test_session"))
-#})
+test_that("input default", {
+
+  f <- file()
+  options(hugo.connection_in = f)
+  ans <- "0"
+  write(ans, f)
+  e <- new.env()
+  e$a <- 5
+  expect_output(hugo_save_investigation(envir = e, session_name = "newsession"))
+  expect_true("variables" %in% list.files("./hugo_test/resources/newsession", all.files = T))
+  options(hugo.connection_in = stdin())
+  close(f)
+
+})
+
+
+test_that("input overwritting", {
+
+  f <- file()
+  options(hugo.connection_in = f)
+  ans <- "newname"
+  write(ans, f)
+  e <- new.env()
+  e$a <- 5
+  expect_output(hugo_save_investigation(envir = e, session_name = "newsession"))
+  expect_true("variables" %in% list.files("./hugo_test/resources/newname", all.files = T))
+  options(hugo.connection_in = stdin())
+  close(f)
+
+})
 
 unlink("hugo_test", recursive = TRUE)
 
