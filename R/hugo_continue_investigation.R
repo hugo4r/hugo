@@ -73,7 +73,7 @@ hugo_continue_investigation <- function(path = NULL, session_name = NULL, envir 
 
   #Check if packages' versions are compatible
   cat("Loading required packages to continue investigation ... \n")
-  existing_packages <- data.frame(installed.packages())
+  existing_packages <- data.frame(utils::installed.packages())
   existing_packages <- existing_packages[,c("Package","Version")]
   not_attached <- integer(0)
 
@@ -122,7 +122,7 @@ read_packages <- function(file,path) {
   lines <- strsplit(lines[package_line:length(lines)], split="\\s+")
   package_name <- sapply(lines, "[[", 2)
   package_version <- sapply(lines, stringr::str_extract, pattern = "(\\d+[\\.\\-])+\\d+")
-  package_version <- sapply(sapply(package_version,na.omit),"[[",1)
+  package_version <- sapply(sapply(package_version,stats::na.omit),"[[",1)
   packages <- data.frame(Package=package_name,Version=package_version)
   packages$Package <- as.character(packages$Package)
   packages$Version <- as.character(packages$Version)
