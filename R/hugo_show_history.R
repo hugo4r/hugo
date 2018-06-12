@@ -107,10 +107,10 @@ checking<-function(last=NULL,first=NULL,specyfic=NULL,restart=F)
   if(!is.null(last)){
     if(!is.numeric(last))
       stop("Error: argument 'last' must be a natural number")
-    if(!last==floor(last))
-      stop("Error: argument 'last' must be a natural number")
     if(!length(last)==1)
       stop("Error: argument 'last' must be a natural number")  
+    if(!last==floor(last))
+      stop("Error: argument 'last' must be a natural number")
     if(last<=0)
       stop("Error: argument 'last' must be a natural number")  
   }
