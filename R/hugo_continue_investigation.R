@@ -21,15 +21,23 @@
 #' @seealso \code{\link{hugo_save_investigation}}, \code{\link{hugo_start_investigation}}
 #'
 #' @examples
+#' \dontrun{
+#'
 #' hugo_start_investigation("iris")
+#'
 #' ## New investigation started in  iris
+#'
 #' my_boxplot <- boxplot(iris$Sepal.Length)
+#'
 #' hugo_save_investigation("iris_session1")
+#'
 #' ## iris_session1  succesfully saved.
+#'
 #' remove(my_boxplot)
 #' hugo_continue_investigation("iris")
+#'
 #' ## Loading required packages to continue investigation ...
-#' ## Session iris_session1 from investigation iris sucessfully restored.
+#' ## Session iris_session1 from investigation iris sucessfully restored.}
 #' @export
 
 
