@@ -29,3 +29,20 @@ test_that("Filling NA's for data with factors (two modes)", {
     sum(is.na(hugo_clean_data(data)))
   }, 0)
 })
+
+test_that("Test interaction with users",{
+  f <- file()
+  g <- file()
+  options(hugo.connection_in = f)
+  options(hugo.connection_out = g)
+
+  ans <- paste(c('4','-2','0.5'),collapse = '\n')
+  write(ans,f)
+
+  expect_equal(sum(is.na(hugo_clean_data(airquality, 5))), 0)
+
+  options(hugo.connection_in = stdin())
+  options(hugo.connection_out = stdout())
+  close(f)
+  close(g)
+})
