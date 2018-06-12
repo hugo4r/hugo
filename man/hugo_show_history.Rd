@@ -4,19 +4,52 @@
 \alias{hugo_show_history}
 \title{Dispays history of hugo investigation.}
 \usage{
-hugo_show_history(last = NULL, first = NULL, specyfic = NULL)
+hugo_show_history(last = NULL, first = NULL, specyfic = NULL,
+  restart = F)
 }
 \arguments{
-\item{last}{is the number of entries from the beginning of the history to display}
+\item{last}{the number of entries from the beginning of the history to display.}
 
-\item{first}{is the number of entries from the end of the history to display}
+\item{first}{the number of entries from the end of the history to display.}
 
 \item{specyfic}{is a natural vector ponting out which particular enrties should be shown.}
+
+\item{reset}{If true, the history of investigation will reset.}
 }
 \description{
 Each usage of any hugo function adds an entry about it to a hidden variable in hugo environment 
 which contains the whole history of your investigation.
 hugo_show_history(), displays all the entries with additions of paths to files created by functions hugo_memorize*.
+}
+\note{
+maximum one argument may not be NULL.
+
+Providing variables which would result in showing more entries than the current history contains 
+or showing entries with indexes not belonging to history index set, cuts displaying. See "examples".
+}
+\examples{
+\dontrun{
+# Displaying lat 10 entries of the investigation history:
+hugo_show_history(10)
+
+# Displaying first 10 entries:
+hugo_show_history(first=10)
+
+# Displaying some specyfic entries:
+hugo_show_history(specyfic=c(1,4,7))
+
+# Let's assume there are 10 entries in the history. 
+# Following usage will display all of theese entries.
+
+hugo_show_history(20), hugo_show_history(first=15)
+
+# This usage will show only entries with indexes 1,3,7 :
+
+hugo_show_history(specyfic=c(-2,1,3,7,12,15))
+
+ # Reseting history :
+hugo_show_history(reset = T)
+}
 }
 \author{
 Maciej Kurek
