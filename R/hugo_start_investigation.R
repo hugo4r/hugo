@@ -8,6 +8,7 @@
 #' hugo_start_investigation()
 #'
 hugo_start_investigation <- function(path = NULL) {
+  .hugoEnv$history[length(.hugoEnv$history) + 1] <- deparse(match.call())
   if (is.null(path)) {
     path <- .hugoEnv$path
   } else  {
