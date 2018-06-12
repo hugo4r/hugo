@@ -1,13 +1,13 @@
-#' Save investigation info
+#' Save variables and information about packages
 #'
-#' @description hugo_save_investigation saves variables and packages used in investigation.
-#' Data is stored in subfolder 'resources/{session_name}' in two separate files: _variables_ and _packages_
-#' Written data can be read back at later date by using function _hugo_continue_investigation_.
+#' @description The \code{hugo_save_investigation} saves variables and versions of packages used in investigation.
+#' Data is stored in subfolder \code{resources/session_name} in two separate files: \code{variables} and \code{packages}.
+#' Restoring data and loading saved versions of packages could be done by using function \code{\link{_hugo_continue_investigation_}}.
 #'
 #' @param session_name name of directory in which the session will be saved.
 #' If session_name = NULL, the dafault name is set.
 #' @param variables a character vector containing names of important variables to be saved.
-#' By default _variables = NULL_, then all the variables in environment _envir_ are saved.
+#' By default \code{variables = NULL}, what means that all the variables in environment \code{envir} are saved.
 #'
 #' @param envir an environment to search for objects to be saved. Global Environment by default.
 #'
@@ -19,8 +19,10 @@
 #' res <- model$residuals
 #' petal.pred <- predict(model, newdata = iris)
 #' hugo_save_investigation()
+#'
 #' # or select variables to be written out and set name of session's directory:
 #' hugo_save_investigation( variables = c('petal.pred', 'res'), session_name = 'IrisModel')
+#'
 #' # or select the environment that contains variables for saving
 #' e <- new.env()
 #' e$a <- FALSE
@@ -32,7 +34,8 @@ hugo_save_investigation <- function( variables = NULL, session_name = NULL, envi
 
   #add_to_history("hugo_save_investigation")
   if (!file.exists(.hugoEnv$path)) {                                # if investigation wasn't called
-    ans <- readline(cat("hugo_start_investigation() wasn't called.\n Enter investigation's path or 0 to continue with default path parameter."))
+    cat("hugo_start_investigation() wasn't called.\n Enter investigation's path or 0 to continue with default path parameter.\n")
+    ans <- readLines(con = getOption("hugo.connection_in"), n = 1)
     if(ans == "0") hugo_start_investigation()
     else hugo_start_investigation(ans)
   }
@@ -56,7 +59,8 @@ hugo_save_investigation <- function( variables = NULL, session_name = NULL, envi
 
   answ <- 1
   while(session_name %in% saved_sessions & answ != "0" ) {
-    answ <- readline(cat('Session ', session_name, " already exists. Please, enter other name or press 0 to overwrite the file" ))
+    cat('Session ', session_name, " already exists. Please, enter other name or press 0 to overwrite the file" )
+    answ <- readLines(con = getOption("hugo.connection_in"), n = 1)
     if(answ != 0 ) session_name <- answ
   }
 
