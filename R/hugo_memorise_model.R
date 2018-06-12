@@ -16,7 +16,7 @@
 
 hugo_memorise_model <- function(model = NULL, name = substitute(model)) {
 
-  # add_to_history("hugo_memorise_model")
+  .hugoEnv$history[length(.hugoEnv$history)+1] <- deparse(match.call())
 
   if (!file.exists(.hugoEnv$path)) {
     stop('Call hugo_start_investigation() for starting the new investigation.')
@@ -59,6 +59,8 @@ hugo_memorise_model <- function(model = NULL, name = substitute(model)) {
     close(rfile)
   })
 
+  add_path_to_history(paste0(path, "/", name, ".md"))
+  add_path_to_history(paste0(path, "/", name, ".rda"))
   cat("Model ", name, " and summary saved in ", path, "\n")
 }
 
