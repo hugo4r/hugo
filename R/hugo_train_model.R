@@ -30,29 +30,29 @@ hugo_train_model <- function(data, formula) {
   }
   
   #make a trainControl set
-  control <- trainControl(method = "repeatedcv",
+  control <- caret::trainControl(method = "repeatedcv",
                           number = 10,
                           repeats = 3)
   
   
   #regresion model
-  glm_model <- train(formula,
+  glm_model <- caret::train(formula,
                      data = data,
                      method = "glm",
                      trControl = control)
   #random forest model
-  randomforest_model <- train(formula,
+  randomforest_model <- caret::train(formula,
                               data = data,
                               method = "rf",
                               trControl = control)
   #gbm model
-  gbm_model <- train(formula,
+  gbm_model <- caret::train(formula,
                      data = data,
                      method = "gbm",
                      trControl = control)
   #results
   outcome <-
-    resamples(
+    caret::resamples(
       list(
         glm_model = glm_model,
         randomforest_model = randomforest_model,
@@ -83,7 +83,7 @@ hugo_train_model <- function(data, formula) {
   
   
   
-  value <- varImp(get(result))$importance
+  value <- caret::varImp(get(result))$importance
   number_of_variable <-
     menu(c("Yes", "No"), title = "Hugo shows you the 20 first variables. Do you want see all?\n")
   if (number_of_variable == "No") {
