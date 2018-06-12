@@ -17,6 +17,13 @@
 #' b <- list('abcdef', seq(0,5,0.1), c(TRUE,FALSE))
 #' hugo_memorise(b)
 #' }
+
+# hugo_memorise_overwrite <- function(object, ans) {
+#   if (ans == 0 | ans == 2) {
+#     return(cat('The \"', deparse(substitute(object)), '\" object was not copied.\n', sep=''))
+#   }
+# }
+
 hugo_memorise <- function(object = NULL) {
 
   .hugoEnv$history[length(.hugoEnv$history)+1]<-deparse(match.call())
@@ -36,10 +43,23 @@ hugo_memorise <- function(object = NULL) {
   file_name <- paste0(path, deparse(substitute(object)), '.rda')
 
   if (file.exists(file_name)) {
-    ans <- utils::menu(c('Yes','No'), title = cat('Object named \"', deparse(substitute(object)), '\" already exists in directory ', path, '.\nDo you want to overwrite it?\n', sep = ''))
-    if (ans == 0 | ans == 2) {
-      return(cat('The \"', deparse(substitute(object)), '\" object was not copied.\n', sep=''))
+    cat('Object named \"', deparse(substitute(object)), '\" already exists in directory ', path, '.\nDo you want to overwrite it?\n', sep = '')
+    cat('Yes: 1\nNo: 2\n')
+    ans <- 0
+    while(ans == 0) {
+      ans <- readLines(con = getOption('hugo.connection_in'), n = 1)
+      if (ans == 2) {
+        return(cat('The \"', deparse(substitute(object)), '\" object was not copied.\n', sep=''))
+      } else if(ans != 1) {
+        cat('Wrong answer, try again!\n')
+        ans <- 0
+      }
     }
+    # ans <- utils::menu(c('Yes','No'), title = cat('Object named \"', deparse(substitute(object)), '\" already exists in directory ', path, '.\nDo you want to overwrite it?\n', sep = ''))
+    # if (ans == 0 | ans == 2) {
+    #   return(cat('The \"', deparse(substitute(object)), '\" object was not copied.\n', sep=''))
+    # }
+    #hugo_memorise_overwrite(object, ans)
   }
 
   object_var <- stats::setNames(as.list(object), deparse(substitute(object)))
