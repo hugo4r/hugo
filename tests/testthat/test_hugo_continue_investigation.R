@@ -82,7 +82,7 @@ test_that("Missing package is installed",{
   hugo_save_investigation(session_name = "test_session 5",envir=e)
   detach(name="package:astsa", unload=TRUE, force = TRUE)
   remove.packages("astsa")
-  expect_failure(expect_error(hugo_continue_investigation(path="hugo_test_continue",session_name="test_session 5",envir=e)))
+  expect_error(hugo_continue_investigation(path="hugo_test_continue",session_name="test_session 5",envir=e))
   expect_true("astsa" %in% .packages())
 
 })
