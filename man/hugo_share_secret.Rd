@@ -24,26 +24,34 @@ hugo_get_secret(user, repo_name, object_name, passphrase)
 Please check Functions section.
 }
 \description{
-Encrypt and share R objects on github
+Encrypt and share R objects on github using \code{\link{hugo_share_object}}.
 }
 \section{Functions}{
 \itemize{
 \item \code{hugo_share_secret}: Shares given object via github, prompts user for input.
 
+   See \code{\link{hugo_share_object}} for details.
+
    Returns: in case of success prompts user with message, and returns string, which is
-   direct call to hugo_get_secret. In case of failure, prompts user with appropriate
+   direct call to \code{\link{hugo_get_secret}}. In case of failure, prompts user with appropriate
    message and returns NULL.
 
 \item \code{hugo_get_secret}: Downloads encrypted object from github.
-Returns: in case of success prompts user with message, and returns object.
-It us up to user how to handle it - wheter to assign it to variable,
-or use as parameter. In case of failure, prompts user with appropriate
-message and returns NULL.
+
+   See \code{\link{hugo_get_object}} for details.
+
+   Returns: in case of success prompts user with message, and returns object.
+   It us up to user how to handle it - wheter to assign it to variable,
+   or use as parameter. In case of failure, prompts user with appropriate
+   message and returns NULL.
 }}
 
 \examples{
 \dontrun{
-hugo_share_secret(iris, "secret")
+get_string <- hugo_share_secret(iris, "secret")
+
+#Fetch object from github using returned command
+eval(parse(text=get_string))
 }
 }
 \author{
