@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Starts a New Hugo Investigation — hugo_start_investigation • hugo</title>
+<title>Share and download object from github. — hugo_share_object • hugo</title>
 
 <!-- jquery -->
 <script src="https://code.jquery.com/jquery-3.1.0.min.js" integrity="sha384-nrOSfDHtoPMzJHjVTdCopGqIqeYETSXhZDFyniQ8ZHcVy08QesyHcnOUpMpqnmWq" crossorigin="anonymous"></script>
@@ -30,9 +30,13 @@
 
 
 
-<meta property="og:title" content="Starts a New Hugo Investigation — hugo_start_investigation" />
+<meta property="og:title" content="Share and download object from github. — hugo_share_object" />
 
-<meta property="og:description" content="Starts a New Hugo Investigation" />
+<meta property="og:description" content="To use both of this functions, it is required to have git installed.
+Becouse of git2r library limitations, those functions won't work if either
+user.name or user.email are empty in git config file. Uses .rds format to save objects.
+Hugo_get_object is intended to use only with hugo_share_object - it is not general
+function to download object from github, and don't try to use it as one." />
 <meta name="twitter:card" content="summary" />
 
 
@@ -92,44 +96,93 @@
 <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-    <h1>Starts a New Hugo Investigation</h1>
+    <h1>Share and download object from github.</h1>
     
-    <div class="hidden name"><code>hugo_start_investigation.Rd</code></div>
+    <div class="hidden name"><code>hugo_share_object.Rd</code></div>
     </div>
 
     <div class="ref-description">
     
-    <p>Starts a New Hugo Investigation</p>
+    <p>To use both of this functions, it is required to have git installed.
+Becouse of git2r library limitations, those functions won't work if either
+user.name or user.email are empty in git config file. Uses .rds format to save objects.
+Hugo_get_object is intended to use only with hugo_share_object - it is not general
+function to download object from github, and don't try to use it as one.</p>
     
     </div>
 
-    <pre class="usage"><span class='fu'>hugo_start_investigation</span>(<span class='kw'>path</span> <span class='kw'>=</span> <span class='kw'>NULL</span>)</pre>
+    <pre class="usage"><span class='fu'>hugo_share_object</span>(<span class='no'>object</span>)
+
+<span class='fu'>hugo_get_object</span>(<span class='no'>user</span>, <span class='no'>repo_name</span>, <span class='no'>object_name</span>)</pre>
     
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
-      <th>path</th>
-      <td><p>name of a directory in which the investigation will be stored</p></td>
+      <th>object</th>
+      <td><p>R object which you wish to share.</p></td>
+    </tr>
+    <tr>
+      <th>user</th>
+      <td><p>Github user name, to construct proper url to repository.</p></td>
+    </tr>
+    <tr>
+      <th>repo_name</th>
+      <td><p>Name of github repository, also used to construct url.</p></td>
+    </tr>
+    <tr>
+      <th>object_name</th>
+      <td><p>Name of the object you want to download.</p></td>
     </tr>
     </table>
     
+    <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
+
+    <p>Please check Functions section.</p>
+    
+    <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
+
+    <p>While using hugo_share_object user is prompted and asked to insert additional parameters - github user name, password for given user, and repository name, to wich you want to add your object.
+If hugo remebers previus answer, user will be prompted and asked if he wishes to use current
+credentials or insert new ones.</p>
+    
+    <h2 class="hasAnchor" id="functions"><a class="anchor" href="#functions"></a>Functions</h2>
+
+    <ul>
+<li><p><code>hugo_share_object</code>: Shares given object via github, prompts user for input.</p>
+<p>Returns: in case of success prompts user with message, and returns string, which is
+   direct call to hugo_get_object. In case of failure, prompts user with appropriate
+   message and returns NULL.</p></li>
+<li><p><code>hugo_get_object</code>: Downloads given object from github.
+Returns: in case of success prompts user with message, and returns object.
+It us up to user how to handle it - wheter to assign it to variable,
+or use as parameter. In case of failure, prompts user with appropriate
+message and returns NULL.</p></li>
+</ul>
+    
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='fu'>hugo_start_investigation</span>()</div><div class='output co'>#&gt; Investigation  hugo_investigation_2018_06_11  already exists</div><div class='input'>
-</div></pre>
+    <pre class="examples"><span class='co'># NOT RUN {</span>
+<span class='fu'>hugo_share_object</span>(<span class='no'>iris</span>)
+<span class='fu'>hugo_get_object</span>(<span class='fu'>matrix</span>(<span class='fu'>runif</span>(<span class='fl'>200</span>), <span class='kw'>ncol</span> <span class='kw'>=</span> <span class='fl'>10</span>))
+
+<span class='no'>object_1</span> <span class='kw'>&lt;-</span> <span class='fu'>hugo_get_object</span>(<span class='st'>'tidyverse'</span>,<span class='st'>'readr'</span>,<span class='st'>'revdep/checks.rds'</span>)
+<span class='no'>object_2</span> <span class='kw'>&lt;-</span> <span class='fu'>hugo_get_object</span>(<span class='st'>'hadley'</span>,<span class='st'>'r-python'</span>,<span class='st'>'github.rds'</span>)
+<span class='co'># }</span></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
     <h2>Contents</h2>
     <ul class="nav nav-pills nav-stacked">
       <li><a href="#arguments">Arguments</a></li>
-            
+      
+      <li><a href="#value">Value</a></li>
+
+      <li><a href="#details">Details</a></li>
+
+      <li><a href="#functions">Functions</a></li>
+      
       <li><a href="#examples">Examples</a></li>
     </ul>
-
-    <h2>Author</h2>
-    
-Przemyslaw Biecek
 
   </div>
 </div>

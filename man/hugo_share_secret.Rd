@@ -2,20 +2,49 @@
 % Please edit documentation in R/hugo_share_secret.R
 \name{hugo_share_secret}
 \alias{hugo_share_secret}
+\alias{hugo_get_secret}
 \title{Encrypt and share any object}
 \usage{
 hugo_share_secret(object, passphrase)
+
+hugo_get_secret(user, repo_name, object_name, passphrase)
 }
 \arguments{
 \item{object}{object to share}
 
 \item{passphrase}{object will be encrypted using provided passphrase}
+
+\item{user}{Github user name, to construct proper url to repository.}
+
+\item{repo_name}{Name of github repository, also used to construct url.}
+
+\item{object_name}{Name of the object you want to download.}
+}
+\value{
+Please check Functions section.
 }
 \description{
-Encrypt and share any object
+Encrypt and share R objects on github
 }
+\section{Functions}{
+\itemize{
+\item \code{hugo_share_secret}: Shares given object via github, prompts user for input.
+
+   Returns: in case of success prompts user with message, and returns string, which is
+   direct call to hugo_get_secret. In case of failure, prompts user with appropriate
+   message and returns NULL.
+
+\item \code{hugo_get_secret}: Downloads encrypted object from github.
+Returns: in case of success prompts user with message, and returns object.
+It us up to user how to handle it - wheter to assign it to variable,
+or use as parameter. In case of failure, prompts user with appropriate
+message and returns NULL.
+}}
+
 \examples{
+\dontrun{
 hugo_share_secret(iris, "secret")
+}
 }
 \author{
 Kamil Romaszko

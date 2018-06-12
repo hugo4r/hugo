@@ -50,11 +50,11 @@ hugo_share_object <- function(object) {
   options(hugo.user_name = user)
 
   if(getOption('hugo.connection_out') != stdout() | !interactive()){
-  cat(paste0("Please insert password for user", getOption('hugo.user_name'), ": > ", sep = " "),
+  cat(paste0("Please insert password for user ", getOption('hugo.user_name'), ": > ", sep = " "),
       file = getOption('hugo.connection_out'))
   pass <-  readLines(con = getOption('hugo.connection_in'), n = 1)
   } else {
-    pass <- getPass::getPass(paste0("Please insert password for user",
+    pass <- getPass::getPass(paste0("Please insert password for user ",
           getOption('hugo.user_name'), ": > ", sep = " "))
 
   }
@@ -66,18 +66,18 @@ hugo_share_object <- function(object) {
 
   } else {
 
-    x <- switch(utils::menu(c('Use previous settings.','Enter new credentials.'),
+    chosen_input <- switch(utils::menu(c('Use previous settings.','Enter new credentials.'),
                      title = paste0("Found previous settings: user = ",
                      getOption('hugo.user_name'), ' , repo_name = ',
                      getOption('hugo.repo_name'), '.')),T,F)
-    if(is.null(x)) {return()}
-    if(x) {
+    if(is.null(chosen_input)) {return()}
+    if(chosen_input) {
       if(getOption('hugo.connection_out') != stdout() | !interactive()){
-        cat(paste0("Please insert password for user", getOption('hugo.user_name'), ": > ", sep = " "),
+        cat(paste0("Please insert password for user ", getOption('hugo.user_name'), ": > ", sep = " "),
             file = getOption('hugo.connection_out'))
         pass <-  readLines(con = getOption('hugo.connection_in'), n = 1)
       } else {
-        pass <- getPass::getPass(paste0("Please insert password for user",
+        pass <- getPass::getPass(paste0("Please insert password for user ",
               getOption('hugo.user_name'), ": > ", sep = " "))
 
       }
@@ -88,11 +88,11 @@ hugo_share_object <- function(object) {
       options(hugo.user_name = user)
 
       if(getOption('hugo.connection_out') != stdout() | !interactive()){
-        cat(paste0("Please insert password for user", getOption('hugo.user_name'), ": > ", sep = " "),
+        cat(paste0("Please insert password for user ", getOption('hugo.user_name'), ": > ", sep = " "),
             file = getOption('hugo.connection_out'))
         pass <-  readLines(con = getOption('hugo.connection_in'), n = 1)
       } else {
-        pass <- getPass::getPass(paste0("Please insert password for user",
+        pass <- getPass::getPass(paste0("Please insert password for user ",
               getOption('hugo.user_name'), ": > ", sep = " "))
 
       }
@@ -169,6 +169,8 @@ hugo_get_object <- function(user, repo_name, object_name) {
 
   path <- tempfile(pattern = paste0("git2r-", user, "-", repo_name, "-"))
   dir.create(path)
+
+  cat("I`m trying to get your object... \n",file = getOption('hugo.connection_out'))
 
   tryCatch(expr =
              repo <- git2r::clone(paste0("https://github.com/", user, "/", repo_name, ".git"),

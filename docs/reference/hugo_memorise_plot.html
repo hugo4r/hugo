@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Starts a New Hugo Investigation — hugo_start_investigation • hugo</title>
+<title>Save plot — hugo_memorise_plot • hugo</title>
 
 <!-- jquery -->
 <script src="https://code.jquery.com/jquery-3.1.0.min.js" integrity="sha384-nrOSfDHtoPMzJHjVTdCopGqIqeYETSXhZDFyniQ8ZHcVy08QesyHcnOUpMpqnmWq" crossorigin="anonymous"></script>
@@ -30,9 +30,11 @@
 
 
 
-<meta property="og:title" content="Starts a New Hugo Investigation — hugo_start_investigation" />
+<meta property="og:title" content="Save plot — hugo_memorise_plot" />
 
-<meta property="og:description" content="Starts a New Hugo Investigation" />
+<meta property="og:description" content="Saves a plot in the directory chosen at the beginning of the current
+Hugo Investigation in the subfolder 'gallery' in .rda file with miniatures
+in pdf and png, what makes plot easier to search" />
 <meta name="twitter:card" content="summary" />
 
 
@@ -92,44 +94,75 @@
 <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-    <h1>Starts a New Hugo Investigation</h1>
+    <h1>Save plot</h1>
     
-    <div class="hidden name"><code>hugo_start_investigation.Rd</code></div>
+    <div class="hidden name"><code>hugo_memorise_plot.Rd</code></div>
     </div>
 
     <div class="ref-description">
     
-    <p>Starts a New Hugo Investigation</p>
+    <p>Saves a plot in the directory chosen at the beginning of the current
+Hugo Investigation in the subfolder 'gallery' in .rda file with miniatures
+in pdf and png, what makes plot easier to search</p>
     
     </div>
 
-    <pre class="usage"><span class='fu'>hugo_start_investigation</span>(<span class='kw'>path</span> <span class='kw'>=</span> <span class='kw'>NULL</span>)</pre>
+    <pre class="usage"><span class='fu'>hugo_memorise_plot</span>(<span class='kw'>plot</span> <span class='kw'>=</span> <span class='fl'>NA</span>, <span class='kw'>name</span> <span class='kw'>=</span> <span class='kw'>NULL</span>)</pre>
     
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
-      <th>path</th>
-      <td><p>name of a directory in which the investigation will be stored</p></td>
+      <th>plot</th>
+      <td><p>plot to be saved, created with package graphics or ggplot2</p></td>
+    </tr>
+    <tr>
+      <th>name</th>
+      <td><p>character string, name of plot, if NULL then plots will be saved as "plot" with next numbers</p></td>
     </tr>
     </table>
     
+    <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
+
+    <p>When plot to save is created with more then one funkction from package
+graphics, the whole block of code should be putted to the function in bracket '...'.</p>
+    
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='fu'>hugo_start_investigation</span>()</div><div class='output co'>#&gt; Investigation  hugo_investigation_2018_06_11  already exists</div><div class='input'>
-</div></pre>
+    <pre class="examples"><span class='co'># NOT RUN {</span>
+<span class='co'># saving plot created with package graphics with a given name</span>
+<span class='fu'>hugo_memorise_plot</span>(<span class='fu'>plot</span>(<span class='fl'>1</span>:<span class='fl'>10</span>), <span class='st'>"nice_plot"</span>)
+
+<span class='co'># saving plot created with package graphics without argument name</span>
+<span class='fu'>hugo_memorise_plot</span>(<span class='fu'>plot</span>(<span class='fl'>1</span>:<span class='fl'>10</span>, <span class='kw'>las</span> <span class='kw'>=</span> <span class='fl'>1</span>))
+
+<span class='co'># if plot is created with more then one function from package graphics</span>
+<span class='fu'>hugo_memorise_plot</span>({<span class='fu'>plot</span>(<span class='fl'>1</span>:<span class='fl'>10</span>)
+                     <span class='fu'>abline</span>(<span class='kw'>a</span> <span class='kw'>=</span> <span class='fl'>1</span>, <span class='kw'>b</span> <span class='kw'>=</span> <span class='fl'>1</span>)})
+
+<span class='co'># creating and saving plot with ggplot2</span>
+<span class='no'>df</span> <span class='kw'>&lt;-</span> <span class='fu'>data.frame</span>(<span class='kw'>gp</span> <span class='kw'>=</span> <span class='fu'>factor</span>(<span class='fu'>rep</span>(<span class='no'>letters</span>[<span class='fl'>1</span>:<span class='fl'>3</span>], <span class='kw'>each</span> <span class='kw'>=</span> <span class='fl'>10</span>)),<span class='kw'>y</span> <span class='kw'>=</span> <span class='fu'>rnorm</span>(<span class='fl'>30</span>))
+<span class='fu'>require</span>(<span class='no'>ggplot2</span>)
+<span class='no'>plot_gg</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='http://www.rdocumentation.org/packages/ggplot2/topics/ggplot'>ggplot</a></span>(<span class='no'>df</span>, <span class='fu'><a href='http://www.rdocumentation.org/packages/ggplot2/topics/aes'>aes</a></span>(<span class='no'>gp</span>, <span class='no'>y</span>)) + <span class='fu'><a href='http://www.rdocumentation.org/packages/ggplot2/topics/geom_point'>geom_point</a></span>()
+
+<span class='fu'>hugo_memorise_plot</span>(<span class='no'>plot_gg</span>, <span class='st'>"plot_with_ggplot"</span>)
+<span class='co'># also works:</span>
+<span class='fu'>hugo_memorise_plot</span>(<span class='fu'><a href='http://www.rdocumentation.org/packages/ggplot2/topics/ggplot'>ggplot</a></span>(<span class='no'>df</span>, <span class='fu'><a href='http://www.rdocumentation.org/packages/ggplot2/topics/aes'>aes</a></span>(<span class='no'>gp</span>, <span class='no'>y</span>)) + <span class='fu'><a href='http://www.rdocumentation.org/packages/ggplot2/topics/geom_point'>geom_point</a></span>())
+<span class='co'># }</span></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
     <h2>Contents</h2>
     <ul class="nav nav-pills nav-stacked">
       <li><a href="#arguments">Arguments</a></li>
-            
+      
+      <li><a href="#details">Details</a></li>
+      
       <li><a href="#examples">Examples</a></li>
     </ul>
 
     <h2>Author</h2>
     
-Przemyslaw Biecek
+Joanna Golawska
 
   </div>
 </div>

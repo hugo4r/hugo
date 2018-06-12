@@ -2,6 +2,7 @@
 
 export(hugo_clean_data)
 export(hugo_get_object)
+export(hugo_get_secret)
 export(hugo_memorise)
 export(hugo_memorise_model)
 export(hugo_memorise_plot)
@@ -11,3 +12,4 @@ export(hugo_share_object)
 export(hugo_share_secret)
 export(hugo_show_history)
 export(hugo_start_investigation)
+export(hugo_train_model)

@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Function reference • hugo</title>
+<title>Clean your data — hugo_clean_data • hugo</title>
 
 <!-- jquery -->
 <script src="https://code.jquery.com/jquery-3.1.0.min.js" integrity="sha384-nrOSfDHtoPMzJHjVTdCopGqIqeYETSXhZDFyniQ8ZHcVy08QesyHcnOUpMpqnmWq" crossorigin="anonymous"></script>
@@ -30,7 +30,12 @@
 
 
 
-<meta property="og:title" content="Function reference" />
+<meta property="og:title" content="Clean your data — hugo_clean_data" />
+
+<meta property="og:description" content="This function fills missing values - a median for numeric variables and a mode for categorical variables (factors).
+Additionally, the outliers from numeric variables are replaced according to the IQR rule for outliers.
+In factors rare levels are merged into 'Other' level." />
+<meta name="twitter:card" content="summary" />
 
 
 
@@ -46,7 +51,7 @@
   </head>
 
   <body>
-    <div class="container template-reference-index">
+    <div class="container template-reference-topic">
       <header>
       <div class="navbar navbar-default navbar-fixed-top" role="navigation">
   <div class="container">
@@ -87,96 +92,82 @@
       </header>
 
 <div class="row">
-  <div class="contents col-md-9">
+  <div class="col-md-9 contents">
     <div class="page-header">
-      <h1>Reference</h1>
+    <h1>Clean your data</h1>
+    
+    <div class="hidden name"><code>hugo_clean_data.Rd</code></div>
     </div>
 
-    <table class="ref-index">
+    <div class="ref-description">
+    
+    <p>This function fills missing values - a median for numeric variables and a mode for categorical variables (factors).
+Additionally, the outliers from numeric variables are replaced according to the IQR rule for outliers.
+In factors rare levels are merged into 'Other' level.</p>
+    
+    </div>
 
-    <colgroup>
-      
-      <col class="alias" />
-      <col class="title" />
-    </colgroup>
-
-    <tbody>
-      <tr>
-        <th colspan="2">
-          <h2 id="section-all-functions" class="hasAnchor"><a href="#section-all-functions" class="anchor"></a>All functions</h2>
-          <p class="section-desc"></p>
-        </th>
-      </tr>
-      <tr>
-        
-        <td>
-          <p><code><a href="hugo_clean_data.html">hugo_clean_data()</a></code> </p>
-        </td>
-        <td><p>Clean your data</p></td>
-      </tr><tr>
-        
-        <td>
-          <p><code><a href="hugo_memorise.html">hugo_memorise()</a></code> </p>
-        </td>
-        <td><p>Saving objects as .rda files</p></td>
-      </tr><tr>
-        
-        <td>
-          <p><code><a href="hugo_memorise_model.html">hugo_memorise_model()</a></code> </p>
-        </td>
-        <td><p>Saves a model</p></td>
-      </tr><tr>
-        
-        <td>
-          <p><code><a href="hugo_memorise_plot.html">hugo_memorise_plot()</a></code> </p>
-        </td>
-        <td><p>Save plot</p></td>
-      </tr><tr>
-        
-        <td>
-          <p><code><a href="hugo_read_data.html">hugo_read_data()</a></code> </p>
-        </td>
-        <td><p>Reads data to R</p></td>
-      </tr><tr>
-        
-        <td>
-          <p><code><a href="hugo_save_investigation.html">hugo_save_investigation()</a></code> </p>
-        </td>
-        <td><p>Save investigation info</p></td>
-      </tr><tr>
-        
-        <td>
-          <p><code><a href="hugo_share_object.html">hugo_share_object()</a></code> <code><a href="hugo_share_object.html">hugo_get_object()</a></code> </p>
-        </td>
-        <td><p>Share and download object from github.</p></td>
-      </tr><tr>
-        
-        <td>
-          <p><code><a href="hugo_share_secret.html">hugo_share_secret()</a></code> <code><a href="hugo_share_secret.html">hugo_get_secret()</a></code> </p>
-        </td>
-        <td><p>Encrypt and share any object</p></td>
-      </tr><tr>
-        
-        <td>
-          <p><code><a href="hugo_show_history.html">hugo_show_history()</a></code> </p>
-        </td>
-        <td><p>Dispays history of hugo investigation.</p></td>
-      </tr><tr>
-        
-        <td>
-          <p><code><a href="hugo_start_investigation.html">hugo_start_investigation()</a></code> </p>
-        </td>
-        <td><p>Starts a New Hugo Investigation</p></td>
-      </tr>
-    </tbody>
+    <pre class="usage"><span class='fu'>hugo_clean_data</span>(<span class='no'>data</span>, <span class='kw'>prop</span> <span class='kw'>=</span> <span class='fl'>0.05</span>)</pre>
+    
+    <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
+    <table class="ref-arguments">
+    <colgroup><col class="name" /><col class="desc" /></colgroup>
+    <tr>
+      <th>data</th>
+      <td><p><code>data.frame</code> to clean</p></td>
+    </tr>
+    <tr>
+      <th>prop</th>
+      <td><p>proportion of occurence of the level in a categorical variable which decides which levels are rare</p></td>
+    </tr>
     </table>
-  </div>
+    
+    <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
+    <p><code>data.frame</code> that has been cleaned</p>
+    
+
+    <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
+    <pre class="examples"><span class='co'># NOT RUN {</span>
+<span class='co'># Dataset in base R: airquality</span>
+<span class='co'># There are 44 missing values</span>
+<span class='fu'>sum</span>(<span class='fu'>is.na</span>(<span class='no'>airquality</span>))
+
+<span class='fu'>hugo_clean_data</span>(<span class='no'>airquality</span>)
+<span class='co'># The data was cleaned.</span>
+
+<span class='co'># Two original rows from data:</span>
+
+<span class='co'># Ozone Solar.R  Wind Temp Month Day</span>
+<span class='co'>#     8      19  20.1   61     5   9</span>
+<span class='co'>#     NA      NA 14.3   56     5   5</span>
+
+<span class='co'># After cleaning:</span>
+
+<span class='co'># Ozone Solar.R  Wind Temp Month Day</span>
+<span class='co'>#     8      19 17.65   61     5   9</span>
+<span class='co'>#  31.5     205 14.30   56     5   5</span>
+
+<span class='co'># We can see that the outlier in 'Wind' was</span>
+<span class='co'># replaced by the value Q3+1.5*IGR for this column.</span>
+<span class='co'># Missing values were replaced with medians.</span>
+<span class='co'># }</span><div class='input'>
+</div></pre>
+  </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
     <h2>Contents</h2>
     <ul class="nav nav-pills nav-stacked">
-      <li><a href="#section-all-functions">All functions</a></li>
+      <li><a href="#arguments">Arguments</a></li>
+      
+      <li><a href="#value">Value</a></li>
+      
+      <li><a href="#examples">Examples</a></li>
     </ul>
+
+    <h2>Author</h2>
+    
+Eliza Kaczorek
+
   </div>
 </div>
 

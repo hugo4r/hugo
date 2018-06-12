@@ -37,14 +37,9 @@ hugo_memorise <- function(object = NULL) {
 
   ans <- -1
   if (file.exists(file_name)) {
-    cat('Object named \"', deparse(substitute(object)), '\" already exists in directory ', path, '.\nDo you want to overwrite it?\n', sep = '')
-    while(!(ans %in% c(0,1))) {
-      ans <- readline(cat('1: Yes\n0: No\n'))
-      if (ans == 0) {
-        return(cat('The \"', deparse(substitute(object)), '\" object was not copied.\n', sep=''))
-      } else if (ans != 1) {
-        cat('Wrong answer, try again!\n')
-      }
+    ans <- utils::menu(c('Yes','No'), title = cat('Object named \"', deparse(substitute(object)), '\" already exists in directory ', path, '.\nDo you want to overwrite it?\n', sep = ''))
+    if (ans == 2) {
+      return(cat('The \"', deparse(substitute(object)), '\" object was not copied.\n', sep=''))
     }
   }
 
