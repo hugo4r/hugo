@@ -78,7 +78,7 @@ test_that("Missing package is installed",{
   hugo_save_investigation(session_name = "test_session 5")
   detach(name="package:astsa", unload=TRUE, force = TRUE)
   remove.packages("astsa")
-  hugo_continue_investigation(path="hugo_test",session_name="test_session 5")
+  hugo_continue_investigation(path="hugo_test_continue",session_name="test_session 5")
   expect_true("astsa" %in% .packages())
 
 })
@@ -91,7 +91,7 @@ test_that("Missing package cannot be installed",{
   hugo_save_investigation(session_name = "test_session 6")
   detach(name="package:testpackage", unload=TRUE, force = TRUE)
   remove.packages("testpackage")
-  expect_error(hugo_continue_investigation(path="hugo_test",session_name="test_session 6"),NA)
+  expect_error(hugo_continue_investigation(path="hugo_test_continue",session_name="test_session 6"),NA)
 })
 
 unlink("hugo_test_continue", recursive = TRUE)
