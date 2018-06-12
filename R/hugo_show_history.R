@@ -7,7 +7,7 @@
 #' @param last the number of entries from the beginning of the history to display.
 #' @param first the number of entries from the end of the history to display.
 #' @param specyfic is a natural vector ponting out which particular enrties should be shown.
-#' @param reset If true, the history of investigation will reset.
+#' @param restart If true, the history of investigation will reset.
 #' @note maximum one argument may not be NULL.
 #' 
 #' Providing variables which would result in showing more entries than the current history contains 
