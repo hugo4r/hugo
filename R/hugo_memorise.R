@@ -35,10 +35,9 @@ hugo_memorise <- function(object = NULL) {
   }
   file_name <- paste0(path, deparse(substitute(object)), '.rda')
 
-  ans <- -1
   if (file.exists(file_name)) {
     ans <- utils::menu(c('Yes','No'), title = cat('Object named \"', deparse(substitute(object)), '\" already exists in directory ', path, '.\nDo you want to overwrite it?\n', sep = ''))
-    if (ans == 2) {
+    if (ans == 0 | ans == 2) {
       return(cat('The \"', deparse(substitute(object)), '\" object was not copied.\n', sep=''))
     }
   }
@@ -48,4 +47,5 @@ hugo_memorise <- function(object = NULL) {
   cat('Copy of the \"', deparse(substitute(object)), '\" object is stored in ', path, '.\n', sep='')
 
 }
+
 
