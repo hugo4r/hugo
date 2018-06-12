@@ -24,7 +24,7 @@ Suggests: testthat,
     forcats,
     git2r,
     getPass,
-	astsa
+    astsa
 License: GPL-3
 Encoding: UTF-8
 Imports: readr,
