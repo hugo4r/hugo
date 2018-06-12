@@ -1,7 +1,24 @@
 context("Check hugo_save_investigation() function")
 
-hugo_start_investigation("hugo_test")
 
+test_that("investigation will start - input", {
+  .hugoEnv$path <- 'unusedpath'
+
+  f <- file()
+  options(hugo.connection_in = f)
+  ans <- "hugo_test"
+  write(ans, f)
+  expect_warning(hugo_save_investigation(), "No variables to save.")
+  options(hugo.connection_in = stdin())
+  close(f)
+
+})
+
+test_that("there is a directory", {
+  expect_true("./hugo_test" %in% list.dirs())
+})
+
+hugo_start_investigation("hugo_test")
 
 test_that("no variables for saving returns warning", {
   expect_warning(hugo_save_investigation(), "No variables to save.")
@@ -19,7 +36,7 @@ test_that("basic funcionality works", {
   e <- new.env()
   e$a <- FALSE
   e$b <- "a"
-  expect_output(hugo_save_investigation(envir = e, session_name = "test_session"))
+  expect_output(hugo_save_investigation(envir = e, session_name = "test_session"), "*succesfully saved")
 })
 
 test_that("selected variables are saved", {
