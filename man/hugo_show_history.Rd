@@ -14,7 +14,7 @@ hugo_show_history(last = NULL, first = NULL, specyfic = NULL,
 
 \item{specyfic}{is a natural vector ponting out which particular enrties should be shown.}
 
-\item{reset}{If true, the history of investigation will reset.}
+\item{restart}{If true, the history of investigation will reset.}
 }
 \description{
 Each usage of any hugo function adds an entry about it to a hidden variable in hugo environment 
