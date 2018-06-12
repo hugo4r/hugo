@@ -26,15 +26,23 @@ the second one is used to load all packages which were attached during the saved
 tries to load compatible versions of packages, or, if it is not possible, installs latest versions of troublesome packages.
 }
 \examples{
+\dontrun{
+
 hugo_start_investigation("iris")
+
 ## New investigation started in  iris
+
 my_boxplot <- boxplot(iris$Sepal.Length)
+
 hugo_save_investigation("iris_session1")
+
 ## iris_session1  succesfully saved.
+
 remove(my_boxplot)
 hugo_continue_investigation("iris")
+
 ## Loading required packages to continue investigation ...
-## Session iris_session1 from investigation iris sucessfully restored.
+## Session iris_session1 from investigation iris sucessfully restored.}
 }
 \seealso{
 \code{\link{hugo_save_investigation}}, \code{\link{hugo_start_investigation}}
