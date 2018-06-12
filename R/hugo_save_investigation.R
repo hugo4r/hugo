@@ -32,7 +32,8 @@
 
 hugo_save_investigation <- function( variables = NULL, session_name = NULL, envir = .GlobalEnv){
 
-  #add_to_history("hugo_save_investigation")
+  .hugoEnv$history[length(.hugoEnv$history)+1]<-deparse(match.call()) 
+
   if (!file.exists(.hugoEnv$path)) {                                # if investigation wasn't called
     cat("hugo_start_investigation() wasn't called.\n Enter investigation's path or 0 to continue with default path parameter.\n")
     ans <- readLines(con = getOption("hugo.connection_in"), n = 1)
