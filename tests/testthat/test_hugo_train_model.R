@@ -12,7 +12,7 @@ test_that("Argument 'data' is missing",{
 
 test_that("Argument 'formula' is missing",{
   expect_error(hugo_train_model())
-  expect_error(hugo_train_model(data))
+  expect_error(hugo_train_model(data.frame(class=c(1,1,2,2), value = c(2,3,4,5))))
 })
 
 
