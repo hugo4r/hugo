@@ -83,6 +83,10 @@ hugo_memorise_plot <- function(plot = NA, name = NULL){
     grDevices::dev.off()
   }
 
+  add_path_to_history(paste0(path, "/", name, ".pdf"))
+  add_path_to_history(paste0(path, "/", name, ".png"))
+  add_path_to_history(paste0(path, "/", name, ".rda"))
+  
   cat("Your plot ", name, " has been saved in ", path, "\n")
 
 }
