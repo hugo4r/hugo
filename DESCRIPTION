@@ -35,6 +35,8 @@ Imports: readr,
     openxlsx,
     RCurl,
     caret,
-    mlbench
+    mlbench,
+    knitr,
+    ReporteRs
 LazyData: true
 RoxygenNote: 6.0.1.9000

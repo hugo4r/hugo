@@ -2,7 +2,7 @@
 #'
 #' @description The \code{hugo_save_investigation} saves variables and versions of packages used in investigation.
 #' Data is stored in subfolder \code{resources/session_name} in two separate files: \code{variables} and \code{packages}.
-#' Restoring data and loading saved versions of packages could be done by using function \code{\link{_hugo_continue_investigation_}}.
+#' Restoring data and loading saved versions of packages could be done by using function hugo_continue_investigation.
 #'
 #' @param session_name name of directory in which the session will be saved.
 #' If session_name = NULL, the dafault name is set.

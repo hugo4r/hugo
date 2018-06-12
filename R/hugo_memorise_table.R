@@ -18,30 +18,30 @@
 
 
 hugo_memorise_table <- function(table = NULL, name = substitute(table)){
-  
+
   # add_to_history("hugo_memorise_table")
-  
+
   if (!file.exists(.hugoEnv$path)) {
     stop('Call hugo_start_investigation() for starting the new investigation.')
   }
-  
+
   if (is.null(table)) {
     stop("There is no table to be saved.", call.=FALSE)
   }
-  
+
   if (!requireNamespace("openxlsx", quietly = TRUE)) {
     stop("You have to first install library 'openxlsx'. ", call. = FALSE)
   }
-  
+
   if (!requireNamespace("ReporteRs", quietly = TRUE)) {
     stop("You have to first install library 'ReporteRs'. ", call. = FALSE)
   }
-  
+
   path <- paste0(.hugoEnv$path, "/gallery")
   if (!dir.exists(path)) {
     dir.create(path)
-  } 
-  
+  }
+
   tryCatch({
     save(table, file=paste0(path, "/", name,".rda"))
   }, warning = function(w) {
@@ -50,10 +50,10 @@ hugo_memorise_table <- function(table = NULL, name = substitute(table)){
     e$message <- paste0("While saving a table: ", e)
     stop(e)
   })
-  
+
   tryCatch({
   doc <- ReporteRs::docx()
-  doc <- ReporteRs::addFlexTable(doc, FlexTable(table))
+  doc <- ReporteRs::addFlexTable(doc, ReporteRs::FlexTable(table))
   ReporteRs::writeDoc(doc, file = paste0(path, "/", name, ".docx"))
   },warning = function(w) {
     warning("While saving a table in .docx: ", w)
@@ -61,7 +61,7 @@ hugo_memorise_table <- function(table = NULL, name = substitute(table)){
     e$message <- paste0("While saving a table in .docx: ", e)
     stop(e)
   })
-  
+
   tryCatch({
   openxlsx::write.xlsx(table, paste0(path, "/", name, ".xlsx"))
   },warning = function(w) {
@@ -70,7 +70,7 @@ hugo_memorise_table <- function(table = NULL, name = substitute(table)){
     e$message <- paste0("While saving a table in .xlsx: ", e)
     stop(e)
   })
-  
+
   tryCatch({
     rfile <- file(paste0(path, "/", name, ".md"), open="wt")
     sink(rfile, type="output")
@@ -85,5 +85,5 @@ hugo_memorise_table <- function(table = NULL, name = substitute(table)){
     sink(type="output")
     close(rfile)
   })
-  
+
 }
