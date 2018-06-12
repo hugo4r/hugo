@@ -15,7 +15,7 @@
 #'
 #' @param data R dataset which you wish to summary. This dataset should be of class \code{data.frame},
 #' \code{tibble} or \code{matrix}.
-#' @param overwrite_paramsA logical. If \code{TRUE} (the default) parameters used to generate report will be saved.
+#' @param overwrite_params logical. If \code{TRUE} (the default) parameters used to generate report will be saved.
 #'
 #' @return The function does not return anything. Its side effect (the production
 #' of a data report) is the reason for running the function.
