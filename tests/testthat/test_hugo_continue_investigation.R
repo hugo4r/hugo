@@ -1,6 +1,6 @@
 context("Check hugo_continue_investigation() function")
 
-hugo_start_investigation("hugo_test")
+hugo_start_investigation("hugo_test_continue")
 
 test_that("No saved sessions exist",{
 
@@ -94,4 +94,4 @@ test_that("Missing package cannot be installed",{
   expect_error(hugo_continue_investigation(path="hugo_test",session_name="test_session 6"),NA)
 })
 
-unlink("hugo_test", recursive = TRUE)
+unlink("hugo_test_continue", recursive = TRUE)
