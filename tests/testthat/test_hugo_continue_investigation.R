@@ -21,7 +21,8 @@ test_that("Variables are loaded",{
 
 test_that("Single session is loaded",{
 
-  expect_error(hugo_continue_investigation(),NA) #Expect success
+  e <- new.env()
+  expect_error(hugo_continue_investigation(envir=e),NA) #Expect success
 
 })
 
@@ -57,41 +58,46 @@ test_that("Multiple sessions handling",{
 
 test_that("Invalid session name is provided",{
 
-  expect_error(hugo_continue_investigation(session_name="Invalid"))
+  e <- new.env()
+  expect_error(hugo_continue_investigation(session_name="Invalid",envir=e))
 })
 
 test_that("Missing package is loaded",{
 
+  e <- new.env()
   library(datasets)
-  hugo_save_investigation(session_name="test_session 4")
+  hugo_save_investigation(session_name="test_session 4",envir=e)
   detach(name="package:datasets", unload=TRUE, force = TRUE)
-  hugo_continue_investigation(session_name="test_session 4")
+  hugo_continue_investigation(session_name="test_session 4",envir=e)
   expect_true("datasets" %in% .packages())
 })
 
 test_that("Missing package is installed",{
 
+  e <- new.env()
   if(!require(astsa)){
     install.packages("astsa")
     library(astsa)
   }
-  hugo_save_investigation(session_name = "test_session 5")
+  hugo_save_investigation(session_name = "test_session 5",envir=e)
   detach(name="package:astsa", unload=TRUE, force = TRUE)
   remove.packages("astsa")
-  hugo_continue_investigation(path="hugo_test_continue",session_name="test_session 5")
+  expect_failure(expect_error(hugo_continue_investigation(path="hugo_test_continue",session_name="test_session 5",envir=e)))
   expect_true("astsa" %in% .packages())
 
 })
 
 
+
 test_that("Missing package cannot be installed",{
 
+  e <- new.env()
   utils::install.packages("testpackage_0.0.0.9000.tar.gz", repos = NULL, type="source")
   library(testpackage)
-  hugo_save_investigation(session_name = "test_session 6")
+  hugo_save_investigation(session_name = "test_session 6",envir=e)
   detach(name="package:testpackage", unload=TRUE, force = TRUE)
   remove.packages("testpackage")
-  expect_error(hugo_continue_investigation(path="hugo_test_continue",session_name="test_session 6"),NA)
+  expect_error(hugo_continue_investigation(path="hugo_test_continue",session_name="test_session 6",envir=e),NA)
 })
 
 unlink("hugo_test_continue", recursive = TRUE)
