@@ -52,6 +52,7 @@ hugo_memorise <- function(object = NULL) {
 
   object_var <- stats::setNames(as.list(object), deparse(substitute(object)))
   save(list = names(object_var), file = file_name, envir = as.environment(object_var))
+  add_path_to_history(file_name)
   cat('Copy of the \"', deparse(substitute(object)), '\" object is stored in ', path, '.\n', sep='')
 
 }
