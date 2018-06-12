@@ -85,7 +85,7 @@ hugo_train_model <- function(data, formula) {
   
   value <- caret::varImp(get(result))$importance
   number_of_variable <-
-    menu(c("Yes", "No"), title = "Hugo shows you the 20 first variables. Do you want see all?\n")
+    utils::menu(c("Yes", "No"), title = "Hugo shows you the 20 first variables. Do you want see all?\n")
   if (number_of_variable == "No") {
     n <- 20
   } else{
@@ -93,7 +93,7 @@ hugo_train_model <- function(data, formula) {
   }
   if (result != "model_gbm") {
     row.names(value)[order(-value)]
-    varImp(get(result))$importance$Overall[order(-value$Overall)]
+    caret::varImp(get(result))$importance$Overall[order(-value$Overall)]
     cat(paste(row.names(value)[order(-value$Overall)][1:n],
               paste(
                 "(", round(value$Overall[order(-value$Overall)][1:n], 2), ")", sep = ""
