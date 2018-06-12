@@ -29,7 +29,7 @@ Imports: readr,
     utils,
     ggplot2,
     broom,
-    xlsx,
+    openxlsx,
     RCurl,
     caret,
     mlbench
