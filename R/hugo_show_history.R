@@ -4,18 +4,50 @@
 #' which contains the whole history of your investigation.
 #' hugo_show_history(), displays all the entries with additions of paths to files created by functions hugo_memorize*.
 #' 
-#' @param last is the number of entries from the beginning of the history to display
-#' @param first is the number of entries from the end of the history to display
+#' @param last the number of entries from the beginning of the history to display.
+#' @param first the number of entries from the end of the history to display.
 #' @param specyfic is a natural vector ponting out which particular enrties should be shown.
+#' @param reset If true, the history of investigation will reset.
+#' @note maximum one argument may not be NULL.
+#' 
+#' Providing variables which would result in showing more entries than the current history contains 
+#' or showing entries with indexes not belonging to history index set, cuts displaying. See "examples".
 #' 
 #' @export
 #' @author Maciej Kurek
+#' @examples
+#' \dontrun{
+#' # Displaying lat 10 entries of the investigation history:
+#' hugo_show_history(10)
+#'
+#' # Displaying first 10 entries:
+#' hugo_show_history(first=10)
+#' 
+#' # Displaying some specyfic entries:
+#' hugo_show_history(specyfic=c(1,4,7))
+#' 
+#' # Let's assume there are 10 entries in the history. 
+#' # Following usage will display all of theese entries.
+#' 
+#' hugo_show_history(20), hugo_show_history(first=15)
+#' 
+#' # This usage will show only entries with indexes 1,3,7 :
+#' 
+#' hugo_show_history(specyfic=c(-2,1,3,7,12,15))
+#' 
+#'  # Reseting history :
+#' hugo_show_history(reset = T)
+#' }
 
-hugo_show_history<-function(last=NULL,first=NULL,specyfic=NULL){
+hugo_show_history<-function(last=NULL,first=NULL,specyfic=NULL,restart=F){
   
   .hugoEnv$history[length(.hugoEnv$history)+1]<-deparse(match.call())
   
-  checking(last=last,first=first,specyfic=specyfic)
+  if(restart){
+    .hugoEnv$history<-"empty" 
+    return(cat("History of hugoing has been reseted"))
+  }
+  checking(last=last,first=first,specyfic=specyfic,restart=restart)
   
   if(.hugoEnv$history[1]=="empty"){
     .hugoEnv$history<-.hugoEnv$history[-1]
@@ -59,11 +91,17 @@ add_path_to_history<-function(path){
   } 
 }
 
-checking<-function(last=NULL,first=NULL,specyfic=NULL)
+checking<-function(last=NULL,first=NULL,specyfic=NULL,restart=F)
 {
   if(is.null(last)+is.null(first)+is.null(specyfic)<2) 
     stop("Error: Maximum one argument may not be NULL")
   ### last & first check
+  
+  if(!is.logical(restart))
+    stop("Error: argument'restart' must be a logical value")
+  if(!length(restart)==1)
+    stop("Error: argument 'restart' must be a single value")  
+  
   if(!is.null(first)) last<-first
   
   if(!is.null(last)){
