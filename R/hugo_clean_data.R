@@ -46,7 +46,8 @@ hugo_clean_data <- function(data, prop = 0.05) {
   if(!(is.numeric(prop) & prop<=1 & prop>=0)) {
     cat("Try choose 'prop' parameter again.\nThe proportion should be the number between 0 and 1 (less than 0.2 recommended).")
     while(TRUE) {
-      prop <- readline(prompt = "prop = ")
+      cat("\nprop=")
+      prop <- readLines(con = getOption('hugo.connection_in'), n = 1)
       if(prop>=0 & prop<=1) {
         break
       } else {
