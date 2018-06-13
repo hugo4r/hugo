@@ -26,6 +26,24 @@ test_that("Must of providing all parameters or none.",{
 #   expect_true("data.frame" %in% class(data))
 # })
 
+test_that("File without extension handled.", {
+  f <- file()
+  g <- file()
+  options(hugo.connection_in = f)
+  options(hugo.connection_out = g)
+  ans <- ""
+  write(ans, f)
+
+  data <- hugo_read_data(path="no_extension")
+  expect_equal(dim(data), c(35,44))
+  expect_true("data.frame" %in% class(data))
+
+  options(hugo.connection_in = stdin())
+  options(hugo.connection_out = stdout())
+  close(f)
+  close(g)
+})
+
 test_that("Json file loaded correctly.",{
   data <- hugo_read_data(path="https://raw.githubusercontent.com/corysimmons/colors.json/master/colors.json")
   expect_equal(length(data), c(149))
