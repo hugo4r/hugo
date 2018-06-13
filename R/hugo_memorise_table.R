@@ -85,9 +85,4 @@ hugo_memorise_table <- function(table = NULL, name = substitute(table)){
     sink(type="output")
     close(rfile)
   })
-  
-  add_path_to_history(paste0(path, "/", name, ".md"))
-  add_path_to_history(paste0(path, "/", name, ".rda"))
-  add_path_to_history(paste0(path, "/", name, ".xlsx"))
-  add_path_to_history(paste0(path, "/", name, ".docx"))
 }
