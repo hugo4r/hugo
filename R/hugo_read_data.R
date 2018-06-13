@@ -145,20 +145,10 @@ hugo_read_data <- function(path, file_extension=NA, header=NA, separator=NA, dec
     if(file_extension=="xlsx"){
       read_data <- openxlsx::read.xlsx(path)
     }
-    # if(file_extension=="xls" || file_extension=="xlsx"){
-    #   read_data <- xlsx::read.xlsx(file=path, sheetIndex = 1)
-    #   if(ncol(read_data)<=1){
-    #     read_data <- xlsx::read.xlsx2(file=path, sheetIndex = 1)
-    #     if(ncol(read_data)<=1){
-    #       utils::head(read_data)
-    #       stop("File haven't been loaded correctly. Please provide your all own parameters.")
-    #     }
-    #   }
-    # }
   }
 
   # saves loaded data
-  path_to_save_data <- paste(.hugoEnv$path, '/data/', sep='')
+  path_to_save_data <- paste(.hugoEnv$path, "/data/", sep="")
   if(!dir.exists(path_to_save_data)) {
     dir.create(path_to_save_data)
   }

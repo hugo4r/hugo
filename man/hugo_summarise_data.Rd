@@ -31,3 +31,8 @@ User can change output format (\code{output}), decide to overwrite output (\code
 less than 5 unique values are treated as factor variables (\code{smart_factor}),
 type max decimals (\code{max_decimals}) and decide to automatically open report (\code{open_result}).
 }
+\examples{
+\dontrun{
+hugo_summarise_data(iris)
+}
+}
