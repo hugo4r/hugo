@@ -51,6 +51,8 @@ hugo_memorise_table <- function(table = NULL, name = substitute(table)){
     stop(e)
   })
 
+  add_path_to_history(paste0(path, "/", name, ".rda"))
+  
   tryCatch({
   doc <- ReporteRs::docx()
   doc <- ReporteRs::addFlexTable(doc, ReporteRs::FlexTable(table))
