@@ -12,6 +12,12 @@ I'm your personal assistant
 
 Hugo helps keeping results from data analysis in the right order.
 
+## Installation
+
+```
+devtools::install_github("hugo4r/hugo")
+```
+
 ## Example
 
 ```
