@@ -19,7 +19,7 @@
 #'
 #' @return The function does not return anything. Its side effect (the production
 #' of a data report) is the reason for running the function.
-#' @example
+#' @examples
 #' \dontrun{
 #' hugo_summarise_data(iris)
 #' }

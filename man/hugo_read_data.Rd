@@ -26,7 +26,7 @@ Returns data.frame, tibble or a list.
 \description{
 Function unifies most common reading data functions. It guesses the file extenstion and fits best function to load.
 Usually knowing types of parameters as: separator, decimal, header is not necessary, but function allows to put them by hand.
-Supported extensions: "txt", "csv", "xls", "xlsx", "tsv", "rda", "rdata", "json".
+Supported extensions: "txt", "csv", "xlsx", "tsv", "rda", "rdata", "json".
 }
 \examples{
 \dontrun{
