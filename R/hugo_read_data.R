@@ -161,8 +161,8 @@ hugo_read_data <- function(path, file_extension=NA, header=NA, separator=NA, dec
   nr_of_rows <- nrow(read_data)
   # prints a message
   cat(paste0("\nI've read a data with ", nr_of_rows, " rows and ", nr_of_columns, " columns."))
-  add_path_to_history(paste0(path_to_save_data, "/", file_name_to_save, ".rda"))
-  cat(paste0("\nCopy of it is stored in ", path_to_save_data, file_name_to_save, "."))
+  add_path_to_history(paste0(path_to_save_data, file_name_to_save, ".rda"))
+  cat(paste0("\nCopy of it is stored in ", path_to_save_data, file_name_to_save, "/rda."))
 
   return(read_data)
 }
