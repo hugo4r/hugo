@@ -50,8 +50,6 @@ hugo_memorise_table <- function(table = NULL, name = substitute(table)){
     e$message <- paste0("While saving a table: ", e)
     stop(e)
   })
-
-  add_path_to_history(paste0(path, "/", name, ".rda"))
   
   tryCatch({
   doc <- ReporteRs::docx()
