@@ -69,10 +69,6 @@ hugo_show_history<-function(last=NULL,first=NULL,specyfic=NULL,restart=F){
   }
   
   which_to_show<-which_to_show[which_to_show>=1 & which_to_show<=n]
-  
-
-
-
   cat("This is your hugoing history: \n \n")
   
   for (i in which_to_show)
@@ -126,21 +122,4 @@ checking<-function(last=NULL,first=NULL,specyfic=NULL,restart=F)
     if(!sum(specyfic==floor(specyfic))==length(specyfic))
       stop("Error: argument 'specyfic' must contain natural numbers")
   }
-}
-
-add_to_history<-function(function_name){
- 
-  utils::savehistory("histor.txt")
-  hist<-readLines("histor.txt")
-  file.remove("histor.txt")
-  
-
- 
-  pat<-paste(function_name,"\\(",sep="")
-  index<-which(grepl(pat,hist[]))
-
-  text<-paste(hist[max(index):length(hist)],collapse = "")
-
-  if(.hugoEnv$history[1]!="empty") .hugoEnv$history[length(.hugoEnv$history)+1]<-text
-  if(.hugoEnv$history[1]=="empty") .hugoEnv$history[1]<-text
 }
