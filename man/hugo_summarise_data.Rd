@@ -27,7 +27,7 @@ To generate report is used function \code{dataMaid::makeDataReport}.
 This function is interactive with user. With first usage user has to type parameters, in next usage user
 can choose previous settings or type new. User can change filename and title of report.
 User can change output format (\code{output}), decide to overwrite output (\code{replace_output}),
- type column names used to summary (\code{variables}),  decide whether numeric and integer variables with
+  decide whether numeric and integer variables with
 less than 5 unique values are treated as factor variables (\code{smart_factor}),
 type max decimals (\code{max_decimals}) and decide to automatically open report (\code{open_result}).
 }
