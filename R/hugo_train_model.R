@@ -19,7 +19,12 @@
 #' 
 
 hugo_train_model <- function(data, formula) {
-  #.hugoEnv$history[length(.hugoEnv$history) + 1] <- deparse(match.call())
+  .hugoEnv$history[length(.hugoEnv$history) + 1] <- deparse(match.call())
+  
+  if (!file.exists(.hugoEnv$path)) {
+    stop('Call hugo_start_investigation() for starting the new investigation.')
+  }
+  
   cat("Hugo starts training models.\n")
   formula <- stats::formula(formula)
   if (length(levels(data[, c(as.character(formula[[2]]))])) != 2) {
@@ -32,11 +37,12 @@ hugo_train_model <- function(data, formula) {
   if (!is.factor(data[, c(as.character(formula[[2]]))])) {
     data[, c(as.character(formula[[2]]))] <- as.factor(data[, c(as.character(formula[[2]]))])
   }
-  path <- paste0(.hugoEnv$path, "/models")
+  path <- paste0(.hugoEnv$path, "/models/")
   if (!dir.exists(path)) {
     dir.create(path)
   }
-  cat("Hugo make a trainControl set : ")
+  
+  cat("Hugo make a trainControl set: ")
   #make a trainControl set
   control <- caret::trainControl(method = "repeatedcv", number = 5, repeats = 3)
   cat("Done. \n")
@@ -46,20 +52,20 @@ hugo_train_model <- function(data, formula) {
   glm_model <- caret::train(formula, data = data, method = "glm", trControl = control)
   cat("Done. \n")
   cat("Hugo save logistic regression model to models catalog.\n")
-  save(glm_model, file = paste0(path, "/", "glm_model", ".rda"))
+  save(glm_model, file = paste0(path, "glm_model.rda"))
   
   #random forest model
   cat("Hugo training random forest model: ")
   randomforest_model <- caret::train(formula, data = data, method = "rf", trControl = control)
   cat("Done. \n")
   cat("Hugo save random forest model to models catalog.\n")
-  save(randomforest_model, file = paste0(path, "/", "randomforest_model", ".rda"))
+  save(randomforest_model, file = paste0(path, "randomforest_model.rda"))
   
   #gbm model
   cat("Hugo training gbm model: ")
   gbm_model <- caret::train(formula, data = data, method = "gbm", trControl = control)
   cat("Done. \n")
-  save(gbm_model, file = paste0(path, "/", "gbm_model", ".rda"))
+  save(gbm_model, file = paste0(path, "gbm_model.rda"))
   cat("Hugo save gbm model to models catalog.\n")
   
   #results
@@ -91,7 +97,7 @@ hugo_train_model <- function(data, formula) {
     row.names(value)[order(-value)]
     caret::varImp(get(result))$importance$Overall[order(-value$Overall)]
     cat(paste(row.names(value)[order(-value$Overall)][1:n],
-              paste("(", round(value$Overall[order(-value$Overall)][1:n], 2), ")", sep = "", )), sep = ", ")
+              paste("(", round(value$Overall[order(-value$Overall)][1:n], 2), ")", sep = "", ), sep = ", "))
   } else{
     cat(paste(summary(get(result))$var[1:n], " ", "(", round(summary(get(result))$rel.inf[1:n], 2), ")", ",", sep = ""))
     cat("\n")
