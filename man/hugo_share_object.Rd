@@ -23,13 +23,24 @@ Please check Functions section.
 }
 \description{
 To use both of this functions, it is required to have git installed.
-Becouse of git2r library limitations, those functions won't work if either
+Because of git2r library limitations, those functions won't work if either
 user.name or user.email are empty in git config file. Uses .rds format to save objects.
 Hugo_get_object is intended to use only with hugo_share_object - it is not general
 function to download object from github, and don't try to use it as one.
 }
 \details{
-While using hugo_share_object user is prompted and asked to insert additional parameters - github user name, password for given user, and repository name, to wich you want to add your object.
+While using hugo_share_object user is prompted and asked to insert additional parameters - github user name, password for given user, and repository name, to wich you want to add your object. Because whole repository is downloaded, it is possible to create new directories. When prompted for repository name please insert it similarly to: 'example_repo_for_hugo/subfold1/subfolder2'. Your input is parsed, so that part before first '/' is treated as repository name, and rest is considered exact path you wish to use. Please, don`t insert '/' as the last character!. This are proper calls:
+\itemize{
+\item example_repo_for_hugo
+\item example_repo_for_hugo/subfolder1
+\item example_repo_for_hugo/subfolder1/subfolder2
+}
+While these are not:
+\itemize{
+\item repository_name/
+\item repository_name/directory1/
+\item repository_name/directory2/
+}
 If hugo remebers previus answer, user will be prompted and asked if he wishes to use current
 credentials or insert new ones.
 }
@@ -55,5 +66,9 @@ hugo_get_object(matrix(runif(200), ncol = 10))
 
 object_1 <- hugo_get_object('tidyverse','readr','revdep/checks.rds')
 object_2 <- hugo_get_object('hadley','r-python','github.rds')
+object_3 <- hugo_get_object('user','repository','file.rds')
+object_4 <- hugo_get_object('user','repository','subfolder1/file.rds')
+object_5 <- hugo_get_object('user','repository','subfolder1/subfolder2/file.rds')
+
 }
 }

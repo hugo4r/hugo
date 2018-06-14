@@ -1,12 +1,23 @@
 #' Share and download object from github.
 #'
 #' To use both of this functions, it is required to have git installed.
-#' Becouse of git2r library limitations, those functions won't work if either
+#' Because of git2r library limitations, those functions won't work if either
 #' user.name or user.email are empty in git config file. Uses .rds format to save objects.
 #' Hugo_get_object is intended to use only with hugo_share_object - it is not general
 #' function to download object from github, and don't try to use it as one.
 #'
-#' While using hugo_share_object user is prompted and asked to insert additional parameters - github user name, password for given user, and repository name, to wich you want to add your object.
+#' While using hugo_share_object user is prompted and asked to insert additional parameters - github user name, password for given user, and repository name, to wich you want to add your object. Because whole repository is downloaded, it is possible to create new directories. When prompted for repository name please insert it similarly to: 'example_repo_for_hugo/subfold1/subfolder2'. Your input is parsed, so that part before first '/' is treated as repository name, and rest is considered exact path you wish to use. Please, don`t insert '/' as the last character!. This are proper calls:
+#'\itemize{
+#'\item example_repo_for_hugo
+#'\item example_repo_for_hugo/subfolder1
+#'\item example_repo_for_hugo/subfolder1/subfolder2
+#'}
+#'While these are not:
+#'\itemize{
+#'\item repository_name/
+#'\item repository_name/directory1/
+#'\item repository_name/directory2/
+#'}
 #' If hugo remebers previus answer, user will be prompted and asked if he wishes to use current
 #' credentials or insert new ones.
 #'
@@ -28,6 +39,10 @@
 #'
 #' object_1 <- hugo_get_object('tidyverse','readr','revdep/checks.rds')
 #' object_2 <- hugo_get_object('hadley','r-python','github.rds')
+#' object_3 <- hugo_get_object('user','repository','file.rds')
+#' object_4 <- hugo_get_object('user','repository','subfolder1/file.rds')
+#' object_5 <- hugo_get_object('user','repository','subfolder1/subfolder2/file.rds')
+#'
 #'}
 #' @export
 
@@ -45,76 +60,80 @@ hugo_share_object <- function(object) {
     stop("You have to first install library 'getPass'. ", call. = FALSE)
   }
 
-  if(!getOption("hugo.know_credentials")) {
-
-  cat("Please insert your github user name: > ",file = getOption('hugo.connection_out'))
-  user <- readLines(con = getOption('hugo.connection_in'), n = 1)
-  options(hugo.user_name = user)
-
-  if(getOption('hugo.connection_out') != stdout() | !interactive()){
-  cat(paste0("Please insert password for user ", getOption('hugo.user_name'), ": > ", sep = " "),
-      file = getOption('hugo.connection_out'))
-  pass <-  readLines(con = getOption('hugo.connection_in'), n = 1)
-  } else {
-    pass <- getPass::getPass(paste0("Please insert password for user ",
-          getOption('hugo.user_name'), ": > ", sep = " "))
-
+  if (!requireNamespace("stringr", quietly = TRUE)) {
+    stop("You have to first install library 'stringr'. ", call. = FALSE)
   }
 
-  cat("Please insert github repository name: > ",file = getOption('hugo.connection_out'))
-  repo_name <-  readLines(con = getOption('hugo.connection_in'), n = 1)
-  options(hugo.repo_name = repo_name)
 
+  if(!getOption("hugo.know_credentials")) {
+    cat("Please insert your github user name: > ",file = getOption('hugo.connection_out'))
+    user <- readLines(con = getOption('hugo.connection_in'), n = 1)
+    options(hugo.user_name = user)
 
+    if(getOption('hugo.connection_out') != stdout() | !interactive()) {
+      cat(paste0("Please insert password for user ",
+                 getOption('hugo.user_name'), ": > ", sep = " "),
+          file = getOption('hugo.connection_out'))
+      pass <-  readLines(con = getOption('hugo.connection_in'), n = 1)
+    } else {
+      pass <- getPass::getPass(paste0("Please insert password for user ",
+                                      getOption('hugo.user_name'), ": > ", sep = " "))
+    }
+
+    cat("Please insert github repository name: > ",file = getOption('hugo.connection_out'))
+    repo_name <-  readLines(con = getOption('hugo.connection_in'), n = 1)
+    options(hugo.repo_name = repo_name)
   } else {
-
     chosen_input <- switch(utils::menu(c('Use previous settings.','Enter new credentials.'),
-                     title = paste0("Found previous settings: user = ",
-                     getOption('hugo.user_name'), ' , repo_name = ',
-                     getOption('hugo.repo_name'), '.')),T,F)
+                                       title = paste0("Found previous settings: user = ",
+                                                      getOption('hugo.user_name'), ' , repo_name = ',
+                                                      getOption('hugo.repo_name'), '.')),T,F)
     if(is.null(chosen_input)) {return()}
     if(chosen_input) {
-      if(getOption('hugo.connection_out') != stdout() | !interactive()){
-        cat(paste0("Please insert password for user ", getOption('hugo.user_name'), ": > ", sep = " "),
+      if(getOption('hugo.connection_out') != stdout() | !interactive()) {
+        cat(paste0("Please insert password for user ",
+                   getOption('hugo.user_name'), ": > ", sep = " "),
             file = getOption('hugo.connection_out'))
         pass <-  readLines(con = getOption('hugo.connection_in'), n = 1)
       } else {
         pass <- getPass::getPass(paste0("Please insert password for user ",
-              getOption('hugo.user_name'), ": > ", sep = " "))
-
+                                        getOption('hugo.user_name'), ": > ", sep = " "))
       }
     } else {
-
-      cat("Please insert your github user name: > ",file = getOption('hugo.connection_out'))
+      cat("Please insert your github user name: > ",
+          file = getOption('hugo.connection_out'))
       user <- readLines(con = getOption('hugo.connection_in'), n = 1)
       options(hugo.user_name = user)
 
-      if(getOption('hugo.connection_out') != stdout() | !interactive()){
-        cat(paste0("Please insert password for user ", getOption('hugo.user_name'), ": > ", sep = " "),
+      if(getOption('hugo.connection_out') != stdout() | !interactive()) {
+        cat(paste0("Please insert password for user ",
+                   getOption('hugo.user_name'), ": > ", sep = " "),
             file = getOption('hugo.connection_out'))
         pass <-  readLines(con = getOption('hugo.connection_in'), n = 1)
       } else {
         pass <- getPass::getPass(paste0("Please insert password for user ",
-              getOption('hugo.user_name'), ": > ", sep = " "))
-
+                                        getOption('hugo.user_name'), ": > ", sep = " "))
       }
 
-      cat("Please insert github repository name: > ",file = getOption('hugo.connection_out'))
+      cat("Please insert github repository name: > ",
+          file = getOption('hugo.connection_out'))
       repo_name <-  readLines(con = getOption('hugo.connection_in'), n = 1)
       options(hugo.repo_name = repo_name)
-      }
+    }
   }
 
   options(hugo.know_credentials = T)
 
+  repo_name_proper <- stringr::str_split(getOption('hugo.repo_name'),'/')[[1]][1]
+  exact_folder <- stringr::str_split(getOption('hugo.repo_name'),'/')[[1]][-1]
+
   cat("I`m trying to share your object... \n",file = getOption('hugo.connection_out'))
 
   tryCatch(expr = {
-    path <- tempfile(pattern = paste0("git2r-",
-        getOption('hugo.user_name'), "-", getOption('hugo.repo_name'), "-"))
+    path <- tempfile(pattern = paste0("git2r-", getOption('hugo.user_name'), "-"))
     dir.create(path)
     repo <- git2r::clone(paste0("https://github.com/",
-        getOption('hugo.user_name'), "/", getOption('hugo.repo_name'), ".git"),
+                                getOption('hugo.user_name'), "/", repo_name_proper, ".git"),
                          path, progress = F)
   }, error = function(e) {
     message("Failed while connecting with given repository.")
@@ -128,11 +147,12 @@ hugo_share_object <- function(object) {
 
   tryCatch(expr = {
     object_name <- paste0("hugo_shared_object_", gsub(" |:|-", "_", Sys.time()), ".rds")
-    saveRDS(object, file.path(path, object_name))
-    git2r::add(repo, file.path(path, object_name))
+    dir.create(file.path(path,paste(exact_folder,collapse = '/')),
+               recursive = T,showWarnings = F)
+    saveRDS(object, file.path(path,paste(exact_folder,collapse = '/'),object_name))
+    git2r::add(repo, file.path(path, paste(c(exact_folder),collapse = '/'),object_name))
     git2r::commit(repo, object_name)
-    git2r::push(repo, credentials = git2r::cred_user_pass(
-      getOption('hugo.user_name'), pass))
+    git2r::push(repo, credentials = git2r::cred_user_pass(getOption('hugo.user_name'), pass))
     succ = T
   }, error = function(e) {
     message("Failed while adding object to given repository.")
@@ -146,7 +166,8 @@ hugo_share_object <- function(object) {
 
   message("Success!")
   return(paste0("hugo_get_object('", getOption('hugo.user_name'),
-        "','", getOption('hugo.repo_name'), "','", object_name, "')"))
+                "','", repo_name_proper, "','",
+                paste(c(exact_folder,object_name),collapse = '/'), "')"))
 }
 
 
@@ -171,7 +192,7 @@ hugo_get_object <- function(user, repo_name, object_name) {
     stop("You have to first install library 'git2r'. ", call. = FALSE)
   }
 
-  path <- tempfile(pattern = paste0("git2r-", user, "-", repo_name, "-"))
+  path <- tempfile(pattern = paste0("git2r-", user, "-"))
   dir.create(path)
 
   cat("I`m trying to get your object... \n",file = getOption('hugo.connection_out'))
@@ -190,7 +211,7 @@ hugo_get_object <- function(user, repo_name, object_name) {
   }
 
   tryCatch(expr = {
-    object <- suppressWarnings(readRDS(file.path(path, paste0(object_name))))
+    object <- suppressWarnings(readRDS(file.path(path, object_name)))
     succ = T
   }, error = function(e) {
     message("Failed while loading object from given repository.")
