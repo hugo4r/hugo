@@ -19,7 +19,7 @@
 #' 
 
 hugo_train_model <- function(data, formula) {
-  .hugoEnv$history[length(.hugoEnv$history) + 1] <- deparse(match.call())
+  #.hugoEnv$history[length(.hugoEnv$history) + 1] <- deparse(match.call())
   cat("Hugo starts training models.\n")
   formula <- stats::formula(formula)
   if (length(levels(data[, c(as.character(formula[[2]]))])) != 2) {
@@ -46,20 +46,20 @@ hugo_train_model <- function(data, formula) {
   glm_model <- caret::train(formula, data = data, method = "glm", trControl = control)
   cat("Done. \n")
   cat("Hugo save logistic regression model to models catalog.\n")
-  save(glm_model, file = paste0(path, "/", substitute(glm_model), ".rda"))
+  save(glm_model, file = paste0(path, "/", "glm_model", ".rda"))
   
   #random forest model
   cat("Hugo training random forest model: ")
   randomforest_model <- caret::train(formula, data = data, method = "rf", trControl = control)
   cat("Done. \n")
   cat("Hugo save random forest model to models catalog.\n")
-  save(randomforest_model, file = paste0(path, "/", substitute(randomforest_model), ".rda"))
+  save(randomforest_model, file = paste0(path, "/", "randomforest_model", ".rda"))
   
   #gbm model
   cat("Hugo training gbm model: ")
   gbm_model <- caret::train(formula, data = data, method = "gbm", trControl = control)
   cat("Done. \n")
-  save(gbm_model, file = paste0(path, "/", substitute(gbm_model), ".rda"))
+  save(gbm_model, file = paste0(path, "/", "gbm_model", ".rda"))
   cat("Hugo save gbm model to models catalog.\n")
   
   #results
