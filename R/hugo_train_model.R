@@ -1,14 +1,19 @@
 #' Training binary classification model and choose the best one
 #' 
-#' @param data an optional data frame containing the variables in the model
+#' This function for the given formula and data builds logistic regressions models, 
+#' decision trees, gbm model. It saves models to the models catalog and as a result
+#' returns trained models and evaluation of how these models are good.
+#' 
+#' @param data an optional \code{data.frame} containing the variables in the model
 #' @param formula formula describing the model to be fitted
 #' 
 #' @export
 #' @author Anna Kozak
+#' @return Function returns trained models and assessment of how these models are good.
 #' @examples
 #' \dontrun{
 #' data("PimaIndiansDiabetes")
-#' formula <- "diabetes~."
+#' formula <- diabetes~.
 #' hugo_train_model(PimaIndiansDiabetes, formula)
 #' }
 #' 
@@ -25,67 +30,58 @@ hugo_train_model <- function(data, formula) {
     )
   }
   if (!is.factor(data[, c(as.character(formula[[2]]))])) {
-    data[, c(as.character(formula[[2]]))] <-
-      as.factor(data[, c(as.character(formula[[2]]))])
+    data[, c(as.character(formula[[2]]))] <- as.factor(data[, c(as.character(formula[[2]]))])
   }
-  
+  path <- paste0(.hugoEnv$path, "/models")
+  if (!dir.exists(path)) {
+    dir.create(path)
+  }
+  cat("Hugo make a trainControl set : ")
   #make a trainControl set
-  control <- caret::trainControl(method = "repeatedcv",
-                          number = 10,
-                          repeats = 3)
-  
-  
+  control <- caret::trainControl(method = "repeatedcv", number = 5, repeats = 3)
+  cat("Done. \n")
+ 
   #regresion model
-  glm_model <- caret::train(formula,
-                     data = data,
-                     method = "glm",
-                     trControl = control)
+  cat("Hugo training logistic regression model: ")
+  glm_model <- caret::train(formula, data = data, method = "glm", trControl = control)
+  cat("Done. \n")
+  cat("Hugo save logistic regression model to models catalog.\n")
+  save(glm_model, file = paste0(path, "/", name, ".rda"))
+  
   #random forest model
-  randomforest_model <- caret::train(formula,
-                              data = data,
-                              method = "rf",
-                              trControl = control)
+  cat("Hugo training random forest model: ")
+  randomforest_model <- caret::train(formula, data = data, method = "rf", trControl = control)
+  cat("Done. \n")
+  cat("Hugo save random forest model to models catalog.\n")
+  save(randomforest_model, file = paste0(path, "/", name, ".rda"))
+  
   #gbm model
-  gbm_model <- caret::train(formula,
-                     data = data,
-                     method = "gbm",
-                     trControl = control)
+  cat("Hugo training gbm model: ")
+  gbm_model <- caret::train(formula, data = data, method = "gbm", trControl = control)
+  cat("Done. \n")
+  save(gbm_model, file = paste0(path, "/", name, ".rda"))
+  cat("Hugo save gbm model to models catalog.\n")
+  
   #results
-  outcome <-
-    caret::resamples(
-      list(
-        glm_model = glm_model,
-        randomforest_model = randomforest_model,
-        gbm_model = gbm_model
-      )
-    )
+  outcome <- caret::resamples(list(glm_model = glm_model, randomforest_model = randomforest_model, gbm_model = gbm_model))
   {
     sum_results <- summary(outcome)
     cat("Statistical variability measured by Accuracy.\n")
     cat(paste(
       "The best model is ",
-      sub("\\_.*", "", names(
-        which.max(sum_results$statistics$Accuracy[, 4])
-      )),
-      ".",
-      " Accuracy = ",
-      round(max(sum_results$statistics$Accuracy[, 4]), 2),
-      "\n",
-      sep = ""
-    ))
+      sub("\\_.*", "", names(which.max(sum_results$statistics$Accuracy[, 4]))), ".", " Accuracy = ", 
+      round(max(sum_results$statistics$Accuracy[, 4]), 2), "\n", sep = ""))
     names(which.max(sum_results$statistics$Accuracy[, 4]))
     }
   
   cat("\n")
   result <- names(which.max(sum_results$statistics$Accuracy[, 4]))
-  cat("Following variables are related with y.\n")
+  
+  #varaibles realated with "y"
+  cat(paste("Following variables are related with ", formula[[2]], ".\n"))
   cat("\n")
-  
-  
-  
   value <- caret::varImp(get(result))$importance
-  number_of_variable <-
-    utils::menu(c("Yes", "No"), title = "Hugo shows you the 20 first variables. Do you want see all?\n")
+  number_of_variable <- utils::menu(c("Yes", "No"), title = "Hugo shows you the 20 first variables. Do you want see all?\n")
   if (number_of_variable == "No") {
     n <- 20
   } else{
@@ -95,25 +91,14 @@ hugo_train_model <- function(data, formula) {
     row.names(value)[order(-value)]
     caret::varImp(get(result))$importance$Overall[order(-value$Overall)]
     cat(paste(row.names(value)[order(-value$Overall)][1:n],
-              paste(
-                "(", round(value$Overall[order(-value$Overall)][1:n], 2), ")", sep = ""
-              )), sep = ", ")
+              paste("(", round(value$Overall[order(-value$Overall)][1:n], 2), ")", sep = "", )), sep = ", ")
   } else{
-    cat(paste(
-      summary(get(result))$var[1:n],
-      " ",
-      "(",
-      round(summary(get(result))$rel.inf[1:n], 2),
-      ")",
-      ",",
-      sep = ""
-    ))
+    cat(paste(summary(get(result))$var[1:n], " ", "(", round(summary(get(result))$rel.inf[1:n], 2), ")", ",", sep = ""))
     cat("\n")
   }
-  return(get(result))
+  return(list(logistic_regression = glm_model, randomforest = randomforest_model, gbm = gbm_model, auc = sum_results$statistics$Accuracy))
 }
 
   
-  
- 
+
 
