@@ -7,17 +7,22 @@
 hugo_train_model(data, formula)
 }
 \arguments{
-\item{data}{an optional data frame containing the variables in the model}
+\item{data}{an optional \code{data.frame} containing the variables in the model}
 
 \item{formula}{formula describing the model to be fitted}
 }
+\value{
+Function returns trained models and assessment of how these models are good.
+}
 \description{
-Training binary classification model and choose the best one
+This function for the given formula and data builds logistic regressions models, 
+decision trees, gbm model. It saves models to the models catalog and as a result
+returns trained models and evaluation of how these models are good.
 }
 \examples{
 \dontrun{
 data("PimaIndiansDiabetes")
-formula <- "diabetes~."
+formula <- diabetes~.
 hugo_train_model(PimaIndiansDiabetes, formula)
 }
 
