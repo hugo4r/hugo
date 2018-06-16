@@ -20,7 +20,7 @@ test_that("plot created with package graphics is correctly saved without name in
 
 test_that("plot created with more then one function from package graphics is correctly saved", {
   expect_output(hugo_memorise_plot({plot(1:10)
-    abline(a = 1, b = 1)}))
+                                    abline(a = 1, b = 1)}))
 })
 
 test_that("function without returning value", {
@@ -38,22 +38,22 @@ test_that("directory was created", {
   expect_true("./hugo_test/gallery" %in% list.dirs())
 })
 
-test_that("object saved as .rda",{
+test_that("object saved as .rda", {
   hugo_memorise_plot(plot(1:10), "testrda")
   expect_true("testrda.rda" %in% list.files("./hugo_test/gallery"))
 })
 
-test_that("Can't double names",{
+test_that("Can't double names", {
   hugo_memorise_plot(plot(1:10), "test")
   expect_error(hugo_memorise_plot(plot(1:10), "test"))
 })
 
-test_that("object without name is saved",{
+test_that("object without name is saved", {
   hugo_memorise_plot(plot(1:10))
   expect_false(length(list.files("./hugo_test/gallery", pattern = "(plot)")) == 0)
 })
 
-test_that("object without name on input are saved with next numbers",{
+test_that("object without name on input are saved with next numbers", {
   hugo_memorise_plot(plot(1:5))
   hugo_memorise_plot(plot(1:10, type = "l"))
   numb_of_plots <- substr(list.files("./hugo_test/gallery", pattern = "(plot)"), start = 5L, stop = 6L)
@@ -61,7 +61,7 @@ test_that("object without name on input are saved with next numbers",{
   expect_true(numb_of_plots[1] == numb_of_plots[2] + 1)
 })
 
-test_that("Next numbers when more then 9 plots in folder",{
+test_that("Next numbers when more then 9 plots in folder", {
   hugo_memorise_plot(plot(1:10), "plot10")
   hugo_memorise_plot(plot(1:10))
   numb_of_plots <- substr(list.files("./hugo_test/gallery", pattern = "(plot)"), start = 5L, stop = 6L)
