@@ -33,6 +33,10 @@
 #' hugo_memorise_plot(ggplot(df, aes(gp, y)) + geom_point())
 #' }
 hugo_memorise_plot <- function(plot = NA, name = NULL){
+  
+  if (!file.exists(.hugoEnv$path)) {
+    stop('Call hugo_start_investigation() for starting the new investigation.')
+  }
 
   .hugoEnv$history[length(.hugoEnv$history)+1] <- deparse(match.call())
 
