@@ -6,6 +6,7 @@
 #'
 #' @param data \code{data.frame} to clean
 #' @param prop proportion of occurence of the level in a categorical variable which decides which levels are rare
+#' @param num_to_fac_amount numeric columns with less than \code{num_to_fac_amount} unique values are treated as factors. You can disable this option by setting this parameter to 0
 #'
 #' @return \code{data.frame} that has been cleaned
 #'
@@ -38,10 +39,12 @@
 #'
 #' @export
 
-hugo_clean_data <- function(data, prop = 0.05) {
+hugo_clean_data <- function(data, prop = 0.01, num_to_fac_amount = 5) {
   .hugoEnv$history[length(.hugoEnv$history)+1] <- deparse(match.call())
 
-  stopifnot(is.data.frame(data))
+  stopifnot(is.numeric(num_to_fac_amount), num_to_fac_amount>0, num_to_fac_amount %% 1==0)
+
+  data <- as.data.frame(data)
 
   if(!(is.numeric(prop) & prop<=1 & prop>=0)) {
     cat("Try choose 'prop' parameter again.\nThe proportion should be the number between 0 and 1 (less than 0.2 recommended).")
@@ -56,8 +59,19 @@ hugo_clean_data <- function(data, prop = 0.05) {
     }
   }
   cat(paste0("Data cleaning will be done with 'prop' parameter equal to ",prop,".\n"))
+  if(num_to_fac_amount > 0)
+    cat(paste0("Numeric columns with less than ", num_to_fac_amount, " unique values will be treated as factors.\n",
+               "You can disable this option by setting the `num_to_fac_amount` parameter to 0.\n"))
 
   columns_num <- ncol(data)
+
+  for(col in 1:columns_num) {
+    if(is.character(data[,col]))
+      data[,col] <- as.factor(data[,col])
+    if(is.numeric(data[,col]))
+      if(length(unique(data[,col])) <= num_to_fac_amount)
+        data[,col] <- as.factor(data[,col])
+  }
 
   factor_columns <- which(sapply(1:columns_num, function(column) is.factor(data[,column])))
   numeric_columns <- setdiff(1:columns_num, factor_columns)
