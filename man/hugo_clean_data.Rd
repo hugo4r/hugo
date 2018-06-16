@@ -4,12 +4,14 @@
 \alias{hugo_clean_data}
 \title{Clean your data}
 \usage{
-hugo_clean_data(data, prop = 0.05)
+hugo_clean_data(data, prop = 0.01, num_to_fac_amount = 5)
 }
 \arguments{
 \item{data}{\code{data.frame} to clean}
 
 \item{prop}{proportion of occurence of the level in a categorical variable which decides which levels are rare}
+
+\item{num_to_fac_amount}{numeric columns with less than \code{num_to_fac_amount} unique values are treated as factors. You can disable this option by setting this parameter to 0}
 }
 \value{
 \code{data.frame} that has been cleaned
