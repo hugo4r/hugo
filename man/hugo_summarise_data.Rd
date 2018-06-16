@@ -34,5 +34,6 @@ type max decimals (\code{max_decimals}) and decide to automatically open report 
 \examples{
 \dontrun{
 hugo_summarise_data(iris)
+hugo_summarise_data(cars)
 }
 }
