@@ -73,13 +73,13 @@ test_that("Missing package is loaded",{
 })
 test_that("Missing package cannot be installed",{
 
-  e <- new.env()
+  test_environment <- new.env()
   utils::install.packages("testpackage_0.0.0.9000.tar.gz", repos = NULL, type="source")
   library(testpackage)
-  hugo_save_investigation(session_name = "test_session 6",envir=e)
+  hugo_save_investigation(session_name = "test_session 6",envir=test_environment)
   detach(name="package:testpackage", unload=TRUE, force = TRUE)
   remove.packages("testpackage")
-  expect_error(hugo_continue_investigation(path="hugo_test_continue",session_name="test_session 6",envir=e),NA)
+  expect_error(hugo_continue_investigation(path="hugo_test_continue",session_name="test_session 6",envir=test_environment),NA)
 })
 
 unlink("hugo_test_continue", recursive = TRUE)
