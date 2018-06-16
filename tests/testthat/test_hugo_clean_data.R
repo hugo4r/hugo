@@ -10,7 +10,7 @@ test_that("There should not be NA's in data after cleaning - data modifications"
   expect_equal({
     data <- airquality
     data$Month <- as.character(data$Month)
-    sum(is.na(hugo_clean_data(airquality)))
+    sum(is.na(hugo_clean_data(data)))
   }, 0)
 })
 
