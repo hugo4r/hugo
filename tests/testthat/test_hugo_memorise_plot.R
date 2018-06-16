@@ -1,5 +1,9 @@
 context("Check hugo_memorise_plot() function")
 
+test_that("there is no investigation", {
+  expect_error(hugo_memorise_plot(plot(1:10)))
+})
+
 hugo_start_investigation("hugo_test")
 
 test_that("have to put a plot", {
