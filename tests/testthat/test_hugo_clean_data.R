@@ -5,13 +5,13 @@ test_that("Argument 'data' is missing",{
   expect_error(hugo_clean_data(prop = 0.1))
 })
 
-test_that("Argument 'data' is not a data.frame",{
-  expect_error(hugo_clean_data(1:10))
-  expect_error(hugo_clean_data(matrix(0,nrow = 3, ncol = 3)))
-})
-
-test_that("There should not be NA's in data after cleaning", {
+test_that("There should not be NA's in data after cleaning - data modifications", {
   expect_equal(sum(is.na(hugo_clean_data(airquality))), 0)
+  expect_equal({
+    data <- airquality
+    data$Month <- as.character(data$Month)
+    sum(is.na(hugo_clean_data(airquality)))
+  }, 0)
 })
 
 test_that("Filling NA's for data with factors (one mode)", {
