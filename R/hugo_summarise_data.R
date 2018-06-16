@@ -22,6 +22,7 @@
 #' @examples
 #' \dontrun{
 #' hugo_summarise_data(iris)
+#' hugo_summarise_data(cars)
 #' }
 #' @importFrom dataMaid makeDataReport
 #' @export
@@ -30,10 +31,19 @@ hugo_summarise_data <- function(data,
                                 overwrite_params = TRUE
 ){
 
+  if (!file.exists(.hugoEnv$path)) {
+    stop('Call hugo_start_investigation() for starting the new investigation.')
+  }
+
   .hugoEnv$history[length(.hugoEnv$history)+1]<-deparse(match.call())
 
-  stopifnot(class(data) %in% c("data.frame", "tibble", "matrix"))
-  stopifnot(is.logical(overwrite_params))
+  if (! class(data) %in% c("data.frame", "tibble", "matrix")){
+    stop("Incorrect data class. It\'s not a data.frame or tibble.")
+  }
+  stopifnot()
+  if (! is.logical(overwrite_params)){
+    stop("Incorrect argument type.  ")
+  }
 
 
   if (!requireNamespace("dataMaid", quietly = TRUE)) {
@@ -56,62 +66,70 @@ hugo_summarise_data <- function(data,
     }
 
 
-
-  columns_name <- colnames(data)
-
   cat(' Hugo\'s trying to prepare report for you. \n')
 
-  if(!getOption("hugo.know_summary_parameters"  )){
+  names_parameters <- c("Output format ", "Replace output ", "Smart factor ", "Max Decimals ", "Open report ")
 
-    default_parameters <- get_parameters_from_user(columns_name)
-    filename <- filename_input(default_filename, path)
-    report_title <- title_input(data_name)
+  if (!getOption("hugo.know_summary_parameters"  )){
+      parameters_to_replace <- list(output = "html",
+                                 replace = TRUE,
+                                 smartNum = TRUE,
+                                 maxDecimals = 2,
+                                 openResult = TRUE)
+      hugo_menu <- menu_first_settings (parameters_to_replace, names_parameters)
+
+
   }
-   else{
-     default_parameters <- .hugoEnv$summarise_data_default_params
 
-     hugo_menu <- menu_prev_settings(default_parameters)
+  else {
+      parameters_to_replace <- .hugoEnv$summarise_data_default_params
+      hugo_menu <- menu_prev_settings(parameters_to_replace, names_parameters)
 
-     if(is.null(hugo_menu)) {return()}
-     if(!hugo_menu) {
+  }
 
-       default_parameters <- get_parameters_from_user(columns_name)
-     }
+  if (is.null(hugo_menu)) {return()}
+  if (!hugo_menu) {
 
-      filename <- filename_input(default_filename, path = path)
-      report_title <- title_input(data_name)
+    used_parameters <- get_parameters_from_user()
+  }
+
+  else{
+
+    used_parameters <- parameters_to_replace
+
+  }
 
 
-   }
-
-
+  filename <- filename_input(default_filename, path = path)
+  report_title <- title_input(data_name)
 
 
 
   filepath <- paste0(path, "/",  filename, ".Rmd")
   parameters <- c(list(data = quote(data), reportTitle = report_title,
                        file = filepath , codebook = TRUE,
-                       quiet = "silent"), default_parameters )
+                       quiet = "silent"), used_parameters )
 
 
 
   results <- tryCatch({suppressWarnings(do.call('makeDataReport',
                                                 args = parameters
   ))},
-  warning = function(w) {
-    warning("While generating a report: ", w)
-  }, error = function(e) {
-    e$message <- paste0("While generating a report: ", e)
-    stop(e)
+  warning = function(warning_communicate) {
+    warning("From package \"dataMaid\" while creating a report: ", warning_communicate)
+  }, error = function(error_communicate) {
+    error_communicate$message <- paste0("From package \"dataMaid\" while creating a report: ", error_communicate)
+    stop(error_communicate)
   })
+
   add_path_to_history(paste0(.hugoEnv$path, "/gallery/",filename,".", parameters$output))
 
-  if(overwrite_params){
-    save_parameters(default_parameters)
-    options(hugo.know_summary_parameters = T)
-                      }
+  if (overwrite_params){
+    save_parameters(used_parameters)
+    options(hugo.know_summary_parameters = TRUE)
+  }
 
-
+  cat("Report ", filename, " saved in ", paste0(.hugoEnv$path, "/gallery/"), "\n")
   cat("Success!")
 
   }
@@ -119,7 +137,7 @@ hugo_summarise_data <- function(data,
 
 
 
-get_parameters_from_user <- function(columns_name){
+get_parameters_from_user <- function(){
 
   output <- get_output_from_user()
   if(is.null(output)) {
@@ -133,14 +151,17 @@ get_parameters_from_user <- function(columns_name){
     message("Default value will be used: TRUE")
   }
   open_output <- get_open_from_user()
-  if(is.null(open_output)) {
+  if (is.null(open_output)) {
     open_output <- FALSE
     message("Default value will be used: FALSE")
+  }
+  if (open_output) {
+    message("Close previous report!")
   }
 
 
   smart_factor <- get_smart_factor_from_user()
-  if(is.null(smart_factor)) {
+  if (is.null(smart_factor)) {
     smart_factor <- TRUE
     message("Default value will be used: TRUE")
   }
@@ -150,9 +171,9 @@ get_parameters_from_user <- function(columns_name){
   cat("Please type max decimals: > ",file = getOption('hugo.connection_out'))
   max_decimals <- suppressWarnings(as.numeric(readLines(con = getOption('hugo.connection_in'), n = 1)))
 
-  if((! max_decimals %% 1 == 0) | (is.na(max_decimals)) |( max_decimals > 10)||( max_decimals < 0)){
+  if  ((! max_decimals %% 1 == 0) | (is.na(max_decimals)) |( max_decimals > 10)||( max_decimals < 0)){
     message("Incorrect value. Default 2 will be used.")
-    max_decimals <- TRUE
+    max_decimals <- 2
   }
 
   return(list(output = output,
@@ -162,47 +183,71 @@ get_parameters_from_user <- function(columns_name){
               openResult = open_output))
 }
 
-menu_prev_settings <- function(default_parameters){
-  hugo_menu <- switch(utils::menu(c('Use previous settings for summary.','Enter new settings.'),
-                                  title = paste0("Found previous settings:  ",
-                                                 paste(names(default_parameters),"=", unlist(as.character(default_parameters)), collapse = ", ")
-                                  )),T,F)
+hugo_choose_menu <- function(text_options, value_options, title){
+  hugo_menu <- switch(utils::menu(text_options,
+                                  title = title),
+                      value_options[1], value_options[2])
+  return(hugo_menu)
+}
+menu_first_settings <- function(default_parameters, names_parameters){
+  hugo_menu <-  hugo_choose_menu(c('Use default settings for report.','Enter new settings.'),
+                                 c(TRUE, FALSE),
+                                 title = paste0("Default settings:  ",
+                                                paste(names_parameters,"= ", unlist(as.character(default_parameters)), collapse = ", "))
+  )
+  return(hugo_menu)
+}
+
+
+menu_prev_settings <- function(default_parameters, names_parameters){
+  hugo_menu <-  hugo_choose_menu(c('Use previous settings for report.','Enter new settings.'),
+                                 c(TRUE, FALSE),
+                                 title = paste0("Found previous settings:  ",
+                                                paste(names_parameters,"= ", unlist(as.character(default_parameters)), collapse = ", "))
+                                 )
   return(hugo_menu)
 }
 
 get_output_from_user <- function (){
-  output <- switch(utils::menu(c('pdf','html'),
-                               title = paste0("Please choose output format: > ")),'pdf','html')
-  return(output)
+  output <- hugo_choose_menu(c('pdf','html'),
+                             c('pdf','html'),
+                             'Please choose report format: > ')
+     return(output)
 }
 
+
+
 get_replace_from_user <- function (){
-  replace_output <- switch(utils::menu(c('TRUE','FALSE'),
-                               title = paste0('Do you want to replace existing file: >')),TRUE,FALSE)
+  replace_output <- hugo_choose_menu(c('TRUE', 'FALSE'),
+                                     c(TRUE, FALSE),
+                                     'Do you want to replace existing report with the same name: >')
   return(replace_output)
 }
+
+
 get_open_from_user <- function (){
-  open_output <- switch(utils::menu(c('TRUE','FALSE'),
-                                       title = paste0('Do you want to open output file: > ')),TRUE,FALSE)
+  open_output <- hugo_choose_menu(c('TRUE', 'FALSE'),
+                                  c(TRUE, FALSE),
+                                  'Do you want to open report after creating: > ')
   return(open_output)
 }
 
+
 get_smart_factor_from_user <- function (){
-  smart_factor <- switch(utils::menu(c('TRUE','FALSE'),
-                                       title = paste0("Do you want to numeric colums with less than 5 unique values are treated as factor variables?: > ")),TRUE,FALSE)
-  return(smart_factor)
+  smart_factor <- hugo_choose_menu(c('TRUE', 'FALSE'),
+                                   c(TRUE, FALSE),
+                                   "Do you want to numeric columns with less than 5 unique values are treated as factor variables?: > ")
+    return(smart_factor)
 }
 
 
 
 filename_input <- function(default_filename, path){
 
-  cat(paste0("To use \"", default_filename, "\" name type NULL or type your name of output (without path): > "), file = getOption('hugo.connection_out'))
+  cat(paste0("To use \"", default_filename, "\" name type 0 or type your name of report (without path): > "), file = getOption('hugo.connection_out'))
   filename <- readLines(con = getOption('hugo.connection_in'), n = 1)
-  if(! filename %in% c("NULL", "")){
-
+  if (! filename %in% c("NULL", "", "0", "null")){
     filename <-  basename(tools::file_path_sans_ext(filename))
-
   }
   else{
     message("Default filename will be used")
@@ -213,9 +258,9 @@ filename_input <- function(default_filename, path){
 
 title_input <- function(data_name){
 
-  cat(paste0("To use \"", data_name, "\" as title type NULL or type your report title: > "),file = getOption('hugo.connection_out'))
+  cat(paste0("To use \"", data_name, "\" as title type 0 or type your report title: > "),file = getOption('hugo.connection_out'))
   report_title <- readLines(con = getOption('hugo.connection_in'), n = 1)
-  if(report_title %in% c("NULL", "")){
+  if (report_title %in% c("NULL", "", "0", "null")){
     message("Default title will be used")
     report_title <- data_name
   }
@@ -227,8 +272,6 @@ title_input <- function(data_name){
 
 
 save_parameters <- function(parameters){
-
-
   .hugoEnv$summarise_data_default_params <- parameters
 }
 
