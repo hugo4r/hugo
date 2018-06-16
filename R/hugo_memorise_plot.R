@@ -21,10 +21,10 @@
 #'
 #' # if plot is created with more then one function from package graphics
 #' hugo_memorise_plot({plot(1:10)
-#'                      abline(a = 1, b = 1)})
+#'                     abline(a = 1, b = 1)})
 #'
 #' # creating and saving plot with ggplot2
-#' df <- data.frame(gp = factor(rep(letters[1:3], each = 10)),y = rnorm(30))
+#' df <- data.frame(gp = factor(rep(letters[1:3], each = 10)), y = rnorm(30))
 #' require(ggplot2)
 #' plot_gg <- ggplot(df, aes(gp, y)) + geom_point()
 #'
@@ -34,13 +34,11 @@
 #' }
 hugo_memorise_plot <- function(plot = NA, name = NULL){
 
-  .hugoEnv$history[length(.hugoEnv$history)+1]<-deparse(match.call())
+  .hugoEnv$history[length(.hugoEnv$history)+1] <- deparse(match.call())
 
-  if (!is.null(plot) & !ggplot2::is.ggplot(plot)){
+  if (!is.null(plot) & !ggplot2::is.ggplot(plot)) {
     stop("Object to save is not a plot", call. = FALSE)
   }
-  
-  loadNamespace("ggplot2")
 
   path <- paste0(.hugoEnv$path, "/gallery")
 
@@ -50,24 +48,26 @@ hugo_memorise_plot <- function(plot = NA, name = NULL){
 
   if (is.null(name)) {
     plot_list <- list.files(path = path, pattern = "(plot)")
-    if(length(plot_list)==0){name <- "plot01"}else{
-    number <- max(as.numeric(substr(plot_list, start = 5L, stop = 6L)))
-    if(number < 10){
-      name <- paste0("plot", "0", number + 1)
-    }else{
-    name <- paste0("plot", number + 1)
-    }
-  }}
+    if (length(plot_list) == 0) {
+      name <- "plot01"
+    } else {
+      number <- max(as.numeric(substr(plot_list, start = 5L, stop = 6L)))
+      if (number < 10) {
+        name <- paste0("plot", "0", number + 1)
+      } else {
+        name <- paste0("plot", number + 1)
+      }
+    }}
   
-  if(any(list.files(path) == paste0(name, ".rda"))) {
-    stop("File with name already exist. Please give another name. List of used names: " , list.files(path = path, pattern = "(.rda)"))
+  if (any(list.files(path) == paste0(name, ".rda"))) {
+    stop("File with name already exist. Please give another name. List of used names: ", list.files(path = path, pattern = "(.rda)"))
   }
   
- if(ggplot2::is.ggplot(plot)){
+ if (ggplot2::is.ggplot(plot)) {
     save(plot, file = paste0(path, "/", name, ".rda"))
     ggplot2::ggsave(filename = paste0(path, "/", name, ".pdf"), plot = plot, device = "pdf")
     ggplot2::ggsave(filename = paste0(path, "/", name, ".png"), plot = plot, device = "png")
-  }else{
+  } else {
     plot
     recorded_plot <- grDevices::recordPlot()
     grDevices::dev.off()
