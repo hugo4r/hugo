@@ -1,17 +1,20 @@
 #' Create report with summary of variables in dataset.
 #'
+#'
 #' Creates  the report 'html' or 'pdf' in the directory chosen at the beginning of the current
 #' Hugo Investigation in the subfolder 'gallery' in .rda file and a summary in .md file.
 #' This reports summarizes the contents of a dataset
 #' and flags potential problems.
 #' To generate report is used function \code{dataMaid::makeDataReport}.
 #'
-#' This function is interactive with user. With first usage user has to type parameters, in next usage user
-#' can choose previous settings or type new. User can change filename and title of report.
-#' User can change output format (\code{output}), decide to overwrite output (\code{replace_output}),
-#'   decide whether numeric and integer variables with
-#' less than 5 unique values are treated as factor variables (\code{smart_factor}),
-#' type max decimals (\code{max_decimals}) and decide to automatically open report (\code{open_result}).
+#' While using hugo_summarise_data user is prompted and asked to choose additional parameters - report format , decide to overwrite existing report,
+#' decide to automatically open report ,
+#' decide whether numeric and integer variables with
+#' less than 5 unique values are treated as factor variables
+#'  and type max decimals .
+#'
+#'  If hugo remembers previuos answer, user will be prompted and asked if he wishes to use previous
+#' parameters or choose new ones.
 #'
 #' @param data R dataset which you wish to summary. This dataset should be of class \code{data.frame},
 #' \code{tibble} or \code{matrix}.
@@ -21,9 +24,12 @@
 #' of a data report) is the reason for running the function.
 #' @examples
 #' \dontrun{
-#' hugo_summarise_data(iris)
-#' hugo_summarise_data(cars)
+#' # create report for iris dataset
+#' hugo_summarise_data(data = iris)
+#' # create report for cars dataset with no overwrite parameters
+#' hugo_summarise_data(data = cars, overwrite_params = FALSE)
 #' }
+#'
 #' @importFrom dataMaid makeDataReport
 #' @export
 #'
@@ -46,11 +52,7 @@ hugo_summarise_data <- function(data,
   }
 
 
-  if (!requireNamespace("dataMaid", quietly = TRUE)) {
-    stop("Package \"dataMaid\" needed for this function to work.
-         Install it first.",
-         call. = FALSE)
-  }
+
 
 
   data_name <- deparse(substitute(data))
@@ -184,59 +186,45 @@ get_parameters_from_user <- function(){
 }
 
 hugo_choose_menu <- function(text_options, value_options, title){
-  hugo_menu <- switch(utils::menu(text_options,
-                                  title = title),
-                      value_options[1], value_options[2])
+  hugo_menu <- switch(utils::menu(text_options, title = title), value_options[1], value_options[2])
   return(hugo_menu)
 }
 menu_first_settings <- function(default_parameters, names_parameters){
-  hugo_menu <-  hugo_choose_menu(c('Use default settings for report.','Enter new settings.'),
-                                 c(TRUE, FALSE),
-                                 title = paste0("Default settings:  ",
-                                                paste(names_parameters,"= ", unlist(as.character(default_parameters)), collapse = ", "))
-  )
+  hugo_menu <-  hugo_choose_menu(text_options = c('Use default settings for report.','Enter new settings.'), value_options = c(TRUE, FALSE),
+                                 title = paste0("Default settings:  ", paste(names_parameters,"= ", unlist(as.character(default_parameters)), collapse = ", ")))
+
   return(hugo_menu)
 }
 
 
 menu_prev_settings <- function(default_parameters, names_parameters){
-  hugo_menu <-  hugo_choose_menu(c('Use previous settings for report.','Enter new settings.'),
-                                 c(TRUE, FALSE),
-                                 title = paste0("Found previous settings:  ",
+  hugo_menu <-  hugo_choose_menu(c('Use previous settings for report.','Enter new settings.'), value_options = c(TRUE, FALSE), title = paste0("Found previous settings:  ",
                                                 paste(names_parameters,"= ", unlist(as.character(default_parameters)), collapse = ", "))
                                  )
   return(hugo_menu)
 }
 
 get_output_from_user <- function (){
-  output <- hugo_choose_menu(c('pdf','html'),
-                             c('pdf','html'),
-                             'Please choose report format: > ')
+  output <- hugo_choose_menu(c('pdf','html'), c('pdf','html'), 'Please choose report format: > ')
      return(output)
 }
 
 
 
 get_replace_from_user <- function (){
-  replace_output <- hugo_choose_menu(c('TRUE', 'FALSE'),
-                                     c(TRUE, FALSE),
-                                     'Do you want to replace existing report with the same name: >')
+  replace_output <- hugo_choose_menu(c('TRUE', 'FALSE'), c(TRUE, FALSE), 'Do you want to replace existing report with the same name: >')
   return(replace_output)
 }
 
 
 get_open_from_user <- function (){
-  open_output <- hugo_choose_menu(c('TRUE', 'FALSE'),
-                                  c(TRUE, FALSE),
-                                  'Do you want to open report after creating: > ')
+  open_output <- hugo_choose_menu(c('TRUE', 'FALSE'), c(TRUE, FALSE), 'Do you want to open report after creating: > ')
   return(open_output)
 }
 
 
 get_smart_factor_from_user <- function (){
-  smart_factor <- hugo_choose_menu(c('TRUE', 'FALSE'),
-                                   c(TRUE, FALSE),
-                                   "Do you want to numeric columns with less than 5 unique values are treated as factor variables?: > ")
+  smart_factor <- hugo_choose_menu(c('TRUE', 'FALSE'), c(TRUE, FALSE), 'Do you want to numeric columns with less than 5 unique values are treated as factor variables?: > ')
     return(smart_factor)
 }
 
