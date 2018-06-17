@@ -24,16 +24,21 @@ and flags potential problems.
 To generate report is used function \code{dataMaid::makeDataReport}.
 }
 \details{
-This function is interactive with user. With first usage user has to type parameters, in next usage user
-can choose previous settings or type new. User can change filename and title of report.
-User can change output format (\code{output}), decide to overwrite output (\code{replace_output}),
-  decide whether numeric and integer variables with
-less than 5 unique values are treated as factor variables (\code{smart_factor}),
-type max decimals (\code{max_decimals}) and decide to automatically open report (\code{open_result}).
+While using hugo_summarise_data user is prompted and asked to choose additional parameters - report format , decide to overwrite existing report,
+decide to automatically open report ,
+decide whether numeric and integer variables with
+less than 5 unique values are treated as factor variables
+ and type max decimals .
+
+If hugo remembers previuos answer, user will be prompted and asked if he wishes to use previous
+parameters or choose new ones.
 }
 \examples{
 \dontrun{
-hugo_summarise_data(iris)
-hugo_summarise_data(cars)
+# create report for iris dataset
+hugo_summarise_data(data = iris)
+# create report for cars dataset with no overwrite parameters
+hugo_summarise_data(data = cars, overwrite_params = FALSE)
 }
+
 }
