@@ -19,7 +19,7 @@
 
 hugo_memorise_model <- function(model = NULL, name = substitute(model)) {
 
-  #.hugoEnv$history[length(.hugoEnv$history) + 1] <- deparse(match.call())
+  .hugoEnv$history[length(.hugoEnv$history) + 1] <- deparse(match.call())
 
   if (!file.exists(.hugoEnv$path)) {
     stop('Call hugo_start_investigation() for starting the new investigation.')
@@ -37,10 +37,7 @@ hugo_memorise_model <- function(model = NULL, name = substitute(model)) {
   replace_output <- NULL
 
   if(file.exists(paste0(path, "/", name, ".rda"))) {
-    replace_output <- switch(utils::menu(choices = c("TRUE", "FALSE"),
-                                         title = paste0("Do you want to replace existing report with the same name: >",
-                                                        name, "?")),
-                             TRUE, FALSE)
+    replace_output <- switch(utils::menu(choices = c("TRUE", "FALSE"), title = paste0("Do you want to replace existing report with the same name: >", name, "?")), TRUE, FALSE)
   }
 
   if (is.null(replace_output)) {
@@ -78,8 +75,8 @@ hugo_memorise_model <- function(model = NULL, name = substitute(model)) {
     stop(error_communicate)
   })
 
-  # add_path_to_history(paste0(path, "/", name, ".md"))
-  # add_path_to_history(paste0(path, "/", name, ".rda"))
+  add_path_to_history(paste0(path, "/", name, ".md"))
+  add_path_to_history(paste0(path, "/", name, ".rda"))
   cat("Model ", name, " and summary saved in ", path, "\n")
 }
 
