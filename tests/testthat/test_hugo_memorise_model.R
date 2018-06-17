@@ -12,7 +12,7 @@ test_that("NULL is not saved", {
 
 test_that("if object is not a model summary is not created", {
   a <- 1
-  expect_error(hugo_memorise_model(a, name = "test"))
+  expect_error(hugo_memorise_model(a, name = "test_summary"))
 })
 
 test_that("there is a directory gallery", {
@@ -21,15 +21,15 @@ test_that("there is a directory gallery", {
 
 test_that("model is saved", {
   expect_true({
-    hugo_memorise_model(lm(c(1,2,3)~c(2,3,1)), name = "test")
-    "test.rda" %in% list.files("./hugo_test/gallery")
+    hugo_memorise_model(lm(c(1,2,3)~c(2,3,1)), name = "test_model_save")
+    "test_model_save.rda" %in% list.files("./hugo_test/gallery")
   })
 })
 
 test_that("summary is saved", {
   expect_true({
-    hugo_memorise_model(lm(c(1,2,3)~c(2,3,1)), name = "test")
-    "test.md" %in% list.files("./hugo_test/gallery")
+    hugo_memorise_model(lm(c(1,2,3)~c(2,3,1)), name = "test_summary_save")
+    "test_summary_save.md" %in% list.files("./hugo_test/gallery")
     })
 })
 
