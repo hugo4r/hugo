@@ -4,7 +4,7 @@
 \alias{hugo_train_model}
 \title{Training binary classification model and choose the best one}
 \usage{
-hugo_train_model(data = NULL, formula = NULL)
+hugo_train_model(data, formula)
 }
 \arguments{
 \item{data}{an optional \code{data.frame} containing the variables in the model}
@@ -22,7 +22,7 @@ returns trained models and evaluation of how these models are good.
 \examples{
 \dontrun{
 data("PimaIndiansDiabetes")
-formula <- "diabetes~."
+formula <- diabetes~.
 hugo_train_model(PimaIndiansDiabetes, formula)
 }
 
