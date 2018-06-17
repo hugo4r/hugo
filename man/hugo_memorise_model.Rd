@@ -13,7 +13,9 @@ hugo_memorise_model(model = NULL, name = substitute(model))
 }
 \description{
 Saves a model in the directory chosen at the beginning of the current
-Hugo Investigation in the subfolder 'gallery' in .rda file and a summary in .md file
+Hugo Investigation in the subfolder 'gallery' in .rda file. In addition, the function
+saves a summary in .md file based on tidy data frames from package \code{broom}.
+Be aware that it can be done only for models supported by \code{broom}.
 }
 \examples{
 \dontrun{mod.lm <- lm(Sepal.Length ~ Petal.Length, data = iris)
@@ -22,5 +24,5 @@ hugo_memorise_model(mod.lm, name = "model.iris")
 hugo_memorise_model(mod.lm)}
 }
 \author{
-Malgosia Lazecka
+Malgorzata Lazecka
 }
