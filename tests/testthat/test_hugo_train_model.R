@@ -40,6 +40,7 @@ test_that("Response variable has more than two classes",{
 })
 
 test_that('There is a memory subdirectory after training models.', {
+  data("PimaIndiansDiabetes")
   data <- PimaIndiansDiabetes
   formula <- "diabetes~."
   hugo_train_model(data, formula)
