@@ -40,7 +40,7 @@ test_that("Response variable has more than two classes",{
 })
 
 test_that('There is a memory subdirectory after training models.', {
-  df <- read.table("PimaIndiansDiabetes.rda")
+  df <- read.table("/train_data/PimaIndiansDiabetes.rda")
   hugo_train_model(data = df, formula = "diabetes~.")
   expect_true('models' %in% list.files('./hugo_test'))
   expect_true("glm_model.rda" %in% list.files("./hugo_test/models"))
