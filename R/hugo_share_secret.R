@@ -41,7 +41,7 @@ hugo_share_secret <- function(object, passphrase) {
   # override history entry from hugo_share_object
   .hugoEnv$history[length(.hugoEnv$history)] <- deparse(match.call())
 
-  if(is.null(get_string)) {
+  if (is.null(get_string)) {
     return(get_string)
   }
 
